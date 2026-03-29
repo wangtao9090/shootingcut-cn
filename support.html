@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — ShootingCut&trade;</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f2e;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --gradient-1: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.8; }
+        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; pointer-events: none; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; backdrop-filter: blur(20px); background: rgba(10,14,23,0.8); border-bottom: 1px solid rgba(59,130,246,0.1); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo a { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+        .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-back a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+        .nav-back a:hover { color: var(--text-primary); }
+        .lang-switch a { color: var(--accent-light); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.8rem; border: 1px solid rgba(96,165,250,0.3); border-radius: 6px; transition: all 0.3s; }
+        .lang-switch a:hover { background: rgba(96,165,250,0.1); }
+        .content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+        .content h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 2rem; }
+        .content h2 { font-size: 1.3rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.8rem; color: var(--accent-light); }
+        .content p, .content li { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; }
+        .content p { margin-bottom: 1rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .content li { margin-bottom: 0.4rem; }
+        .content a { color: var(--accent-light); text-decoration: none; }
+        .content a:hover { text-decoration: underline; }
+        .support-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+        .support-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .support-card p { margin-bottom: 0; }
+        footer { position: relative; z-index: 1; padding: 2rem; border-top: 1px solid rgba(148,163,184,0.08); text-align: center; }
+        footer p { color: var(--text-secondary); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo"><a href="/">ShootingCut&trade;</a></div>
+            <div class="nav-right">
+                <div class="lang-switch"><a href="/support-zh.html">中文</a></div>
+                <div class="nav-back"><a href="/">&larr; Back to Home</a></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1>Support</h1>
+
+        <p>Need help with ShootingCut? We're here to assist you. Please review the information below or reach out to us directly.</p>
+
+        <div class="support-card">
+            <h3>Email Support</h3>
+            <p>For any questions, bug reports, or feature requests, email us at <a href="mailto:support@shootingcut.com">support@shootingcut.com</a>. We typically respond within 24–48 hours.</p>
+        </div>
+
+        <div class="support-card">
+            <h3>Bug Reports</h3>
+            <p>If you encounter a bug, please include your device model, OS version, app version, and a description of the issue. Screenshots or screen recordings are very helpful.</p>
+        </div>
+
+        <div class="support-card">
+            <h3>Feature Requests</h3>
+            <p>Have an idea to make ShootingCut better? We'd love to hear it. Send your suggestions to our support email and we'll consider them for future updates.</p>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="support-card">
+            <h3>Which devices are supported?</h3>
+            <p>ShootingCut supports macOS 14.0+, iPadOS 17.0+, and iOS 17.0+.</p>
+        </div>
+
+        <div class="support-card">
+            <h3>Is my video data uploaded to any server?</h3>
+            <p>No. All video and audio processing is performed locally on your device. Your media files never leave your device unless you explicitly choose to export or share them.</p>
+        </div>
+
+        <div class="support-card">
+            <h3>What shooting sports are supported?</h3>
+            <p>ShootingCut is designed for practical shooting competitions including IPSC, USPSA, and IDPA.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ShootingCut&trade; LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
