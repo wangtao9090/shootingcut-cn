@@ -1,60 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShootingCut&trade; — Smart Video Analysis for Competitive Shooters</title>
-    <meta name="description" content="ShootingCut is an intelligent video analysis and auto-editing tool designed for IPSC, USPSA, and IDPA competitive shooters. Coming soon to the App Store.">
+    <title>ShootingCut&trade; — 实用射击智能视频分析工具</title>
+    <meta name="description" content="ShootingCut 是专为 IPSC、USPSA、IDPA 实用射击选手打造的智能视频分析与自动剪辑工具。即将登陆 App Store。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg-primary: #0a0e17;
-            --bg-secondary: #111827;
-            --bg-card: #1a1f2e;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --accent: #3b82f6;
-            --accent-light: #60a5fa;
-            --accent-glow: rgba(59, 130, 246, 0.3);
+            --bg-primary: #0a0e17; --bg-secondary: #111827; --bg-card: #1a1f2e;
+            --text-primary: #f1f5f9; --text-secondary: #94a3b8;
+            --accent: #3b82f6; --accent-light: #60a5fa; --accent-glow: rgba(59, 130, 246, 0.3);
             --gradient-1: linear-gradient(135deg, #3b82f6, #8b5cf6);
             --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
-            --orange: #f59e0b;
-            --green: #22c55e;
+            --orange: #f59e0b; --green: #22c55e;
         }
-
         html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ── Animated Background ── */
-        .bg-grid {
-            position: fixed; inset: 0;
-            background-image:
-                linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: 0; pointer-events: none;
-        }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; pointer-events: none; }
         .bg-glow { position: fixed; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); opacity: 0.15; pointer-events: none; z-index: 0; }
         .bg-glow-1 { background: #3b82f6; top: -200px; right: -100px; }
         .bg-glow-2 { background: #8b5cf6; bottom: -200px; left: -100px; }
-
-        /* ── Navigation ── */
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; backdrop-filter: blur(20px); background: rgba(10,14,23,0.8); border-bottom: 1px solid rgba(59,130,246,0.1); transition: all 0.3s ease; }
         nav.scrolled { padding: 0.7rem 2rem; background: rgba(10,14,23,0.95); }
         .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; position: relative; }
         .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
         .nav-links a:hover { color: var(--text-primary); }
@@ -65,8 +39,6 @@
         .lang-btn::after { display: none !important; }
         .lang-btn:hover { background: rgba(96,165,250,0.1); }
         .mobile-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; }
-
-        /* ── Hero ── */
         .hero { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 4rem; }
         .hero-content { max-width: 800px; }
         .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 100px; font-size: 0.85rem; color: var(--orange); margin-bottom: 2rem; }
@@ -76,14 +48,6 @@
         .hero h1 .gradient { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .hero h1 .hero-word { display: inline; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.7; }
-        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 10px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
-        .btn-primary { background: var(--gradient-1); color: white; box-shadow: 0 4px 20px var(--accent-glow); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
-        .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(148,163,184,0.3); }
-        .btn-outline:hover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
-
-        /* ── Sections ── */
         section { position: relative; z-index: 1; padding: 6rem 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         .section-label { display: inline-block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-light); margin-bottom: 1rem; }
@@ -91,40 +55,11 @@
         .section-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 650px; line-height: 1.7; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header .section-subtitle { margin: 0 auto; }
-
-        /* ── Platform Tags ── */
-        .platform-tags { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
-        .platform-tag { padding: 0.5rem 1.2rem; background: var(--bg-card); border: 1px solid rgba(148,163,184,0.1); border-radius: 100px; font-size: 0.85rem; color: var(--text-secondary); }
-
-        /* ── Feature Cards ── */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .feature-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
-        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient-2); opacity: 0; transition: opacity 0.3s; }
-        .feature-card:hover { border-color: rgba(6,182,212,0.2); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-        .feature-card:hover::before { opacity: 1; }
-        .feature-icon { font-size: 1.5rem; margin-bottom: 1rem; }
-        .feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .feature-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
-
-        /* ── Modes Section ── */
-        .modes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-        .mode-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; }
-        .mode-card:hover { border-color: rgba(59,130,246,0.2); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
-        .mode-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-        .mode-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
-        .mode-card .mode-name { font-size: 0.85rem; color: var(--accent-light); margin-bottom: 0.8rem; }
-        .mode-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
-
-        /* ── Coming Soon Banner ── */
         .coming-soon { text-align: center; padding: 4rem 2rem; position: relative; z-index: 1; }
         .coming-soon-badge { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.8rem 2rem; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); border-radius: 100px; font-size: 1.1rem; font-weight: 700; color: var(--orange); margin-bottom: 1.5rem; }
         .coming-soon p { color: var(--text-secondary); font-size: 1.05rem; max-width: 500px; margin: 0 auto; }
-
-        /* ── About ── */
         .about-content { max-width: 700px; margin: 0 auto; text-align: center; }
         .about-content .section-subtitle { max-width: 700px; margin: 0 auto; }
-
-        /* ── Contact ── */
         .contact-center { max-width: 600px; margin: 0 auto; }
         .contact-items { display: flex; flex-direction: column; gap: 1.5rem; }
         .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
@@ -133,26 +68,19 @@
         .contact-item p { color: var(--text-secondary); font-size: 0.9rem; }
         .contact-item a { color: var(--accent-light); text-decoration: none; }
         .contact-item a:hover { text-decoration: underline; }
-
-        /* ── Footer ── */
         footer { position: relative; z-index: 1; padding: 2rem; border-top: 1px solid rgba(148,163,184,0.08); text-align: center; }
         .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         footer p { color: var(--text-secondary); font-size: 0.85rem; }
         .footer-links { display: flex; gap: 1.5rem; list-style: none; }
         .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
         .footer-links a:hover { color: var(--accent-light); }
-
-        /* ── Animations ── */
         .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-        /* ── Responsive ── */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
             .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,14,23,0.98); padding: 1.5rem 2rem; border-bottom: 1px solid rgba(59,130,246,0.1); }
             .hero h1 .hero-word { display: block; }
-            .features-grid, .modes-grid { grid-template-columns: 1fr; }
             .footer-inner { flex-direction: column; text-align: center; }
         }
     </style>
@@ -162,91 +90,84 @@
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
 
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-inner">
             <div class="logo">ShootingCut&trade;</div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#features">Product</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact" class="nav-cta">Contact</a></li>
-                <li><a href="/zh/" class="lang-btn">中文</a></li>
+                <li><a href="#features">产品</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact" class="nav-cta">联系</a></li>
+                <li><a href="/" class="lang-btn">EN</a></li>
             </ul>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">&#9776;</button>
         </div>
     </nav>
 
-    <!-- Hero -->
     <section class="hero" id="home">
         <div class="hero-content fade-in">
             <div class="hero-badge">
                 <span class="dot"></span>
-                Coming Soon to the App Store
+                即将登陆 App Store
             </div>
             <h1>
-                <span class="hero-word">Shoot.</span>
-                <span class="hero-word">Analyze.</span>
-                <span class="hero-word gradient">Improve.</span>
+                <span class="hero-word">射击。</span>
+                <span class="hero-word">分析。</span>
+                <span class="hero-word gradient">进步。</span>
             </h1>
             <p>
-                ShootingCut&trade; helps competitive shooters quickly align, edit, and analyze
-                match videos. Turn raw footage into professional clips in minutes —
-                available on macOS, iPad, and iPhone.
+                ShootingCut&trade; 帮助实用射击选手快速对齐、剪辑和分析比赛视频。
+                将原始素材在几分钟内变成专业比赛片段 —
+                支持 macOS、iPad 和 iPhone。
             </p>
         </div>
     </section>
 
-    <!-- Product -->
     <section id="features" style="background: var(--bg-secondary);">
         <div class="container">
             <div class="about-content fade-in">
-                <span class="section-label">Product</span>
-                <h2 class="section-title">What is ShootingCut&trade;?</h2>
+                <span class="section-label">产品介绍</span>
+                <h2 class="section-title">ShootingCut&trade; 是什么？</h2>
                 <p class="section-subtitle">
-                    ShootingCut&trade; is a smart video tool built for competitive shooters.
-                    Quickly align multi-angle footage, auto-edit your match videos,
-                    and analyze your shooting performance — all in one app.
+                    ShootingCut&trade; 是一款专为实用射击选手打造的智能视频工具。
+                    快速对齐多角度素材、自动剪辑比赛视频、
+                    分析射击表现 — 一个 App 搞定。
                 </p>
                 <p class="section-subtitle" style="margin-top: 1.5rem;">
-                    No more hours of manual editing. Import your videos, let ShootingCut&trade; handle the rest,
-                    and share professional match clips in minutes. Available on macOS, iPad, and iPhone.
+                    告别繁琐的手动剪辑。导入视频，让 ShootingCut&trade; 处理一切，
+                    几分钟内分享专业比赛片段。支持 macOS、iPad 和 iPhone。
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Coming Soon -->
     <div class="coming-soon fade-in" style="background: var(--bg-secondary);">
-        <div class="coming-soon-badge">&#128640; Coming Soon</div>
+        <div class="coming-soon-badge">&#128640; 即将上线</div>
         <p>
-            ShootingCut&trade; is currently in development and will be available on the App Store soon.
-            Stay tuned for our official launch!
+            ShootingCut&trade; 目前正在开发中，即将登陆 App Store。
+            敬请期待正式发布！
         </p>
     </div>
 
-    <!-- About -->
     <section id="about">
         <div class="container">
             <div class="about-content fade-in">
-                <span class="section-label">About</span>
+                <span class="section-label">关于</span>
                 <h2 class="section-title">ShootingCut&trade; LLC</h2>
                 <p class="section-subtitle">
-                    ShootingCut&trade; LLC is an independent software studio focused on developing
-                    apps for the practical shooting community. From match video analysis to performance
-                    tracking, we build tools that help competitive shooters train smarter and share better.
+                    ShootingCut&trade; LLC 是一家独立软件工作室，专注于为实用射击社区开发应用。
+                    从比赛视频分析到成绩追踪，我们打造帮助射击选手更高效训练和分享的工具。
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact" style="background: var(--bg-secondary);">
         <div class="container">
             <div class="section-header fade-in">
-                <span class="section-label">Contact</span>
-                <h2 class="section-title">Get in Touch</h2>
+                <span class="section-label">联系</span>
+                <h2 class="section-title">联系我们</h2>
                 <p class="section-subtitle">
-                    Questions, feedback, or partnership inquiries — feel free to reach out.
+                    有疑问、反馈或合作意向，欢迎随时联系。
                 </p>
             </div>
             <div class="contact-center fade-in">
@@ -254,7 +175,7 @@
                     <div class="contact-item">
                         <div class="contact-icon">&#128231;</div>
                         <div>
-                            <h4>Email</h4>
+                            <h4>邮箱</h4>
                             <p><a href="mailto:support@shootingcut.com">support@shootingcut.com</a></p>
                         </div>
                     </div>
@@ -263,18 +184,17 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-inner">
             <p>&copy; 2026 ShootingCut&trade; LLC. All rights reserved.</p>
             <ul class="footer-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Product</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="/privacy.html">Privacy</a></li>
-                <li><a href="/terms.html">Terms</a></li>
-                <li><a href="/support.html">Support</a></li>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#features">产品</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
+                <li><a href="/privacy-zh.html">隐私政策</a></li>
+                <li><a href="/terms-zh.html">使用条款</a></li>
+                <li><a href="/support-zh.html">支持</a></li>
             </ul>
         </div>
     </footer>
