@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shooting Cut&trade; — 实用射击智能视频分析工具</title>
-    <meta name="description" content="Shooting Cut 是专为 IPSC、USPSA、IDPA 实用射击选手打造的智能视频分析与自动剪辑工具。即将登陆 App Store。">
+    <meta name="description" content="Shooting Cut 是专为 IPSC、USPSA、IDPA 实用射击选手打造的智能视频分析与自动剪辑工具。现已登陆 App Store，支持 macOS、iPad 和 iPhone。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,16 +19,18 @@
             --orange: #f59e0b; --green: #22c55e;
         }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
         .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; pointer-events: none; }
         .bg-glow { position: fixed; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); opacity: 0.15; pointer-events: none; z-index: 0; }
         .bg-glow-1 { background: #3b82f6; top: -200px; right: -100px; }
         .bg-glow-2 { background: #8b5cf6; bottom: -200px; left: -100px; }
+
+        /* ── Navigation ── */
         nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; backdrop-filter: blur(20px); background: rgba(10,14,23,0.8); border-bottom: 1px solid rgba(59,130,246,0.1); transition: all 0.3s ease; }
         nav.scrolled { padding: 0.7rem 2rem; background: rgba(10,14,23,0.95); }
         .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        .nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; position: relative; }
         .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
         .nav-links a:hover { color: var(--text-primary); }
@@ -39,15 +41,35 @@
         .lang-btn::after { display: none !important; }
         .lang-btn:hover { background: rgba(96,165,250,0.1); }
         .mobile-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; }
+
+        /* ── Hero ── */
         .hero { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 4rem; }
-        .hero-content { max-width: 800px; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); border-radius: 100px; font-size: 0.85rem; color: var(--orange); margin-bottom: 2rem; }
-        .hero-badge .dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: pulse 2s infinite; }
+        .hero-content { max-width: 820px; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 100px; font-size: 0.85rem; color: var(--green); margin-bottom: 2rem; }
+        .hero-badge .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .hero h1 { font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1.5rem; }
         .hero h1 .gradient { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .hero h1 .hero-word { display: inline; }
         .hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; border-radius: 10px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid rgba(148,163,184,0.3); }
+        .btn-outline:hover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+
+        /* App Store badge */
+        .appstore-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.8rem; background: #000; color: white; border-radius: 12px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s; }
+        .appstore-btn:hover { background: #1a1a1a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+        .appstore-btn svg { width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+        .appstore-btn-text { display: flex; flex-direction: column; align-items: flex-start; }
+        .appstore-btn-text .small { font-size: 0.65rem; font-weight: 400; opacity: 0.8; line-height: 1; }
+        .appstore-btn-text .large { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+
+        /* Platform pills */
+        .platform-tags { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
+        .platform-tag { padding: 0.4rem 1rem; background: var(--bg-card); border: 1px solid rgba(148,163,184,0.12); border-radius: 100px; font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* ── Sections ── */
         section { position: relative; z-index: 1; padding: 6rem 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         .section-label { display: inline-block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-light); margin-bottom: 1rem; }
@@ -55,11 +77,46 @@
         .section-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 650px; line-height: 1.7; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header .section-subtitle { margin: 0 auto; }
-        .coming-soon { text-align: center; padding: 4rem 2rem; position: relative; z-index: 1; }
-        .coming-soon-badge { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.8rem 2rem; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); border-radius: 100px; font-size: 1.1rem; font-weight: 700; color: var(--orange); margin-bottom: 1.5rem; }
-        .coming-soon p { color: var(--text-secondary); font-size: 1.05rem; max-width: 500px; margin: 0 auto; }
+
+        /* ── Feature Cards ── */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .feature-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient-2); opacity: 0; transition: opacity 0.3s; }
+        .feature-card:hover { border-color: rgba(6,182,212,0.2); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .feature-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+
+        /* ── Modes Section ── */
+        .modes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+        .mode-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; }
+        .mode-card:hover { border-color: rgba(59,130,246,0.25); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+        .mode-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+        .mode-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .mode-badge { display: inline-block; font-size: 0.75rem; color: var(--accent-light); background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.2); border-radius: 100px; padding: 0.2rem 0.7rem; margin-bottom: 0.8rem; font-weight: 600; }
+        .mode-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+        .mode-card .mode-videos { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.75rem; opacity: 0.7; }
+
+        /* ── Platforms Section ── */
+        .platforms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .platform-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s; }
+        .platform-card:hover { border-color: rgba(59,130,246,0.2); transform: translateY(-3px); }
+        .platform-card .p-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+        .platform-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .platform-card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; }
+        .platform-card .req { margin-top: 0.8rem; font-size: 0.78rem; color: var(--accent-light); background: rgba(96,165,250,0.08); border-radius: 6px; padding: 0.3rem 0.7rem; display: inline-block; }
+
+        /* ── Download CTA ── */
+        .download-cta { text-align: center; padding: 5rem 2rem; position: relative; z-index: 1; }
+        .download-cta .section-title { margin-bottom: 1rem; }
+        .download-cta .section-subtitle { margin: 0 auto 2.5rem; }
+
+        /* ── About ── */
         .about-content { max-width: 700px; margin: 0 auto; text-align: center; }
         .about-content .section-subtitle { max-width: 700px; margin: 0 auto; }
+
+        /* ── Contact ── */
         .contact-center { max-width: 600px; margin: 0 auto; }
         .contact-items { display: flex; flex-direction: column; gap: 1.5rem; }
         .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
@@ -68,19 +125,26 @@
         .contact-item p { color: var(--text-secondary); font-size: 0.9rem; }
         .contact-item a { color: var(--accent-light); text-decoration: none; }
         .contact-item a:hover { text-decoration: underline; }
+
+        /* ── Footer ── */
         footer { position: relative; z-index: 1; padding: 2rem; border-top: 1px solid rgba(148,163,184,0.08); text-align: center; }
         .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         footer p { color: var(--text-secondary); font-size: 0.85rem; }
-        .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+        .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
         .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
         .footer-links a:hover { color: var(--accent-light); }
+
+        /* ── Animations ── */
         .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive ── */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
-            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,14,23,0.98); padding: 1.5rem 2rem; border-bottom: 1px solid rgba(59,130,246,0.1); }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,14,23,0.98); padding: 1.5rem 2rem; border-bottom: 1px solid rgba(59,130,246,0.1); gap: 1rem; }
             .hero h1 .hero-word { display: block; }
+            .features-grid, .modes-grid, .platforms-grid { grid-template-columns: 1fr; }
             .footer-inner { flex-direction: column; text-align: center; }
         }
     </style>
@@ -90,24 +154,28 @@
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
 
+    <!-- 导航 -->
     <nav id="navbar">
         <div class="nav-inner">
             <div class="logo">Shooting Cut&trade;</div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#features">产品</a></li>
+                <li><a href="#features">功能</a></li>
+                <li><a href="#modes">编辑模式</a></li>
+                <li><a href="#platforms">平台</a></li>
                 <li><a href="#about">关于</a></li>
-                <li><a href="#contact" class="nav-cta">联系</a></li>
+                <li><a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="nav-cta" target="_blank">立即下载</a></li>
                 <li><a href="/" class="lang-btn">EN</a></li>
             </ul>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">&#9776;</button>
         </div>
     </nav>
 
+    <!-- Hero -->
     <section class="hero" id="home">
         <div class="hero-content fade-in">
             <div class="hero-badge">
                 <span class="dot"></span>
-                即将登陆 App Store
+                App Store 现已上线
             </div>
             <h1>
                 <span class="hero-word">射击。</span>
@@ -116,42 +184,169 @@
             </h1>
             <p>
                 Shooting Cut&trade; 帮助实用射击选手快速对齐、剪辑和分析比赛视频。
-                将原始素材在几分钟内变成专业比赛片段 —
-                支持 macOS、iPad 和 iPhone。
+                将原始素材在几分钟内变成专业比赛片段 — 支持 macOS、iPad 和 iPhone。
             </p>
-        </div>
-    </section>
-
-    <section id="features" style="background: var(--bg-secondary);">
-        <div class="container">
-            <div class="about-content fade-in">
-                <span class="section-label">产品介绍</span>
-                <h2 class="section-title">Shooting Cut&trade; 是什么？</h2>
-                <p class="section-subtitle">
-                    Shooting Cut&trade; 是一款专为实用射击选手打造的智能视频工具。
-                    快速对齐多角度素材、自动剪辑比赛视频、
-                    分析射击表现 — 一个 App 搞定。
-                </p>
-                <p class="section-subtitle" style="margin-top: 1.5rem;">
-                    告别繁琐的手动剪辑。导入视频，让 Shooting Cut&trade; 处理一切，
-                    几分钟内分享专业比赛片段。支持 macOS、iPad 和 iPhone。
-                </p>
+            <div class="hero-buttons">
+                <a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="appstore-btn" target="_blank">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    <div class="appstore-btn-text">
+                        <span class="small">下载于</span>
+                        <span class="large">App Store</span>
+                    </div>
+                </a>
+                <a href="#features" class="btn btn-outline">了解更多 ↓</a>
+            </div>
+            <div class="platform-tags">
+                <span class="platform-tag">macOS 14+</span>
+                <span class="platform-tag">iPadOS 17+</span>
+                <span class="platform-tag">iOS 17+</span>
+                <span class="platform-tag">IPSC · USPSA · IDPA</span>
             </div>
         </div>
     </section>
 
-    <div class="coming-soon fade-in" style="background: var(--bg-secondary);">
-        <div class="coming-soon-badge">&#128640; 即将上线</div>
-        <p>
-            Shooting Cut&trade; 目前正在开发中，即将登陆 App Store。
-            敬请期待正式发布！
+    <!-- 功能 -->
+    <section id="features" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">核心功能</span>
+                <h2 class="section-title">让复盘更快、更专业</h2>
+                <p class="section-subtitle">
+                    从自动枪声检测到多机位剪辑，Shooting Cut&trade; 处理繁琐工作，让你专注于提升技术。
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎵</div>
+                    <h3>智能音频分析</h3>
+                    <p>基于 FFT 信号处理技术，自动检测计时器蜂鸣声（2500–3500 Hz）和枪声脉冲。精准获得每枪 Split 时间、首枪时间和总用时。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">✂️</div>
+                    <h3>自动裁剪</h3>
+                    <p>自动截去 Stage 前后的冗余片段。自定义 Timer 前缓冲和最后一枪后缓冲，每次导出都是完美剪辑。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📊</div>
+                    <h3>成绩字幕叠加</h3>
+                    <p>将实时成绩数据直接叠加到导出视频中：枪号、Split 间隔、累计时间、首枪时间、最佳 Split。支持 6 种颜色适配不同背景。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔄</div>
+                    <h3>分屏同步（Split Sync）</h3>
+                    <p>将两个拍摄角度并排同步播放。利用计时器蜂鸣声自动对齐时间轴，完美呈现第一人称 + 跟拍的双视角对比。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎬</div>
+                    <h3>场景混编（Stage Mix）</h3>
+                    <p>导入 3 个以上机位，App 自动剪辑：射击时切 POV，移动时切跟拍，智能计算切换时机，还支持手动覆盖任意分镜。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📱</div>
+                    <h3>全平台原生体验</h3>
+                    <p>macOS 版采用侧边栏 + 主编辑区布局，iPhone/iPad 版专为触屏优化，6 Tab 工作流。买一次，所有设备通用。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 编辑模式 -->
+    <section id="modes">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">编辑模式</span>
+                <h2 class="section-title">四种模式，覆盖所有场景</h2>
+                <p class="section-subtitle">
+                    无论你只有一个视频还是多机位素材，Shooting Cut 都有对应的工作流程。
+                </p>
+            </div>
+            <div class="modes-grid">
+                <div class="mode-card fade-in">
+                    <div class="mode-icon">✂️</div>
+                    <h3>Auto Trim · 自动裁剪</h3>
+                    <div class="mode-badge">1 个视频</div>
+                    <p>对单个比赛视频进行自动裁剪，去除 Stage 前后多余片段，叠加字幕与水印，一键导出分享。</p>
+                    <div class="mode-videos">适用于：单角度比赛片段</div>
+                </div>
+                <div class="mode-card fade-in">
+                    <div class="mode-icon">🔗</div>
+                    <h3>Merge · 视频合并</h3>
+                    <div class="mode-badge">2 个以上视频</div>
+                    <p>将多段视频按顺序拼接成完整影片。拖拽排序，为每段设置独立成绩文字，分别控制音频。</p>
+                    <div class="mode-videos">适用于：多 Stage 赛事集锦</div>
+                </div>
+                <div class="mode-card fade-in">
+                    <div class="mode-icon">⬛⬛</div>
+                    <h3>Split Sync · 分屏同步</h3>
+                    <div class="mode-badge">2 个视频</div>
+                    <p>以计时器蜂鸣声为基准，自动对齐两个视角的时间轴，生成上下分屏同步视频。支持全屏和 HUD 布局。</p>
+                    <div class="mode-videos">适用于：双视角对比分析</div>
+                </div>
+                <div class="mode-card fade-in">
+                    <div class="mode-icon">🎬</div>
+                    <h3>Stage Mix · 场景混编</h3>
+                    <div class="mode-badge">3 个以上视频</div>
+                    <p>为每个机位标注视角（POV / 跟拍 / 固定），App 自动在最佳时机切换机位，并支持手动覆盖任意分镜。</p>
+                    <div class="mode-videos">适用于：电影感多机位混剪</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 平台 -->
+    <section id="platforms" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">支持平台</span>
+                <h2 class="section-title">专为 Apple 生态打造</h2>
+                <p class="section-subtitle">
+                    macOS、iPad、iPhone 三端原生适配，每个平台都有最佳体验。
+                </p>
+            </div>
+            <div class="platforms-grid">
+                <div class="platform-card fade-in">
+                    <div class="p-icon">💻</div>
+                    <h3>macOS</h3>
+                    <p>侧边栏 + 主编辑区布局。支持从 Finder 或照片库导入，完整键盘快捷键，大尺寸波形图方便精准校准。</p>
+                    <span class="req">macOS 14.0 或更高</span>
+                </div>
+                <div class="platform-card fade-in">
+                    <div class="p-icon">📱</div>
+                    <h3>iPhone</h3>
+                    <p>专为手机优化的 6 Tab 工作流：布局、分析、音频、字幕、自动裁剪、水印。支持全屏预览，导出直接存入相册。</p>
+                    <span class="req">iOS 17.0 或更高</span>
+                </div>
+                <div class="platform-card fade-in">
+                    <div class="p-icon">📟</div>
+                    <h3>iPad</h3>
+                    <p>共享 macOS 侧边栏布局，提供宽敞的编辑空间。支持双指捏合缩放波形、长按呼出菜单，连接键盘时支持快捷键。</p>
+                    <span class="req">iPadOS 17.0 或更高</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载 CTA -->
+    <div class="download-cta fade-in">
+        <span class="section-label">立即下载</span>
+        <h2 class="section-title">准备好升级你的复盘方式了吗？</h2>
+        <p class="section-subtitle">
+            现已登陆 App Store，支持 macOS、iPhone 和 iPad。
         </p>
+        <a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="appstore-btn" target="_blank" style="margin: 0 auto; display: inline-flex;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;fill:white;"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <div class="appstore-btn-text">
+                <span class="small">下载于</span>
+                <span class="large">App Store</span>
+            </div>
+        </a>
     </div>
 
-    <section id="about">
+    <!-- 关于 -->
+    <section id="about" style="background: var(--bg-secondary);">
         <div class="container">
             <div class="about-content fade-in">
-                <span class="section-label">关于</span>
+                <span class="section-label">关于我们</span>
                 <h2 class="section-title">ShootingCut&trade; LLC</h2>
                 <p class="section-subtitle">
                     ShootingCut&trade; LLC 是一家独立软件工作室，专注于为实用射击社区开发应用。
@@ -161,11 +356,12 @@
         </div>
     </section>
 
-    <section id="contact" style="background: var(--bg-secondary);">
+    <!-- 联系 -->
+    <section id="contact">
         <div class="container">
             <div class="section-header fade-in">
-                <span class="section-label">联系</span>
-                <h2 class="section-title">联系我们</h2>
+                <span class="section-label">联系我们</span>
+                <h2 class="section-title">有问题？联系我们</h2>
                 <p class="section-subtitle">
                     有疑问、反馈或合作意向，欢迎随时联系。
                 </p>
@@ -184,12 +380,15 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-inner">
             <p>&copy; 2026 ShootingCut&trade; LLC. All rights reserved.</p>
             <ul class="footer-links">
                 <li><a href="#home">首页</a></li>
-                <li><a href="#features">产品</a></li>
+                <li><a href="#features">功能</a></li>
+                <li><a href="#modes">编辑模式</a></li>
+                <li><a href="#platforms">平台</a></li>
                 <li><a href="#about">关于</a></li>
                 <li><a href="#contact">联系</a></li>
                 <li><a href="/privacy-zh.html">隐私政策</a></li>
