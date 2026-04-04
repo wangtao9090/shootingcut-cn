@@ -176,6 +176,27 @@
         .platform-tags { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
         .platform-tag { padding: 0.4rem 1rem; background: var(--bg-card); border: 1px solid rgba(148,163,184,0.12); border-radius: 100px; font-size: 0.8rem; color: var(--text-secondary); }
 
+
+        /* ── 视频演示 ── */
+        .demo-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 1.2rem; align-items: end; }
+        .demo-card { text-align: center; }
+        .demo-video { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid rgba(148,163,184,0.12); background: var(--bg-card); }
+        .demo-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .demo-landscape { padding-bottom: 56.25%; }
+        .demo-portrait { padding-bottom: 125%; }
+        .demo-portrait-tall { padding-bottom: 133.33%; }
+        .demo-square { padding-bottom: 100%; }
+        .demo-label { margin-top: 0.8rem; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+        .demo-platform { font-size: 0.78rem; font-weight: 400; color: var(--text-secondary); margin-left: 0.3rem; }
+        .demo-note { text-align: center; color: var(--text-secondary); font-size: 0.88rem; margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        @media (max-width: 768px) {
+            .demo-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .demo-grid .demo-card:first-child { grid-column: 1 / -1; }
+        }
+        @media (max-width: 480px) {
+            .demo-grid { grid-template-columns: 1fr; }
+            .demo-grid .demo-card:first-child { grid-column: auto; }
+        }
         /* ── Sections ── */
         section { position: relative; z-index: 1; padding: 6rem 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
@@ -255,6 +276,58 @@
             .footer-inner { flex-direction: column; text-align: center; }
         }
     </style>
+
+    <!-- JSON-LD: VideoObject (GEO optimization) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "ShootingCut Portrait Tracking Demo — Export Ratio Comparison",
+        "description": "Same competitive shooting stage footage exported at four different aspect ratios using Portrait Tracking. Demonstrates automatic subject tracking that keeps the shooter centered.",
+        "itemListElement": [
+            {
+                "@type": "VideoObject",
+                "position": 1,
+                "name": "ShootingCut in Action — 16:9 Landscape Export",
+                "description": "Competitive shooting match video exported in 16:9 landscape ratio with Portrait Tracking keeping the shooter centered. Ideal for YouTube.",
+                "thumbnailUrl": "https://i.ytimg.com/vi/EO-yju9mCIk/hqdefault.jpg",
+                "uploadDate": "2026-04-04",
+                "contentUrl": "https://www.youtube.com/watch?v=EO-yju9mCIk",
+                "embedUrl": "https://www.youtube.com/embed/EO-yju9mCIk"
+            },
+            {
+                "@type": "VideoObject",
+                "position": 2,
+                "name": "ShootingCut in Action — 4:5 Portrait Export",
+                "description": "Same shooting stage exported in 4:5 portrait ratio with automatic subject tracking. Perfect for Instagram feed posts.",
+                "thumbnailUrl": "https://i.ytimg.com/vi/ZO5H3u1iSR8/hq2.jpg",
+                "uploadDate": "2026-04-04",
+                "contentUrl": "https://www.youtube.com/shorts/ZO5H3u1iSR8",
+                "embedUrl": "https://www.youtube.com/embed/ZO5H3u1iSR8"
+            },
+            {
+                "@type": "VideoObject",
+                "position": 3,
+                "name": "ShootingCut in Action — 3:4 Portrait Export",
+                "description": "Competitive shooting video exported in 3:4 portrait ratio. Portrait Tracking keeps the shooter centered throughout transitions.",
+                "thumbnailUrl": "https://i.ytimg.com/vi/9p-BtRQN9t0/hq2.jpg",
+                "uploadDate": "2026-04-04",
+                "contentUrl": "https://www.youtube.com/shorts/9p-BtRQN9t0",
+                "embedUrl": "https://www.youtube.com/embed/9p-BtRQN9t0"
+            },
+            {
+                "@type": "VideoObject",
+                "position": 4,
+                "name": "ShootingCut in Action — 1:1 Square Export",
+                "description": "Match video exported in 1:1 square ratio with automatic reframing. Ideal for Instagram and social media square format.",
+                "thumbnailUrl": "https://i.ytimg.com/vi/LZIfZt51ynQ/hq2.jpg",
+                "uploadDate": "2026-04-04",
+                "contentUrl": "https://www.youtube.com/shorts/LZIfZt51ynQ",
+                "embedUrl": "https://www.youtube.com/embed/LZIfZt51ynQ"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <div class="bg-grid"></div>
@@ -267,6 +340,7 @@
             <div class="logo">Shooting Cut&trade;</div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#features">功能</a></li>
+                <li><a href="#demo">演示</a></li>
                 <li><a href="#modes">编辑模式</a></li>
                 <li><a href="#platforms">平台</a></li>
                 <li><a href="#about">关于</a></li>
@@ -373,6 +447,47 @@
     </section>
 
     <!-- 编辑模式 -->
+
+    <!-- 视频演示 -->
+    <section id="demo">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">实际效果</span>
+                <h2 class="section-title">一个素材，适配所有平台</h2>
+                <p class="section-subtitle">
+                    同一段比赛素材，通过转竖屏追踪导出不同比例 — 射手在每一帧都保持居中。
+                </p>
+            </div>
+            <div class="demo-grid fade-in">
+                <div class="demo-card">
+                    <div class="demo-video demo-landscape">
+                        <iframe src="https://www.youtube.com/embed/EO-yju9mCIk" title="ShootingCut 16:9 演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="demo-label">16:9 <span class="demo-platform">YouTube</span></div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-video demo-portrait">
+                        <iframe src="https://www.youtube.com/embed/ZO5H3u1iSR8" title="ShootingCut 4:5 演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="demo-label">4:5 <span class="demo-platform">Instagram</span></div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-video demo-portrait-tall">
+                        <iframe src="https://www.youtube.com/embed/9p-BtRQN9t0" title="ShootingCut 3:4 演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="demo-label">3:4 <span class="demo-platform">竖屏</span></div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-video demo-square">
+                        <iframe src="https://www.youtube.com/embed/LZIfZt51ynQ" title="ShootingCut 1:1 演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="demo-label">1:1 <span class="demo-platform">方形</span></div>
+                </div>
+            </div>
+            <p class="demo-note fade-in">以上四个视频来自同一段原始素材。转竖屏追踪功能自动重构画面，无论导出什么比例，射手始终居中。</p>
+        </div>
+    </section>
+
     <section id="modes">
         <div class="container">
             <div class="section-header fade-in">
@@ -509,6 +624,7 @@
             <ul class="footer-links">
                 <li><a href="#home">首页</a></li>
                 <li><a href="#features">功能</a></li>
+                <li><a href="#demo">演示</a></li>
                 <li><a href="#modes">编辑模式</a></li>
                 <li><a href="#platforms">平台</a></li>
                 <li><a href="#about">关于</a></li>
