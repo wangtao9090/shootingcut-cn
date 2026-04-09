@@ -277,6 +277,21 @@
         .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
         .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
         .footer-links a:hover { color: var(--accent-light); }
+        .footer-social { display: flex; gap: 1rem; align-items: center; }
+        .footer-social a { color: var(--text-secondary); transition: color 0.3s; display: inline-flex; align-items: center; }
+        .footer-social a:hover { color: var(--accent-light); }
+        .footer-social svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* ── FAQ ── */
+        .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 12px; overflow: hidden; transition: border-color 0.3s; }
+        .faq-item[open] { border-color: rgba(59,130,246,0.2); }
+        .faq-question { padding: 1.25rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .faq-question::-webkit-details-marker { display: none; }
+        .faq-question::after { content: '+'; font-size: 1.4rem; color: var(--accent-light); font-weight: 300; transition: transform 0.3s; }
+        .faq-item[open] .faq-question::after { content: '−'; }
+        .faq-answer { padding: 0 1.5rem 1.25rem; }
+        .faq-answer p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
 
         /* ── Animations ── */
         .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
@@ -394,6 +409,7 @@
                 <a href="#features" class="btn btn-outline">了解更多 ↓</a>
             </div>
             <div class="platform-tags">
+                <span class="platform-tag" style="color:var(--green);border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);">免费下载试用 · 无需注册</span>
                 <span class="platform-tag">macOS 14+</span>
                 <span class="platform-tag">iPadOS 17+</span>
                 <span class="platform-tag">iOS 17+</span>
@@ -618,7 +634,7 @@
         <span class="section-label">立即下载</span>
         <h2 class="section-title">准备好升级你的复盘方式了吗？</h2>
         <p class="section-subtitle">
-            现已登陆 App Store，支持 macOS、iPhone 和 iPad。
+            免费下载试用，无需注册账号。一次购买覆盖 macOS、iPhone 和 iPad。
         </p>
         <a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="appstore-btn" target="_blank" style="margin: 0 auto; display: inline-flex;">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;fill:white;"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -636,8 +652,7 @@
                 <span class="section-label">关于我们</span>
                 <h2 class="section-title">ShootingCut&trade; LLC</h2>
                 <p class="section-subtitle">
-                    ShootingCut&trade; LLC 是一家独立软件工作室，专注于为实用射击社区开发应用。
-                    从比赛视频分析到成绩追踪，我们打造帮助射击选手更高效训练和分享的工具。
+                    由一位受够了赛后视频编辑折磨的竞技射手创建。ShootingCut&trade; LLC 是一家独立软件工作室，专注于为实用射击社区开发工具——帮助射击选手更高效地训练和分享。
                 </p>
             </div>
         </div>
@@ -667,6 +682,43 @@
         </div>
     </section>
 
+    <!-- 常见问题 -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">常见问题</span>
+                <h2 class="section-title">FAQ</h2>
+            </div>
+            <div class="faq-list fade-in">
+                <details class="faq-item">
+                    <summary class="faq-question">Shooting Cut 是免费的吗？</summary>
+                    <div class="faq-answer">
+                        <p>Shooting Cut 免费下载，核心功能免费使用。无需注册账号，无需登录，无任何追踪。高级功能可通过一次性购买解锁，一次购买覆盖所有 Apple 设备（iPhone、iPad 和 Mac）。</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Shooting Cut 和 Shot Streamer、cyfrTimer 有什么区别？</summary>
+                    <div class="faq-answer">
+                        <p>Shot Streamer 是基于网页的工具，需要上传视频到服务器处理。cyfrTimer 侧重计时分析和叠加导出，不支持视频剪辑或裁剪。Shooting Cut 是原生 App，所有处理都在你的设备上完成——支持多机位同步（SplitSync 和 StageMix）、自动视频裁剪、AI Reframe 竖屏导出，完全离线可用。不上传，不等待。</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">支持哪些相机？</summary>
+                    <div class="faq-answer">
+                        <p>任何能录制带音频视频的相机都可以——GoPro、DJI Action、Insta360、iPhone 或其他任何相机。只要视频音频中能听到计时器 beep 和枪声，Shooting Cut 就能检测和分析。为获得最佳效果，请确保麦克风没有被遮挡。</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">我的视频数据安全吗？</summary>
+                    <div class="faq-answer">
+                        <p>100% 安全。所有视频处理完全在你的设备上进行，不会上传到任何服务器。视频仅通过你个人的 iCloud 和 Apple 相册同步。无第三方分析、无追踪、无需注册账号。</p>
+                    </div>
+                </details>
+            </div>
+            <p style="text-align:center; margin-top:2rem;"><a href="/faq-zh.html" style="color:var(--accent-light); text-decoration:none; font-size:0.95rem;">查看所有常见问题 &rarr;</a></p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-inner">
@@ -684,6 +736,11 @@
                 <li><a href="/support-zh.html">支持</a></li>
                 <li><a href="/faq-zh.html">FAQ</a></li>
             </ul>
+            <div class="footer-social">
+                <a href="https://www.youtube.com/@Shooting_Cut" target="_blank" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor;"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
         </div>
     </footer>
 
