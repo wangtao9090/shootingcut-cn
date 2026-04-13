@@ -106,7 +106,7 @@
                 "name": "Shooting Cut 支持哪些平台？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Shooting Cut 支持 macOS（26.0+）、iPad（iPadOS 26.0+）和 iPhone（iOS 26.0+）。macOS版采用侧边栏+编辑器布局，iPhone版有专门设计的6标签页工作流。一次购买覆盖所有Apple设备。"
+                    "text": "Shooting Cut 支持 macOS（26.0+）、iPad（iPadOS 26.0+）和 iPhone（iOS 26.0+）。macOS版采用侧边栏+编辑器布局，iPhone版有专门设计的6标签页工作流。AutoTrim（单视频剪辑）完全免费，Pro 订阅解锁多机位等高级功能，覆盖所有 Apple 设备。"
                 }
             }
         ]
@@ -293,6 +293,14 @@
         .faq-answer { padding: 0 1.5rem 1.25rem; }
         .faq-answer p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
 
+        /* ── Release Banner ── */
+        .release-banner { position: relative; z-index: 101; background: linear-gradient(135deg, #059669, #0d9488, #0891b2); text-align: center; padding: 0.6rem 2rem; font-size: 0.88rem; color: white; font-weight: 500; }
+        .release-banner a { color: #fef08a; text-decoration: underline; font-weight: 600; margin-left: 0.3rem; }
+        .release-banner a:hover { color: white; }
+        .release-banner .banner-close { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer; padding: 0.2rem 0.5rem; }
+        .release-banner .banner-close:hover { color: white; }
+        .release-banner .free-tag { background: rgba(255,255,255,0.2); padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; margin-right: 0.4rem; }
+
         /* ── Animations ── */
         .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -365,6 +373,12 @@
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
 
+    <!-- 发布公告 -->
+    <div class="release-banner" id="releaseBanner">
+        <span class="free-tag">NEW</span> v1.0.4 来了 — <strong>AutoTrim 永久免费！</strong>单视频剪辑无任何限制。还有全新片头标题卡和自定义水印。<a href="https://apps.apple.com/app/shooting-cut/id6761160281">立即更新 &rarr;</a>
+        <button class="banner-close" id="bannerClose" aria-label="关闭公告">&times;</button>
+    </div>
+
     <!-- 导航 -->
     <nav id="navbar">
         <div class="nav-inner">
@@ -395,8 +409,8 @@
                 <span class="hero-word gradient">Improve.</span>
             </h1>
             <p>
-                Shooting Cut&trade; 帮助实用射击选手快速对齐、剪辑和分析比赛视频。
-                将原始素材在几分钟内变成专业比赛片段 — 支持 macOS、iPad 和 iPhone。
+                Shooting Cut&trade; 助你快速对齐、剪辑和分析比赛视频。
+                AutoTrim 永久免费，几分钟内将原始素材变为专业片段。订阅 Pro 解锁多机位高级功能，支持 macOS、iPad 和 iPhone。
             </p>
             <div class="hero-buttons">
                 <a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="appstore-btn" target="_blank">
@@ -423,26 +437,26 @@
         <div class="container">
             <div class="section-header fade-in">
                 <span class="section-label">核心功能</span>
-                <h2 class="section-title">让复盘更快、更专业</h2>
+                <h2 class="section-title">提升复盘效率的终极武器</h2>
                 <p class="section-subtitle">
-                    从自动枪声检测到多机位剪辑，Shooting Cut&trade; 处理繁琐工作，让你专注于提升技术。
+                    从免费的自动裁剪到强大的多机位编辑，Shooting Cut&trade; 包揽繁琐，助你专注每一次射击的提升。
                 </p>
             </div>
             <div class="features-grid">
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🎵</div>
                     <h3>智能音频分析</h3>
-                    <p>自动分析视频音频，检测计时器蜂鸣声和枪声脉冲。精准获得每枪 Split 时间、首枪时间和总用时。</p>
+                    <p>听声辨位，精准复盘。自动识别计时器蜂鸣和枪声，瞬间生成精准的分段时间、首发反应和总用时。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">✂️</div>
-                    <h3>自动裁剪</h3>
-                    <p>自动截去 Stage 前后的冗余片段。自定义 Timer 前缓冲和最后一枪后缓冲，每次导出都是完美剪辑。</p>
+                    <h3>自动裁剪 <span style="color:var(--green);font-size:0.8em;">(免费)</span></h3>
+                    <p>免费自动裁剪，一键成片。智能去除比赛前后冗余，轻松设定开始与结束间隔，每次都能导出恰到好处的精彩片段。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">📊</div>
                     <h3>成绩字幕叠加</h3>
-                    <p>将实时成绩数据直接叠加到导出视频中：枪号、Split 间隔、累计时间、首枪时间、最佳 Split。支持 6 种颜色适配不同背景。</p>
+                    <p>实时数据，直观呈现。在视频中叠加射击编号、分段时间、累计时间、首发反应及最快分段。六种配色可选，让数据更吸睛。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🔄</div>
@@ -457,22 +471,32 @@
                 <div class="feature-card fade-in">
                     <div class="feature-icon">📱</div>
                     <h3>全平台原生体验</h3>
-                    <p>macOS 版采用侧边栏 + 主编辑区布局，iPhone/iPad 版专为触屏优化，6 Tab 工作流。买一次，所有设备通用。</p>
+                    <p>macOS 侧边栏布局，iPhone/iPad 直观六标签工作流，深度适配 Apple 生态。一个订阅，即可在所有 Apple 设备上畅享完整功能。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🔒</div>
                     <h3>隐私至上 — 数据完全属于你</h3>
-                    <p>所有处理都在设备本地完成。视频通过 iCloud 和 Apple 相册同步 — 绝不上传到第三方服务器。无需注册账号，无需登录，无追踪。你的比赛视频始终存储在你的设备和个人 iCloud 中。</p>
+                    <p>所有视频处理均在设备本地完成，通过 iCloud 和 Apple 相册同步，绝不上传至任何第三方服务器。无需注册、无需账号、无任何追踪。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🚀</div>
                     <h3>一键多平台分享</h3>
-                    <p>通过系统分享面板，一键将编辑好的视频分享到 YouTube、TikTok、Facebook、Instagram 等平台。无需额外APP，无需手动导出。从原始素材到社交发布，只需几分钟。</p>
+                    <p>轻松将剪辑好的视频导出并分享到 YouTube、TikTok、Facebook、Instagram 等社交媒体，一步到位。从原始素材到社交发布，只需几分钟。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🎯</div>
                     <h3>转竖屏追踪 — 射手始终居中</h3>
-                    <p>切换导出比例到 9:16（TikTok / Reels）、1:1（Instagram）或 16:9（YouTube），点击"追踪"选择目标人物。APP 自动跟随射手进行智能重构画面，无论输出什么比例都保持射手居中。一个素材，适配所有平台。</p>
+                    <p>无论是 TikTok/Reels 的 9:16、Instagram 的 1:1 还是 YouTube 的 16:9，选择目标，应用智能追踪射手，保证画面主体始终居中。一个素材，适配所有平台。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎞️</div>
+                    <h3>赛事片头卡</h3>
+                    <p>专业感拉满。加入动画标题层，轻松展示比赛名称、日期、选手信息和个人/团队 Logo，让你的视频更专业。</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">💧</div>
+                    <h3>专属水印</h3>
+                    <p>彰显个性。可添加 Logo、文字或图片水印，为你的精彩瞬间打上独一无二的专属印记。</p>
                 </div>
             </div>
         </div>
@@ -582,9 +606,9 @@
             <div class="modes-grid">
                 <div class="mode-card fade-in">
                     <div class="mode-icon">✂️</div>
-                    <h3>Auto Trim · 自动裁剪</h3>
+                    <h3>Auto Trim · 自动裁剪 <span style="color:var(--green);font-size:0.85em;">(免费)</span></h3>
                     <div class="mode-badge">1 个视频</div>
-                    <p>对单个比赛视频进行自动裁剪，去除 Stage 前后多余片段，叠加字幕与水印，一键导出分享。</p>
+                    <p>精准裁剪比赛片段，添加性能字幕和专属水印，即刻分享你的高光时刻。完全免费，无任何限制。</p>
                     <div class="mode-videos">适用于：单角度比赛片段</div>
                 </div>
                 <div class="mode-card fade-in">
@@ -650,7 +674,7 @@
         <span class="section-label">立即下载</span>
         <h2 class="section-title">准备好升级你的复盘方式了吗？</h2>
         <p class="section-subtitle">
-            免费下载试用，无需注册账号。一次购买覆盖 macOS、iPhone 和 iPad。
+            立即前往 App Store 免费下载！AutoTrim 永久免费，Pro 订阅解锁所有高级功能，一个账号覆盖 macOS、iPhone 和 iPad。
         </p>
         <a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="appstore-btn" target="_blank" style="margin: 0 auto; display: inline-flex;">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;fill:white;"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -669,6 +693,8 @@
                 <h2 class="section-title">ShootingCut&trade; LLC</h2>
                 <p class="section-subtitle">
                     由一位受够了赛后视频编辑折磨的竞技射手创建。ShootingCut&trade; LLC 是一家独立软件工作室，专注于为实用射击社区开发工具——帮助射击选手更高效地训练和分享。
+                    ShootingCut&trade; LLC 是一家专注于实用射击运动领域的独立软件工作室，
+                    致力于为全球射击爱好者打造最好用的分析与剪辑工具。
                 </p>
             </div>
         </div>
@@ -709,7 +735,7 @@
                 <details class="faq-item">
                     <summary class="faq-question">Shooting Cut 是免费的吗？</summary>
                     <div class="faq-answer">
-                        <p>Shooting Cut 免费下载，核心功能免费使用。无需注册账号，无需登录，无任何追踪。高级功能可通过一次性购买解锁，一次购买覆盖所有 Apple 设备（iPhone、iPad 和 Mac）。</p>
+                        <p>Shooting Cut 免费下载。AutoTrim（单视频自动剪辑）完全免费，无任何限制。多机位高级模式（SplitSync、StageMix）需要 Pro 订阅解锁，一个订阅覆盖所有 Apple 设备（iPhone、iPad 和 Mac）。无需注册账号，无需登录，无任何追踪。</p>
                     </div>
                 </details>
                 <details class="faq-item">
@@ -768,6 +794,7 @@
         window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
         document.getElementById('mobileToggle').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
         document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('open'); }); });
+        document.getElementById('bannerClose').addEventListener('click', () => { document.getElementById('releaseBanner').style.display = 'none'; });
     </script>
 </body>
 </html>
