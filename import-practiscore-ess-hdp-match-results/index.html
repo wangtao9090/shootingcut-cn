@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导入 PractiScore、ESS、HDP 与 IDPA 比赛成绩 | Shooting Cut</title>
+    <meta name="description" content="在 Shooting Cut 中从 PractiScore、ESS、HDP 或 IDPA 导入仍由来源提供的比赛、射手、Stage 与成绩信息，并关联本地比赛视频归档。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/import-practiscore-ess-hdp-match-results/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/import-practiscore-ess-hdp-match-results/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/import-practiscore-ess-hdp-match-results/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/import-practiscore-ess-hdp-match-results/">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/import-practiscore-ess-hdp-match-results/">
+    <meta property="og:title" content="导入 PractiScore、ESS、HDP 与 IDPA 比赛成绩">
+    <meta property="og:description" content="选择受支持来源中的比赛、射手与 Stage，把仍可访问的成绩记录关联到本地视频归档。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="/assets/content.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/import-practiscore-ess-hdp-match-results/#article",
+                "url": "https://shootingcut.cn/import-practiscore-ess-hdp-match-results/",
+                "mainEntityOfPage": {"@id": "https://shootingcut.cn/import-practiscore-ess-hdp-match-results/"},
+                "headline": "导入 PractiScore、ESS、HDP 与 IDPA 比赛成绩",
+                "description": "介绍如何从当前受支持的成绩来源导入比赛、射手、Stage 与成绩信息，并关联本地视频。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"},
+                "publisher": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"}
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://shootingcut.cn/"},
+                    {"@type": "ListItem", "position": 2, "name": "竞技射击视频编辑器", "item": "https://shootingcut.cn/competitive-shooting-video-editor/"},
+                    {"@type": "ListItem", "position": 3, "name": "比赛成绩导入", "item": "https://shootingcut.cn/import-practiscore-ess-hdp-match-results/"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/competitive-shooting-video-editor/">功能总览</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/import-practiscore-ess-hdp-match-results/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">成绩导入免费 · 来源仍需可访问</p>
+                <h1>导入 PractiScore、ESS、HDP 与 IDPA 比赛成绩</h1>
+                <p class="answer-first">Shooting Cut 当前可从 PractiScore、ESS、HDP 与 IDPA 来源导入比赛、射手、Stage 和成绩信息，并把选定记录关联到你的本地比赛视频；导入使用网络，且前提是来源仍然提供相应比赛与成绩。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+            <aside class="hero-panel" aria-label="成绩导入的来源与边界">
+                <ol class="mode-rail">
+                    <li><span class="rail-marker">4</span><span class="rail-copy"><strong>四个来源家族</strong><span>PractiScore、ESS、HDP、IDPA</span></span></li>
+                    <li><span class="rail-marker">网</span><span class="rail-copy"><strong>需要网络</strong><span>来源必须仍能提供记录</span></span></li>
+                    <li><span class="rail-marker">本</span><span class="rail-copy"><strong>关联本地视频</strong><span>由用户选择对应记录</span></span></li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#sources">来源差异</a></li>
+                    <li><a href="#workflow">导入流程</a></li>
+                    <li><a href="#matching">如何关联视频</a></li>
+                    <li><a href="#timing">逐发时间边界</a></li>
+                    <li><a href="#availability">来源可访问性</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="sources">
+                    <h2>四个来源都能导入成绩，但提供的数据并不相同</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>当前成绩来源家族</caption>
+                            <thead>
+                                <tr><th scope="col">来源</th><th scope="col">可用于什么</th><th scope="col">逐发时间边界</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>PractiScore</strong></td><td>导入比赛、射手、Stage、成绩和来源提供的相关字段</td><td>只有成绩包含官方计时器逐发记录时，才可做官方逐发锚定</td></tr>
+                                <tr><td><strong>ESS</strong></td><td>导入来源仍提供的比赛与成绩信息</td><td>不提供 PractiScore 风格的官方逐发时间锚点</td></tr>
+                                <tr><td><strong>HDP</strong></td><td>从已结束比赛或 scoreboard 路径选择并导入成绩</td><td>不提供 PractiScore 风格的官方逐发时间锚点</td></tr>
+                                <tr><td><strong>IDPA</strong></td><td>导入受支持的比赛与成绩信息</td><td>不提供 PractiScore 风格的官方逐发时间锚点</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>“成绩导入”描述的是这些明确受支持的来源家族，不代表可以接受任意成绩系统或任意文件格式。</p>
+                </section>
+
+                <section class="article-section" id="workflow">
+                    <h2>从来源记录到本地视频关联的五个步骤</h2>
+                    <ol>
+                        <li><strong>选择成绩来源。</strong>根据比赛实际使用的系统选择 PractiScore、ESS、HDP 或 IDPA。</li>
+                        <li><strong>通过网络查找仍可访问的比赛。</strong>确认赛事、日期和组织信息，避免选中名称相似的其他比赛。</li>
+                        <li><strong>选择射手与 Stage。</strong>核对 division、射手信息、Stage 编号和成绩字段。</li>
+                        <li><strong>关联对应的本地视频。</strong>在自己的比赛视频归档中选择真正记录该射手和 Stage 的素材。</li>
+                        <li><strong>复核后保存。</strong>检查比赛、射手、Stage 与成绩是否一致，再在字幕、归档或后续编辑中使用。</li>
+                    </ol>
+                    <p>导入需要用户逐项选择和确认。应用不会保证仅凭文件名或相似日期就能把所有视频与成绩自动正确匹配。</p>
+                </section>
+
+                <section class="article-section" id="matching">
+                    <h2>用比赛、射手与 Stage 三层信息确认关联</h2>
+                    <p>先确认比赛，再确认射手，最后确认 Stage。若一场比赛拍了多个视角或重复录制，应通过画面内容、拍摄顺序和已知 Stage 信息决定哪段视频对应哪条记录。</p>
+                    <div class="callout">
+                        <p><strong>本地归档价值：</strong>已导入的比赛、射手、Stage 与成绩记录可以和自己的本地比赛视频建立关联，后续在整理单段 Stage 或 <a href="/merge-uspsa-stage-videos/">完整比赛 Merge</a> 时继续复核。</p>
+                    </div>
+                </section>
+
+                <section class="article-section" id="timing">
+                    <h2>只有特定 PractiScore 记录支持官方逐发锚定</h2>
+                    <p>当 PractiScore 成绩本身包含官方 timer 逐发记录时，Shooting Cut 可以用视频中的计时器蜂鸣建立锚点，并在字幕或叠加中使用官方 times、splits、发数和成绩。并非每一条 PractiScore 结果都包含这些字段。</p>
+                    <p>ESS、HDP 与 IDPA 的受支持路径只导入成绩，不提供同类官方逐发时间。完整步骤请阅读<a href="/add-shot-times-and-scores-to-match-video/">把官方逐发时间与成绩加入比赛视频</a>。</p>
+                </section>
+
+                <section class="article-section" id="availability">
+                    <h2>在来源仍可访问时完成导入</h2>
+                    <p>成绩导入依赖外部来源当前仍然提供比赛与结果。如果来源之后撤下、替换或删除记录，Shooting Cut 无法重新取回或恢复此前未导入的数据。</p>
+                    <p>同时参加泰国 HDP 与 ESS 赛事的用户，可阅读<a href="/thailand-hdp-ess-match-results/">泰国 HDP 与 ESS 成绩导入指南</a>，了解两个 portal 的选择方式与 ESS 当前比赛切换风险。</p>
+                    <div class="privacy-cta">
+                        <p>成绩导入会使用网络；媒体编辑仍遵守设备端处理边界。</p>
+                        <a class="button-link" href="/on-device-shooting-video-editor/">查看本地与联网数据流</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">相关指南</h2>
+            <ul>
+                <li><a href="/add-shot-times-and-scores-to-match-video/">PractiScore 时间与成绩字幕</a></li>
+                <li><a href="/thailand-hdp-ess-match-results/">泰国 HDP 与 ESS</a></li>
+                <li><a href="/merge-uspsa-stage-videos/">保留每段成绩关联</a></li>
+                <li><a href="/privacy.html">隐私政策</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a><a href="/faq.html">常见问题</a><a href="/privacy.html">隐私政策</a><a href="/support.html">支持</a><a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>

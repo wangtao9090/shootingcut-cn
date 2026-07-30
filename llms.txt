@@ -1,0 +1,82 @@
+# Shooting Cut
+
+> 中文规范站点：https://shootingcut.cn/
+> 英文站点：https://shootingcut.com/
+> 当前产品版本：1.1.3
+
+Shooting Cut 是面向 iPhone、iPad 和 Mac 的竞技射击视频编辑器，集设备端计时器/枪声分析、裁剪、整场比赛顺序合并、双机位同步、2–3 机位剪辑、成绩与计时字幕、人物追踪重构和导出于一体。枪声分析只是支持编辑的一项能力，不是产品的全部。
+
+本文件用于补充公开 HTML 页面和 XML sitemap。产品事实、限制和路由应以对应规范页面为准。
+
+## 平台与编辑模式
+
+- 需要 iOS 26.0+、iPadOS 26.0+ 或 macOS 26.0+。
+- Auto Trim 恰好接收 1 个视频。
+- Merge 最多把 20 个顺序片段合并为一条长视频。
+- Split Sync 恰好接收 2 个同步视角，提供 Full Screen、Dual View: Center HUD、Dual View: Top HUD 和 Side by Side 四种布局。
+- Stage Mix 接收 2–3 个同步输入，角色为 POV、Follow 或 Static，按移动状态建议切换并支持人工覆盖。
+
+## 免费、Pro、订阅与上传
+
+- Auto Trim 和成绩导入免费。
+- 免费 Auto Trim 导出包含 Shooting Cut 水印和 Logo 片头卡。
+- Pro 可移除 Shooting Cut 水印、使用自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。
+- 一次订阅覆盖订阅者的所有 Apple 设备，实际权益受 App Store 账号与订阅状态约束。
+- 当前支持由用户主动发起的 YouTube 和 Facebook 直传。
+
+## 成绩、官方逐发时间与字幕
+
+- 当前成绩导入来源家族包括 PractiScore、ESS、HDP 和 IDPA。
+- 当 PractiScore 结果实际包含官方计时器逐发记录时，Shooting Cut 可用视频中的计时器蜂鸣声建立锚点，并在字幕中使用官方时间、Split、发数和成绩数据。
+- ESS、HDP、IDPA 支持成绩导入，但不提供相同的 PractiScore 式官方逐发计时锚点。
+- 导入时，成绩仍需能从受支持的来源访问。已经导入的记录可以继续关联到射手自己的本地比赛视频档案；来源删除结果后，Shooting Cut 无法重新取回该结果。
+
+## Reframe、Track 与导出边界
+
+- Auto Trim、Merge、Stage Mix 支持 Reframe/Track；Auto Trim 和 Merge 也支持手动裁切。
+- Track 驱动的裁切比例为 9:16、3:4、4:5、6:7、1:1。
+- Source 不裁切；非追踪 16:9 与 Track 比例分开处理。
+- 常规导出选择可包括 Original、4K、1080p、720p，并受源素材与具体工作流上限过滤。
+- Track 裁切使用 1080 像素短边，可降为 720p，不是 4K 追踪导出。
+- Split Sync 由布局决定输出画布，使用 1080 像素短边。
+
+## 设备端处理与联网功能
+
+- 核心视频/音频分析、剪辑、导出和人物追踪在用户的 Apple 设备上完成。
+- 原始素材不会为了这些核心流程上传到 Shooting Cut 媒体处理服务器。
+- Apple 照片、iCloud 照片和 iCloud 云盘遵循 Apple 服务与用户设置。
+- iCloud KVS 可同步轻量应用元数据，例如素材别名、机位视角、枪械类型、成绩关联和已导入比赛字段，以及已经存在的非匿名自定义 RevenueCat App User ID。以 `$RCAnonymousID:` 开头的匿名 ID 不进入 KVS；原始媒体、PCM 音频和人物追踪路径也不进入 KVS。
+- RevenueCat 接收订阅标识和权益状态。
+- “帮助改进枪声检测”由用户控制且当前默认开启。开启时，可向 Apple CloudKit 发送有限的伪匿名派生检测与纠错字段；不包含原始音视频或 PCM。
+- 成绩导入和用户主动发起的 YouTube/Facebook 上传使用网络。
+
+## 从这里开始
+
+- [竞技射击视频编辑器](https://shootingcut.cn/competitive-shooting-video-editor/)：比较 Auto Trim、Merge、Split Sync 和 Stage Mix，并了解成绩、Reframe、免费与 Pro 边界。
+- [设备端射击视频编辑器](https://shootingcut.cn/on-device-shooting-video-editor/)：准确了解本地处理、iCloud、订阅、检测改进、成绩导入与主动上传的数据流。
+
+## 核心工作流指南
+
+- [自动裁剪射击比赛视频](https://shootingcut.cn/auto-trim-shooting-match-video/)：分析并裁剪恰好一段 Stage 素材，导出前人工复核事件。
+- [用计时器蜂鸣同步两个射击视频](https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/)：对齐恰好两个同步视角并选择 Split Sync 布局。
+- [剪辑多机位射击视频](https://shootingcut.cn/edit-multi-camera-shooting-video/)：用 Stage Mix 编辑 2–3 个 POV、Follow 或 Static 输入。
+- [枪声检测排查](https://shootingcut.cn/shot-detection-troubleshooting/)：排查 AGC、邻近枪声、回音/混响、弱蜂鸣和人工纠错。
+- [把横屏射击视频重构为社交发布比例](https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/)：在工作流上限内追踪并重复导出竖屏、方形或横屏版本。
+- [合并 USPSA 全部 Stage 视频](https://shootingcut.cn/merge-uspsa-stage-videos/)：按 Stage 1 到 Stage N 排序，最多合并 20 段，输出完整比赛视频。
+
+## 进阶工作流指南
+
+- [Side by Side 射击视频对比](https://shootingcut.cn/side-by-side-shooting-video-comparison/)：用 Pro Split Sync 的 Side by Side 布局处理恰好两个视频。
+- [批量导出比赛视频](https://shootingcut.cn/batch-export-match-videos/)：使用 macOS Pro 生成多个独立输出。
+- [导入 PractiScore、ESS、HDP 和 IDPA 比赛成绩](https://shootingcut.cn/import-practiscore-ess-hdp-match-results/)：在来源仍可访问时导入受支持成绩，并与本地视频档案关联。
+- [泰国 HDP 与 ESS 比赛成绩](https://shootingcut.cn/thailand-hdp-ess-match-results/)：在结果仍可访问时导入，并把已导入记录与射手自己的档案保存在一起。
+- [给比赛视频添加官方逐发时间和成绩](https://shootingcut.cn/add-shot-times-and-scores-to-match-video/)：把可用的 PractiScore 官方逐发记录与视频对齐，复核字幕后导出。
+
+## 政策与发现文件
+
+- [常见问题](https://shootingcut.cn/faq.html)
+- [隐私政策](https://shootingcut.cn/privacy.html)
+- [支持](https://shootingcut.cn/support.html)
+- [服务条款](https://shootingcut.cn/terms.html)
+- [XML sitemap](https://shootingcut.cn/sitemap.xml)
+- [英文站](https://shootingcut.com/)

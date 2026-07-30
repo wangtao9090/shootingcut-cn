@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合并 USPSA 全部 Stage 视频：Merge 指南 | Shooting Cut</title>
+    <meta name="description" content="用 Shooting Cut Merge 按 Stage 1 到 Stage N 的比赛顺序合并最多 20 段 USPSA 视频，逐段复核并保留各输入素材自己的成绩关联。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/merge-uspsa-stage-videos/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/merge-uspsa-stage-videos/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/merge-uspsa-stage-videos/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/merge-uspsa-stage-videos/">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/merge-uspsa-stage-videos/">
+    <meta property="og:title" content="合并 USPSA 全部 Stage 视频：Merge 指南">
+    <meta property="og:description" content="按比赛顺序排列最多 20 段 Stage，逐段决定是否纳入，并输出完整比赛视频或个人归档。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="/assets/content.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/merge-uspsa-stage-videos/#article",
+                "url": "https://shootingcut.cn/merge-uspsa-stage-videos/",
+                "mainEntityOfPage": {"@id": "https://shootingcut.cn/merge-uspsa-stage-videos/"},
+                "headline": "合并 USPSA 全部 Stage 视频：Merge 指南",
+                "description": "介绍如何按比赛顺序合并最多二十段 Stage 视频，逐段复核并保留各输入素材自己的成绩关联。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"},
+                "publisher": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"}
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://shootingcut.cn/"},
+                    {"@type": "ListItem", "position": 2, "name": "竞技射击视频编辑器", "item": "https://shootingcut.cn/competitive-shooting-video-editor/"},
+                    {"@type": "ListItem", "position": 3, "name": "Merge 指南", "item": "https://shootingcut.cn/merge-uspsa-stage-videos/"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/competitive-shooting-video-editor/">功能总览</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/merge-uspsa-stage-videos/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Stage 1 → Stage N · 最多二十段</p>
+                <h1>合并 USPSA 全部 Stage 视频</h1>
+                <p class="answer-first">要把一场 USPSA 比赛的多个 Stage 做成一条完整视频，可用 Shooting Cut 的 Merge 按 Stage 1 到 Stage N 排列最多 20 段顺序素材，逐段决定是否纳入并复核内容，同时保留每段输入自己的成绩关联。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+            <aside class="hero-panel" aria-label="Merge 的关键边界">
+                <ol class="mode-rail">
+                    <li><span class="rail-marker">20</span><span class="rail-copy"><strong>最多二十段</strong><span>按比赛先后顺序连接</span></span></li>
+                    <li><span class="rail-marker">序</span><span class="rail-copy"><strong>顺序素材</strong><span>不同 Stage 前后衔接</span></span></li>
+                    <li><span class="rail-marker">分</span><span class="rail-copy"><strong>逐段关联</strong><span>各输入保留自己的成绩</span></span></li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#scope">Merge 解决什么问题</a></li>
+                    <li><a href="#workflow">完整比赛流程</a></li>
+                    <li><a href="#review">逐段复核</a></li>
+                    <li><a href="#titles">标题与发布</a></li>
+                    <li><a href="#compare">与多机位模式的区别</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="scope">
+                    <h2>Merge 连接不同时间发生的 Stage</h2>
+                    <p>Merge 面向顺序关系：Stage 1 完成后才是 Stage 2，再到 Stage 3，依次形成整场比赛。一次 Merge 最多加入 20 段视频，你可以按照真实比赛顺序重排，也可以暂时排除不准备出现在成片中的片段。</p>
+                    <p>每段输入仍是独立的 Stage 素材。若原片已经关联对应成绩，Merge 会保留各输入自己的成绩关联，而不是把某一段的成绩套到整条合并视频上。</p>
+                    <div class="callout">
+                        <p><strong>先处理单段，再组织整场。</strong>需要缩短某个 Stage 的首尾空白时，可先使用 <a href="/auto-trim-shooting-match-video/">Auto Trim</a> 完成单段裁剪与复核，再进入 Merge 排序。</p>
+                    </div>
+                </section>
+
+                <section class="article-section" id="workflow">
+                    <h2>制作完整比赛视频的五个步骤</h2>
+                    <ol>
+                        <li><strong>准备 Stage 素材。</strong>确认每段视频对应哪一个 Stage，并先完成必要的单段裁剪、字幕和成绩关联。</li>
+                        <li><strong>加入 Merge。</strong>选择要纳入整场视频的片段，一次最多加入 20 段。</li>
+                        <li><strong>按 Stage 顺序排列。</strong>把素材整理为 Stage 1、Stage 2，直到 Stage N；若比赛实际顺序不同，以真实拍摄和参赛顺序为准。</li>
+                        <li><strong>逐段纳入或排除并复核。</strong>检查每一段的内容、首尾衔接、成绩关联和是否应出现在本次成片中。</li>
+                        <li><strong>预览并导出。</strong>从开头连续检查到结尾，再生成完整比赛视频或个人归档文件。</li>
+                    </ol>
+                    <p>Merge 不会替你生成自动章节。若发布平台需要章节，可在导出后根据 Stage 顺序手动整理时间点和说明。</p>
+                </section>
+
+                <section class="article-section" id="review">
+                    <h2>逐段复核比只看最终长度更重要</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>合并前的逐段检查</caption>
+                            <thead>
+                                <tr><th scope="col">检查项</th><th scope="col">要确认的内容</th><th scope="col">常见处理</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>顺序</strong></td><td>Stage 编号与实际比赛先后是否一致</td><td>拖动重排，避免漏段或重复</td></tr>
+                                <tr><td><strong>纳入状态</strong></td><td>练习片段、误录或不准备发布的片段是否被加入</td><td>逐段选择纳入或排除</td></tr>
+                                <tr><td><strong>首尾</strong></td><td>每段是否留有过长等待，最后动作是否被截断</td><td>返回单段编辑调整裁剪</td></tr>
+                                <tr><td><strong>成绩关联</strong></td><td>每个输入是否关联自己的 Stage 成绩</td><td>在对应输入上修正，不跨段替换</td></tr>
+                                <tr><td><strong>构图</strong></td><td>不同输入的方向和画面比例是否符合成片目标</td><td>需要时先使用手动裁切或 Reframe</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>如果同一段横屏素材还要输出竖屏或方形版本，可参阅 <a href="/reframe-landscape-shooting-video-for-social-media/">Reframe 与 Track 指南</a>。Merge 支持手动裁切；Track 则适合需要持续跟随主体的比例重构。</p>
+                </section>
+
+                <section class="article-section" id="titles">
+                    <h2>标题应让观众知道比赛范围</h2>
+                    <p>完整比赛视频可以在标题中写明赛事、日期、分组或器材，并用“完整比赛”“全部 Stage”“POV”或明确的 Stage 数量告诉观众内容范围。例如：“USPSA 月赛完整比赛｜8 个 Stage｜POV”。不要把实际缺少的 Stage 描述为“全部”。</p>
+                    <p>长视频适合由用户主动上传到 YouTube，也适合作为个人比赛归档。Shooting Cut 还支持由用户主动发起的 Facebook 上传；你也可以先导出文件，再使用自己的发布或存档流程。</p>
+                </section>
+
+                <section class="article-section" id="compare">
+                    <h2>Merge 与 Split Sync、Stage Mix 不是同一种关系</h2>
+                    <div class="card-grid">
+                        <div class="info-card">
+                            <span class="metric">先后</span>
+                            <h3>Merge</h3>
+                            <p>连接不同时间发生的多个 Stage，最多 20 段，目标是整场比赛或顺序归档。</p>
+                        </div>
+                        <div class="info-card">
+                            <span class="metric">同步</span>
+                            <h3>Split Sync / Stage Mix</h3>
+                            <p>处理同一次 Stage 的同步机位：Split Sync 恰好两个输入，Stage Mix 使用 2–3 个角色化输入。</p>
+                        </div>
+                    </div>
+                    <p>macOS Pro 的批量导出用于批量处理多个导出任务，不等同于 Merge。Merge 的核心仍是把选定片段按顺序组成一条视频。</p>
+                    <div class="privacy-cta">
+                        <p>准备从单个 Stage 开始整理整场素材？</p>
+                        <a class="button-link" href="/auto-trim-shooting-match-video/">查看 Auto Trim 指南</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">相关指南</h2>
+            <ul>
+                <li><a href="/auto-trim-shooting-match-video/">自动裁剪单个 Stage</a></li>
+                <li><a href="/reframe-landscape-shooting-video-for-social-media/">重复导出多个比例</a></li>
+                <li><a href="/sync-two-shooting-videos-by-timer-beep/">同步两个机位</a></li>
+                <li><a href="/edit-multi-camera-shooting-video/">剪辑 2–3 个机位</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a><a href="/faq.html">常见问题</a><a href="/privacy.html">隐私政策</a><a href="/support.html">支持</a><a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,608 @@
+import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import test, { after } from "node:test";
+import { fileURLToPath } from "node:url";
+
+const testDirectory = path.dirname(fileURLToPath(import.meta.url));
+const workspaceRoot = path.resolve(testDirectory, "..");
+const validatorPath = path.join(workspaceRoot, "scripts", "validate-site.mjs");
+const temporaryRoots = new Set();
+const publicEntries = [
+  ".github",
+  "add-shot-times-and-scores-to-match-video",
+  "assets",
+  "auto-trim-shooting-match-video",
+  "batch-export-match-videos",
+  "CNAME",
+  "competitive-shooting-video-editor",
+  "edit-multi-camera-shooting-video",
+  "faq.html",
+  "import-practiscore-ess-hdp-match-results",
+  "index.html",
+  "llms.txt",
+  "merge-uspsa-stage-videos",
+  "on-device-shooting-video-editor",
+  "oauth",
+  "og-image.svg",
+  "privacy.html",
+  "reframe-landscape-shooting-video-for-social-media",
+  "robots.txt",
+  "shot-detection-troubleshooting",
+  "side-by-side-shooting-video-comparison",
+  "sitemap.xml",
+  "support.html",
+  "sync-two-shooting-videos-by-timer-beep",
+  "terms.html",
+  "thailand-hdp-ess-match-results",
+];
+const guideRoutes = [
+  "/competitive-shooting-video-editor/",
+  "/on-device-shooting-video-editor/",
+  "/auto-trim-shooting-match-video/",
+  "/sync-two-shooting-videos-by-timer-beep/",
+  "/edit-multi-camera-shooting-video/",
+  "/shot-detection-troubleshooting/",
+  "/reframe-landscape-shooting-video-for-social-media/",
+  "/merge-uspsa-stage-videos/",
+  "/side-by-side-shooting-video-comparison/",
+  "/batch-export-match-videos/",
+  "/import-practiscore-ess-hdp-match-results/",
+  "/thailand-hdp-ess-match-results/",
+  "/add-shot-times-and-scores-to-match-video/",
+];
+
+async function copyCurrentSite() {
+  const root = await mkdtemp(path.join(os.tmpdir(), "shootingcut-task-2-"));
+  temporaryRoots.add(root);
+  for (const entry of publicEntries) {
+    await cp(path.join(workspaceRoot, entry), path.join(root, entry), {
+      recursive: true,
+    });
+  }
+  return root;
+}
+
+after(async () => {
+  await Promise.all(
+    [...temporaryRoots].map((root) => rm(root, { recursive: true, force: true })),
+  );
+});
+
+async function replaceInFile(root, relativePath, before, after) {
+  const target = path.join(root, relativePath);
+  const source = await readFile(target, "utf8");
+  assert.ok(
+    source.includes(before),
+    `test fixture ${relativePath} does not contain the expected source`,
+  );
+  await writeFile(target, source.replace(before, after));
+}
+
+function runValidator(root) {
+  return spawnSync(process.execPath, [validatorPath], {
+    cwd: root,
+    encoding: "utf8",
+  });
+}
+
+function assertRejected(result, expected) {
+  const output = `${result.stdout}\n${result.stderr}`;
+  assert.equal(result.status, 1, output);
+  assert.match(output, expected);
+}
+
+test("homepage exposes every guide through one visible ordinary link", async () => {
+  const homepage = await readFile(path.join(workspaceRoot, "index.html"), "utf8");
+  const guideSections = [
+    ...homepage.matchAll(
+      /<section\b[^>]*\bid="guides"[^>]*>([\s\S]*?)<\/section>/gi,
+    ),
+  ];
+  assert.equal(guideSections.length, 1, "homepage must contain one #guides section");
+
+  const guideSection = guideSections[0][1];
+  assert.doesNotMatch(
+    guideSection,
+    /\b(?:hidden|inert)\b|aria-hidden\s*=\s*["']?true|class\s*=\s*["'][^"']*\bfade-in\b|<script\b|<template\b|onclick\s*=/i,
+    "#guides links must remain visible and usable without JavaScript",
+  );
+
+  const hrefs = [
+    ...guideSection.matchAll(/<a\b[^>]*\bhref="(\/[^"#?]+\/)"[^>]*>/gi),
+  ].map((match) => match[1]);
+  assert.deepEqual(
+    hrefs,
+    guideRoutes,
+    "#guides must expose the 13 guide routes once, in the intended order",
+  );
+  assert.equal(new Set(hrefs).size, 13, "#guides links must be unique");
+  assert.match(
+    homepage,
+    /<nav\b[\s\S]*?<a\b[^>]*href="#guides"[^>]*>使用指南<\/a>[\s\S]*?<\/nav>/i,
+    "primary navigation must link to #guides",
+  );
+
+  for (const route of guideRoutes) {
+    const target = path.join(workspaceRoot, route.slice(1), "index.html");
+    await assert.doesNotReject(
+      readFile(target, "utf8"),
+      `${route} must resolve to a real guide`,
+    );
+  }
+
+  assert.doesNotMatch(homepage, /任意输出比例/);
+  assert.match(homepage, /9:16、3:4、4:5、6:7、1:1/);
+  assert.match(homepage, /Source[^。<]*(?:不裁切|保留来源)/);
+  assert.match(homepage, /非追踪[^。<]*16:9|16:9[^。<]*非追踪/);
+  const subscriptionClaims = [
+    ...homepage.matchAll(/一次订阅覆盖[^。"<>]*Apple 设备/g),
+  ].map((match) => match[0]);
+  assert.ok(subscriptionClaims.length > 0, "homepage must state device coverage");
+  assert.ok(
+    subscriptionClaims.every(
+      (claim) => claim === "一次订阅覆盖订阅者的所有 Apple 设备",
+    ),
+    `homepage has stale subscription coverage: ${subscriptionClaims.join(" | ")}`,
+  );
+});
+
+test("llms.txt publishes the complete factual discovery surface outside sitemap", async () => {
+  const llmsPath = path.join(workspaceRoot, "llms.txt");
+  let llms;
+  try {
+    llms = await readFile(llmsPath, "utf8");
+  } catch (error) {
+    assert.fail(`llms.txt must exist and be readable: ${error.message}`);
+  }
+
+  assert.ok(llms.startsWith("# Shooting Cut"));
+  for (const required of [
+    "1.1.3",
+    "https://shootingcut.cn/",
+    "https://shootingcut.com/",
+    "Auto Trim 恰好接收 1 个视频",
+    "Merge 最多把 20 个顺序片段合并为一条长视频",
+    "Split Sync 恰好接收 2 个同步视角",
+    "Stage Mix 接收 2–3 个同步输入",
+    "Auto Trim 和成绩导入免费",
+    "一次订阅覆盖订阅者的所有 Apple 设备",
+    "用户主动发起的 YouTube 和 Facebook 直传",
+    "Track 驱动的裁切比例为 9:16、3:4、4:5、6:7、1:1",
+    "Source 不裁切；非追踪 16:9 与 Track 比例分开处理",
+    "非匿名自定义 RevenueCat App User ID",
+    "$RCAnonymousID:",
+    "原始媒体、PCM 音频和人物追踪路径也不进入 KVS",
+    "当前默认开启",
+    "用户控制",
+    "https://shootingcut.cn/faq.html",
+    "https://shootingcut.cn/privacy.html",
+    "https://shootingcut.cn/support.html",
+    "https://shootingcut.cn/terms.html",
+    "https://shootingcut.cn/sitemap.xml",
+  ]) {
+    assert.ok(llms.includes(required), `llms.txt missing required fact: ${required}`);
+  }
+
+  for (const route of guideRoutes) {
+    const url = `https://shootingcut.cn${route}`;
+    assert.equal(
+      llms.split(url).length - 1,
+      1,
+      `llms.txt must list ${url} exactly once`,
+    );
+  }
+
+  assert.doesNotMatch(
+    llms,
+    /一次购买|终身买断|\.22\b|任意(?:比例|组合|4K)|(?:Track|追踪)[^。\n]{0,20}(?:任意|支持|可用|提供)[^。\n]{0,10}4K|4K\s*(?:Track|追踪)(?:导出)?\s*(?:可用|支持)|(?:自动|智能)章节|弹着点|命中定位|(?:所有|全部)(?:视频|音频|数据|媒体)[^。\n]*(?:不离开设备|绝不离开设备|完全离线)/i,
+  );
+
+  const sitemap = await readFile(path.join(workspaceRoot, "sitemap.xml"), "utf8");
+  assert.doesNotMatch(sitemap, /<loc>[^<]*llms\.txt<\/loc>/i);
+  assert.equal([...sitemap.matchAll(/<loc>/g)].length, 18);
+});
+
+test("accepts the precise privacy boundary and legitimate external JSON-LD URLs", async () => {
+  const root = await copyCurrentSite();
+  const result = runValidator(root);
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+});
+
+test("requires one matching og:url on every public page", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '    <meta property="og:url" content="https://shootingcut.cn/">\n',
+    "",
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ expected exactly one og:url/i);
+});
+
+test("rejects a cross-domain og:url", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<meta property="og:url" content="https://shootingcut.cn/">',
+    '<meta property="og:url" content="https://shootingcut.com/">',
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ og:url must be exactly/i);
+});
+
+test("rejects a page-owned JSON-LD URL on the wrong domain", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '"url": "https://shootingcut.cn/",',
+    '"url": "https://shootingcut.com/",',
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ SoftwareApplication url must be exactly/i);
+});
+
+test("accepts a same-route object mainEntityOfPage reference", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '"url": "https://shootingcut.cn/",',
+    '"url": "https://shootingcut.cn/",\n        "mainEntityOfPage": {"@id": "https://shootingcut.cn/"},',
+  );
+  const result = runValidator(root);
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+});
+
+test("rejects an object mainEntityOfPage reference on the wrong domain", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '"url": "https://shootingcut.cn/",',
+    '"url": "https://shootingcut.cn/",\n        "mainEntityOfPage": {"@id": "https://shootingcut.com/"},',
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /index\.html:\d+ SoftwareApplication mainEntityOfPage\.@id must be exactly/i,
+  );
+});
+
+test("rejects duplicate HTML ids", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<section class="hero" id="home">',
+    '<section class="hero" id="home"><div id="home"></div>',
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ duplicate id="home"/i);
+});
+
+test("rejects a language switch hidden with an important inline style", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>',
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" style="display:none!important">EN</a>',
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ language switch must be visible/i);
+});
+
+test("rejects a language switch hidden by an ancestor", async () => {
+  const root = await copyCurrentSite();
+  const languageSwitch =
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>';
+  await replaceInFile(
+    root,
+    "index.html",
+    languageSwitch,
+    `<div style="visibility:hidden !important">${languageSwitch}</div>`,
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ language switch must be visible/i);
+});
+
+test("does not count a commented language switch as visible", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>',
+    '<!-- <a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a> -->',
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /index\.html:\d+ expected exactly one visible English language switch; found 0/i,
+  );
+});
+
+test("does not count language switches inside script or style elements", async () => {
+  const languageSwitch =
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>';
+  for (const element of ["script", "style"]) {
+    const root = await copyCurrentSite();
+    await replaceInFile(
+      root,
+      "index.html",
+      languageSwitch,
+      `<${element}>${languageSwitch}</${element}>`,
+    );
+    const result = runValidator(root);
+    assertRejected(
+      result,
+      /index\.html:\d+ expected exactly one visible English language switch; found 0/i,
+    );
+  }
+});
+
+test("rejects browser-hidden or non-link language-switch variants", async () => {
+  const languageSwitch =
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>';
+  const variants = [
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" aria-hidden="tr&#117;e">EN</a>',
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" style="display&colon;none">EN</a>',
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" style="display:/**/none">EN</a>',
+    '<style>.review-hide { display: none; }</style><a class="lang-btn review-hide" href="https://shootingcut.com/" hreflang="en" lang="en">EN</a>',
+    `<textarea>${languageSwitch}</textarea>`,
+    `<div hidden/>${languageSwitch}</div>`,
+    `<dialog>${languageSwitch}</dialog>`,
+  ];
+
+  for (const variant of variants) {
+    const root = await copyCurrentSite();
+    await replaceInFile(root, "index.html", languageSwitch, variant);
+    const result = runValidator(root);
+    const output = `${result.stdout}\n${result.stderr}`;
+    assert.equal(result.status, 1, `${variant}\n${output}`);
+    assert.match(
+      output,
+      /index\.html:\d+ (?:language switch must be visible|expected exactly one visible English language switch; found 0)/i,
+    );
+  }
+});
+
+test("rejects an absolute local-media privacy claim", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "support.html",
+    "核心音视频分析、剪辑、导出和人物追踪在设备本地运行，原始素材不会上传到 ShootingCut 的媒体处理服务器。",
+    "所有视频和音频处理都在设备本地完成，媒体文件绝不会离开设备。",
+  );
+  const result = runValidator(root);
+  assertRejected(result, /support\.html:\d+ absolute local-media privacy claim/i);
+});
+
+test("rejects detection reports described as anonymous instead of pseudonymous", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "Apple CloudKit 发送有限的伪匿名派生字段",
+    "Apple CloudKit 发送匿名派生字段",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ detection reports must be described as pseudonymous/i,
+  );
+});
+
+test("requires the current default state of the detection-improvement switch", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "是用户可控制的功能，在当前版本中默认开启",
+    "是用户可控制的功能",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ must state that detection improvement is currently enabled by default/i,
+  );
+});
+
+test("requires the custom RevenueCat App User ID KVS boundary", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "非匿名 RevenueCat App User ID",
+    "RevenueCat 标识符",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ must disclose the custom RevenueCat App User ID KVS boundary/i,
+  );
+});
+
+test("requires all real detection-improvement control labels", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "或简称“改进”",
+    "<!--\n或简称“改进”\n-->",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ must list the actual detection-improvement control labels/i,
+  );
+});
+
+test("does not let hidden CSS or an unclosed comment satisfy required labels", async () => {
+  for (const replacement of [
+    '<style>.review-hide { display: none; }</style><span class="review-hide">或简称“改进”</span>',
+    '<!--\n或简称“改进”',
+  ]) {
+    const root = await copyCurrentSite();
+    await replaceInFile(
+      root,
+      "privacy.html",
+      "或简称“改进”",
+      replacement,
+    );
+    const result = runValidator(root);
+    assertRejected(
+      result,
+      /privacy\.html:\d+ must list the actual detection-improvement control labels/i,
+    );
+  }
+});
+
+test("requires support to list all real detection-improvement control labels", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "support.html",
+    "或简称“改进”",
+    "",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /support\.html:\d+ support must list the actual detection-improvement control labels/i,
+  );
+});
+
+test("rejects a TikTok direct-upload claim split by an inline tag", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<section class="hero" id="home">',
+    `<section class="hero" id="home">
+      <p>TikTok 视频直<span>传</span>目前受支持。</p>`,
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /index\.html:\d+ TikTok direct-upload or integration claim/i,
+  );
+});
+
+test("does not let a legal negative sentence excuse an adjacent positive claim", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "当前 1.1.3 不提供 TikTok 视频直传。",
+    "当前 1.1.3 不提供 TikTok 视频直传。TikTok 视频直传目前受支持。",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ TikTok direct-upload or integration claim/i,
+  );
+});
+
+test("does not let a negative clause or ellipsis excuse a positive claim", async () => {
+  const legalSentence = "当前 1.1.3 不提供 TikTok 视频直传。";
+  const variants = [
+    "当前不提供 TikTok 视频直传，但 TikTok 视频直传目前受支持。",
+    "当前不提供 TikTok 视频直传……TikTok 视频直传目前受支持。",
+  ];
+
+  for (const variant of variants) {
+    const root = await copyCurrentSite();
+    await replaceInFile(root, "privacy.html", legalSentence, variant);
+    const result = runValidator(root);
+    assertRejected(
+      result,
+      /privacy\.html:\d+ TikTok direct-upload or integration claim/i,
+    );
+  }
+});
+
+test("scans facts that remain visually rendered inside inert or aria-hidden content", async () => {
+  for (const attribute of ["inert", 'aria-hidden="true"']) {
+    const root = await copyCurrentSite();
+    await replaceInFile(
+      root,
+      "index.html",
+      '<section class="hero" id="home">',
+      `<section class="hero" id="home"><p ${attribute}>所有视频都完全在本地处理。TikTok 视频直传目前受支持。</p>`,
+    );
+    const result = runValidator(root);
+    const output = `${result.stdout}\n${result.stderr}`;
+    assert.equal(result.status, 1, output);
+    assert.match(output, /absolute local-media privacy claim/i);
+    assert.match(output, /TikTok direct-upload or integration claim/i);
+  }
+});
+
+test("follows browser comment and optional paragraph-closing semantics", async () => {
+  const variants = [
+    '<section class="hero" id="home"><!-- <script> --><p>TikTok 视频直传目前受支持。</p>',
+    '<section class="hero" id="home"><p>Tik<!-- marker --!>Tok 视频直传目前受支持。</p>',
+    '<section class="hero" id="home"><p hidden>占位<p>TikTok 视频直传目前受支持。</p>',
+  ];
+
+  for (const variant of variants) {
+    const root = await copyCurrentSite();
+    await replaceInFile(
+      root,
+      "index.html",
+      '<section class="hero" id="home">',
+      variant,
+    );
+    const result = runValidator(root);
+    assertRejected(
+      result,
+      /index\.html:\d+ TikTok direct-upload or integration claim/i,
+    );
+  }
+});
+
+test("rejects protected facts split across adjacent visible blocks", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<section class="hero" id="home">',
+    '<section class="hero" id="home"><p>TikTok 视频直</p><p>传目前受支持。</p><p>Stage Mix 支持</p><p>三机位以上。</p>',
+  );
+  const result = runValidator(root);
+  const output = `${result.stdout}\n${result.stderr}`;
+  assert.equal(result.status, 1, output);
+  assert.match(output, /TikTok direct-upload or integration claim/i);
+  assert.match(output, /stale Stage Mix input-count claim/i);
+});
+
+test("ignores forbidden claims that are statically hidden", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<section class="hero" id="home">',
+    '<section class="hero" id="home"><p hidden>所有视频都完全在本地处理。TikTok 视频直传。Stage Mix 支持三机位以上。</p>',
+  );
+  const result = runValidator(root);
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+});
+
+test("requires robots.txt to reference only the Chinese sitemap", async () => {
+  const root = await copyCurrentSite();
+  const robotsPath = path.join(root, "robots.txt");
+  const robots = await readFile(robotsPath, "utf8");
+  await writeFile(
+    robotsPath,
+    `${robots}\nSitemap: https://shootingcut.com/sitemap.xml\n`,
+  );
+  const result = runValidator(root);
+  assertRejected(result, /robots\.txt:\d+ sitemap directive must be exactly/i);
+});

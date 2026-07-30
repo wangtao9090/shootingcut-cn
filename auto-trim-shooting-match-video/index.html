@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动裁剪射击比赛视频：Auto Trim 指南 | Shooting Cut</title>
+    <meta name="description" content="用 Shooting Cut Auto Trim 分析计时器蜂鸣声与枪声，自动裁剪一段射击 Stage 视频，并在导出前复核时间线、字幕和裁剪边界。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/auto-trim-shooting-match-video/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/auto-trim-shooting-match-video/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/auto-trim-shooting-match-video/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/auto-trim-shooting-match-video/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/auto-trim-shooting-match-video/">
+    <meta property="og:title" content="自动裁剪射击比赛视频：Auto Trim 指南">
+    <meta property="og:description" content="从一段 Stage 视频开始，用蜂鸣声与枪声音频分析缩短首尾空白，并在导出前完成手动复核。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="/assets/content.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/auto-trim-shooting-match-video/#article",
+                "url": "https://shootingcut.cn/auto-trim-shooting-match-video/",
+                "mainEntityOfPage": {"@id": "https://shootingcut.cn/auto-trim-shooting-match-video/"},
+                "headline": "自动裁剪射击比赛视频：Auto Trim 指南",
+                "description": "介绍如何用 Shooting Cut Auto Trim 分析一段射击 Stage 视频，并在导出前复核和修正检测结果。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"},
+                "publisher": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"}
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://shootingcut.cn/"},
+                    {"@type": "ListItem", "position": 2, "name": "竞技射击视频编辑器", "item": "https://shootingcut.cn/competitive-shooting-video-editor/"},
+                    {"@type": "ListItem", "position": 3, "name": "Auto Trim 指南", "item": "https://shootingcut.cn/auto-trim-shooting-match-video/"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/competitive-shooting-video-editor/">功能总览</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/auto-trim-shooting-match-video/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">单个 Stage · 一段输入视频</p>
+                <h1>自动裁剪射击比赛视频</h1>
+                <p class="answer-first">要缩短一段射击 Stage 视频的等待和收尾画面，可在 Shooting Cut 中使用 Auto Trim：它分析计时器蜂鸣声与枪声，给裁剪点预留首尾缓冲，再让你在时间线上复核、修正并导出。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+            <aside class="hero-panel" aria-label="Auto Trim 的输入与流程边界">
+                <ol class="mode-rail">
+                    <li><span class="rail-marker">1</span><span class="rail-copy"><strong>一段输入</strong><span>一次处理一个 Stage 视频</span></span></li>
+                    <li><span class="rail-marker">音</span><span class="rail-copy"><strong>音频分析</strong><span>寻找蜂鸣声和枪声事件</span></span></li>
+                    <li><span class="rail-marker">人</span><span class="rail-copy"><strong>人工定稿</strong><span>导出前复核并可手动修正</span></span></li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#scope">适用范围</a></li>
+                    <li><a href="#workflow">操作流程</a></li>
+                    <li><a href="#review">如何复核</a></li>
+                    <li><a href="#audio">复杂录音环境</a></li>
+                    <li><a href="#plans">免费版与 Pro</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="scope">
+                    <h2>Auto Trim 适合一个 Stage 的单段素材</h2>
+                    <p>Auto Trim 每次接收<strong>恰好一段视频</strong>。它适合一台相机连续拍下等待口令、计时器蜂鸣、射击过程和结束后的单个 Stage 素材。若你要按比赛顺序连接多个 Stage，应使用 <a href="/merge-uspsa-stage-videos/">Merge</a>；若素材是同一次射击的两个同步视角，则应使用 <a href="/sync-two-shooting-videos-by-timer-beep/">Split Sync</a>。</p>
+                    <div class="callout">
+                        <p><strong>它识别的是音频事件，不是靶面命中。</strong>Auto Trim 不识别弹孔位置，也不会根据靶纸画面判断得分。</p>
+                    </div>
+                </section>
+
+                <section class="article-section" id="workflow">
+                    <h2>从导入到导出的五个步骤</h2>
+                    <ol>
+                        <li><strong>导入一段 Stage 视频。</strong>确认素材同时包含开始前、蜂鸣声、射击过程和结束后的必要画面。</li>
+                        <li><strong>运行 Auto Trim 分析。</strong>Shooting Cut 从音轨中寻找计时器蜂鸣声与枪声事件，生成建议的开始和结束范围。</li>
+                        <li><strong>检查首尾缓冲。</strong>保留适当的 head padding 与 tail padding，避免把准备动作、蜂鸣声或最后一发之后的必要画面切得太紧。</li>
+                        <li><strong>在时间线上复核。</strong>试听蜂鸣声与枪声标记，必要时移动计时器标记、添加或删除枪声，并修正最后一发。</li>
+                        <li><strong>预览后导出。</strong>检查字幕、裁剪边界、总用时和画面构图，再生成最终文件。</li>
+                    </ol>
+                    <p>自动建议的价值是先完成粗剪，让人工复核集中在关键事件附近。最终成片仍由你在预览后确认。</p>
+                </section>
+
+                <section class="article-section" id="review">
+                    <h2>导出前重点检查四个位置</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>Auto Trim 复核清单</caption>
+                            <thead>
+                                <tr><th scope="col">位置</th><th scope="col">检查内容</th><th scope="col">发现偏差时</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>开始点</strong></td><td>准备动作是否保留，计时器蜂鸣声是否完整</td><td>调整开始边界或移动蜂鸣声标记</td></tr>
+                                <tr><td><strong>事件序列</strong></td><td>邻近选手枪声或回音是否被误列为本段事件</td><td>删除多余枪声，补回漏检事件</td></tr>
+                                <tr><td><strong>最后一发</strong></td><td>最后一发是否落在正确位置</td><td>修正最后一发标记并重新检查总用时</td></tr>
+                                <tr><td><strong>结束点</strong></td><td>结束动作和必要的 tail padding 是否保留</td><td>向后移动结束边界</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>需要逐项排查检测偏差时，请参阅<a href="/shot-detection-troubleshooting/">枪声检测排查指南</a>。</p>
+                </section>
+
+                <section class="article-section" id="audio">
+                    <h2>AGC、邻近枪声和回音会怎样影响分析</h2>
+                    <p>手机或运动相机的自动增益控制（AGC）可能在响声之后压低后续音量；邻近选手枪声可能进入同一音轨；室内场地或挡板会产生回音与混响；较远或被遮挡的计时器则可能留下较弱的蜂鸣声。这些情况都可能让自动标记提前、延后、多出或遗漏。</p>
+                    <p>先把自动结果当作可编辑的起点，再结合现场画面和音频判断。调整检测设置后仍要回到时间线，确认蜂鸣声、首发、末发、字幕和裁剪边界。</p>
+                </section>
+
+                <section class="article-section" id="plans">
+                    <h2>Auto Trim 免费，导出外观取决于方案</h2>
+                    <p>Auto Trim 与成绩导入可免费使用。免费 Auto Trim 导出包含 Shooting Cut 水印和 Logo 片头卡。Pro 可移除 Shooting Cut 水印，并使用自定义片头卡。</p>
+                    <div class="privacy-cta">
+                        <p>准备把横屏 Stage 继续制作成竖屏、方形或信息流版本？</p>
+                        <a class="button-link" href="/reframe-landscape-shooting-video-for-social-media/">查看 Reframe 与 Track 指南</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">相关指南</h2>
+            <ul>
+                <li><a href="/shot-detection-troubleshooting/">排查枪声检测</a></li>
+                <li><a href="/reframe-landscape-shooting-video-for-social-media/">横屏素材多比例重构</a></li>
+                <li><a href="/merge-uspsa-stage-videos/">合并整场比赛的 Stage</a></li>
+                <li><a href="/on-device-shooting-video-editor/">了解设备端处理</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a><a href="/faq.html">常见问题</a><a href="/privacy.html">隐私政策</a><a href="/support.html">支持</a><a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>

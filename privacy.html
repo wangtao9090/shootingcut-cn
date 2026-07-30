@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>隐私政策 — ShootingCut&trade;</title>
+    <link rel="canonical" href="https://shootingcut.cn/privacy.html">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/privacy.html">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/privacy.html">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/privacy.html">
+    <meta property="og:url" content="https://shootingcut.cn/privacy.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -55,7 +60,7 @@
         <div class="nav-inner">
             <div class="logo"><a href="/">ShootingCut&trade;</a></div>
             <div class="nav-right">
-                <div class="lang-switch"><a href="/privacy.html">English</a></div>
+                <div class="lang-switch"><a href="https://shootingcut.com/privacy.html" hreflang="en" lang="en">English</a></div>
                 <div class="nav-back"><a href="/">&larr; 返回首页</a></div>
             </div>
         </div>
@@ -63,152 +68,118 @@
 
     <div class="content">
         <h1>隐私政策</h1>
-        <p class="updated">最后更新：2026 年 4 月 8 日</p>
+        <p class="updated">最后更新：2026 年 7 月 29 日</p>
 
         <div class="highlight-box">
-            <p>&#x1F512; <strong>隐私优先：</strong>ShootingCut 的所有视频与音频处理均<strong>在您的设备本地完成</strong>。您的媒体文件从不上传至我们的服务器。我们不会向任何第三方出售您的个人数据。</p>
+            <p>&#x1F512; <strong>本地媒体处理：</strong>ShootingCut 1.1.3 的核心视频与音频分析、剪辑、导出和人物追踪在您的设备上运行。原始素材不会上传到 ShootingCut 的媒体处理服务器。订阅验证、可选检测改进、比赛成绩导入、iCloud 同步，以及您主动发起的平台上传会按下文说明使用网络。</p>
         </div>
 
-        <p>ShootingCut（以下简称"我们"）致力于保护您的隐私。本隐私政策说明您在使用 ShootingCut 应用程序（以下简称"应用"）时，我们如何处理相关信息。本应用适用于 iOS、iPadOS 及 macOS 平台。使用本应用即表示您同意本政策所述的做法。</p>
+        <p>ShootingCut（以下简称“我们”）是一款适用于 iPhone、iPad 和 Mac 的竞技射击视频编辑器。本隐私政策说明 ShootingCut 应用程序（以下简称“应用”）如何处理信息，以及您可以怎样控制相关功能。</p>
 
-        <h2>1. 我们收集的信息</h2>
-        <p>我们收集的信息分为两类：您主动提供的信息，以及自动收集的信息。</p>
-
-        <p><strong>1.1 您主动提供的信息</strong></p>
+        <h2>1. 核心媒体处理</h2>
+        <p>以下核心操作在设备本地运行：</p>
         <ul>
-            <li><strong>视频与音频文件：</strong>您导入应用进行编辑和分析的视频。这些文件完全在您的设备本地处理，从不上传至我们的服务器。</li>
-            <li><strong>会话数据：</strong>您在应用内创建的会话名称及组织元数据，存储于您的本地设备。</li>
-            <li><strong>社交媒体凭证：</strong>若您选择连接 TikTok、YouTube 或 Facebook 账号以分享视频，OAuth 访问令牌将安全存储于您设备的系统钥匙串（Keychain）中。我们无法访问您的社交媒体密码。</li>
+            <li>计时器蜂鸣声和枪声的音频分析</li>
+            <li>视频裁剪、顺序合并、双画面同步和多机位剪辑</li>
+            <li>成绩与计时字幕渲染、画面重构和视频导出</li>
+            <li>使用 Apple Vision 进行人物检测与追踪</li>
         </ul>
+        <p>应用不会为了完成这些编辑或分析操作，把原始视频、原始音频或提取出的 PCM 音频上传到 ShootingCut 的媒体处理服务器。导出结果默认保存到您选择的本地位置或照片图库；只有当您主动选择平台上传时，所选导出文件才会发送给相应平台。</p>
 
-        <p><strong>1.2 自动收集的信息</strong></p>
-        <ul>
-            <li><strong>崩溃报告：</strong>通过 Apple 标准崩溃报告机制收集的崩溃日志和诊断数据，受您设备"分析与改进"设置的控制。</li>
-            <li><strong>购买与订阅数据：</strong>由内购管理服务商 RevenueCat 管理的交易标识符和订阅状态。我们无法获取您的任何支付卡信息。</li>
-            <li><strong>应用统计数据：</strong>无法识别个人身份的匿名汇总使用统计（例如功能使用频率），收集行为受您设备"分析与改进"设置控制。</li>
-            <li><strong>检测质量数据：</strong>通过 Apple CloudKit 收集的匿名音频分析参数（频谱质心、能量比值、时间特征等数值），用于改进检测算法准确度。该数据不含原始音频、不含视频内容、不含文件名、不含设备标识符、不含任何可识别个人身份的信息。您可随时在应用导出设置中关闭此功能（"帮助改进检测准确度"开关）。</li>
-        </ul>
-
-        <h2>2. 设备权限</h2>
-        <p>应用可能请求以下设备权限：</p>
+        <h2>2. 设备权限与 Apple 服务</h2>
+        <p>应用可能按功能需要请求以下权限或使用以下 Apple 服务：</p>
         <table>
-            <tr><th>权限</th><th>用途</th><th>是否必须</th></tr>
-            <tr><td>相册读取权限</td><td>从您的相册导入视频进行编辑。若视频存储于 iCloud 照片且尚未下载至本地，系统将临时下载该视频供本地处理，应用不会保留处理后的副本。</td><td>iOS/iPadOS 导入必须</td></tr>
-            <tr><td>相册写入权限</td><td>将导出视频保存至相册</td><td>iOS/iPadOS 导出必须</td></tr>
-            <tr><td>文件系统访问（macOS）</td><td>在 macOS 上导入/导出任意位置的视频文件，包括 iCloud 云盘目录。文件在本地读取，应用不会主动上传。</td><td>可选</td></tr>
-            <tr><td>iCloud 键值存储</td><td>在登录同一 iCloud 账号的多台设备间同步会话名称等轻量元数据（不含视频文件）。</td><td>设备已开启 iCloud 云盘时自动启用</td></tr>
+            <tr><th>权限或服务</th><th>用途</th><th>控制方式</th></tr>
+            <tr><td>照片图库读取</td><td>选择并导入视频；若素材只在 iCloud 照片中，Apple 可能按需将其下载到设备。</td><td>由系统设置、照片权限和您的 iCloud 设置控制</td></tr>
+            <tr><td>照片图库写入</td><td>将导出视频保存到照片图库。</td><td>可在系统设置中撤销</td></tr>
+            <tr><td>macOS 文件访问</td><td>读取或保存您选择的本地文件或 iCloud 云盘文件。</td><td>由文件选择和 macOS 权限控制</td></tr>
+            <tr><td>iCloud 键值存储（KVS）</td><td>在使用同一 iCloud 账号的设备间同步轻量编辑与比赛元数据。</td><td>受您的 Apple ID、iCloud 和设备设置控制</td></tr>
+            <tr><td>CloudKit</td><td>在“帮助改进枪声检测”开启时接收有限的伪匿名派生检测数据。</td><td>可通过应用内开关控制</td></tr>
         </table>
-        <p>权限仅在需要时请求。您可随时在设备的"设置"应用中撤销任意权限。撤销权限可能导致部分应用功能受限。</p>
-        <p><strong>关于 iCloud 照片与 iCloud 云盘：</strong>当您导入尚未下载到本地的 iCloud 视频时，iOS/macOS 会按需将该视频下载到本地存储以供处理。此下载行为完全由 Apple 操作系统及您的 iCloud 账号设置管理，应用本身不会向 iCloud 独立发起上传或下载操作。</p>
+        <p>iCloud 照片和 iCloud 云盘的上传、下载、缓存与跨设备同步由 Apple 服务及您的设置管理。选择云端素材可能产生网络流量。应用不会把这些 Apple 服务描述为完全离线存储。</p>
 
-        <h2>3. 本地处理 — 您的媒体文件留在您的设备上</h2>
-        <p>所有核心功能均完全在您的设备本地执行：</p>
+        <h2>3. iCloud KVS 跨设备元数据</h2>
+        <p>应用可使用您自己的 iCloud 键值存储同步轻量元数据，包括：</p>
         <ul>
-            <li>音频分析（基于 FFT 的计时器蜂鸣声与枪声检测）</li>
-            <li>视频裁剪、多视角时间轴同步与剪辑</li>
-            <li>字幕自动生成与叠加渲染</li>
-            <li>视频导出与合成</li>
-            <li>人物/目标追踪与视频自动重构框（详见第 3A 节）</li>
+            <li>素材别名、机位视角和枪械类型</li>
+            <li>视频与成绩的关联信息</li>
+            <li>导入的比赛记录，以及记录中的射手和比赛字段</li>
+            <li>已经存在的非匿名 RevenueCat App User ID（用于跨设备恢复订阅身份的自定义 ID）。以 <code>$RCAnonymousID:</code> 开头的 RevenueCat 匿名 ID 不会写入 KVS。</li>
         </ul>
-        <p>在上述任何处理环节中，您的视频和音频文件均<strong>不会传输至我们的服务器</strong>。导出的视频将直接保存至您的本地存储或相册。</p>
+        <p>原始媒体文件、PCM 音频和人物追踪路径或关键帧不会放入 KVS。KVS 数据由 Apple 托管在您的 iCloud 账号下，并受 Apple 的服务条款、保留政策和您的 iCloud 设置约束。</p>
 
-        <h2>3A. 人物 / 目标追踪 — 设备端 Vision 处理</h2>
-        <div class="highlight-box">
-            <p>&#x1F9E0; <strong>全程本地处理：</strong>所有人物检测与追踪数据均由 Apple Vision 框架在设备本地计算完成。不会有任何生物特征数据、图像或追踪结果上传至我们的服务器或共享给任何第三方。</p>
-        </div>
-        <p>应用包含可选的人物/目标追踪功能，可在视频导出时自动将选定目标保持在画面中央。该功能的工作方式如下：</p>
+        <h2>4. “帮助改进枪声检测”遥测</h2>
+        <p>“帮助改进枪声检测”是用户可控制的功能，在当前版本中默认开启。开启时，应用可向 Apple CloudKit 发送有限的伪匿名派生字段，用于改善检测准确度。这些字段可能包括：</p>
         <ul>
-            <li><strong>检测：</strong>Apple 设备端 Vision 框架分析视频帧，定位人体位置（边界框）。不执行人脸识别或身份提取。</li>
-            <li><strong>追踪：</strong>应用使用 <code>VNTrackObjectRequest</code> 跨帧跟踪所选目标，在内存中临时生成裁剪中心关键帧序列。</li>
-            <li><strong>用途：</strong>关键帧数据仅用于视频导出时计算每帧的裁剪矩形。</li>
-            <li><strong>数据保留：</strong>追踪数据（边界框与关键帧）仅存在于当前会话的设备内存中，不写入磁盘、不嵌入导出视频元数据，会话结束后自动丢弃。</li>
-            <li><strong>不做生物特征分析：</strong>应用不识别、不分析、不存储任何个人身份信息。检测结果仅为几何位置数据（坐标与置信度分数）。</li>
+            <li>随机会话标识符和分析标识符</li>
+            <li>枪声和计时器时间、计数、枪械类型、AGC 等分析状态</li>
+            <li>振幅、频谱质心、能量比例、上升时间、持续时间等派生频谱或时序特征</li>
+            <li>用户删除、添加或截断检测结果，以及调整计时器、灵敏度、枪械类型或最小 Split 等纠错事件</li>
+            <li>应用版本、触发原因和报告时间</li>
         </ul>
+        <p>这些报告不包含原始视频、原始音频、PCM 音频、文件内容或人物追踪路径。它们也不用于跨应用广告跟踪。</p>
+        <p><strong>如何控制：</strong>您可以关闭编辑界面的行内开关；根据平台与布局，它会显示“改进检测”或简称“改进”，导出设置则使用完整标签“帮助改进枪声检测”。关闭后，应用在关闭期间不会创建新的报告，也不会重试发送本地待处理队列。关闭开关不会删除此前已经提交的报告，也不会清空设备上已经存在的本地重试队列。再次开启后，应用可能继续重试该队列。</p>
 
-        <h2>4. 社交媒体集成</h2>
-        <p>应用提供可选的社交平台分享集成。这些集成功能完全可选，您无需连接任何社交账号即可使用应用的核心功能。</p>
+        <h2>5. 比赛成绩导入</h2>
+        <p>PractiScore、ESS、HDP、IDPA 或其他受支持成绩来源的导入功能需要网络连接。使用该功能时，应用会向您选择或提供的成绩来源请求比赛、赛段、射手、成绩和官方计时记录等所需信息。相应站点会按照其自身政策接收正常的网络请求信息。导入后的比赛记录和成绩关联可存储在本地，并可按第 3 节所述通过您的 iCloud KVS 同步。</p>
 
+        <h2>6. 购买与订阅</h2>
+        <p>应用通过 Apple App Store 提供订阅，并使用 <strong>RevenueCat</strong> 管理订阅权益。RevenueCat 会接收应用或订阅标识符、App Store 交易标识符和订阅状态，以完成购买验证和跨设备权益同步。如果 KVS 中已经保存非匿名的自定义 RevenueCat App User ID，应用可在另一台 Apple 设备上读取该 ID，并用它登录 RevenueCat；RevenueCat 匿名 ID 不进入这项 KVS 备份。RevenueCat 不接收您的支付卡详情。一次订阅可覆盖该订阅者的 Apple 设备。详情请参阅 <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat 隐私政策</a>。</p>
+
+        <h2>7. 用户主动发起的平台上传</h2>
+        <p>ShootingCut 1.1.3 支持用户主动把所选导出视频上传到 YouTube 或 Facebook。只有在您选择平台、完成授权并确认上传后，应用才会把所选导出文件、访问令牌以及平台完成上传所需的账号或视频元数据发送给该平台。</p>
         <table>
-            <tr><th>平台</th><th>访问的数据</th><th>存储位置</th><th>隐私政策</th></tr>
-            <tr><td>TikTok</td><td>仅用于上传视频的 OAuth 令牌</td><td>存储于设备钥匙串</td><td><a href="https://www.tiktok.com/legal/page/row/privacy-policy/zh-Hans" target="_blank">TikTok 隐私政策</a></td></tr>
-            <tr><td>YouTube</td><td>仅用于上传视频的 OAuth 令牌</td><td>存储于设备钥匙串</td><td><a href="https://policies.google.com/privacy?hl=zh-CN" target="_blank">Google 隐私政策</a></td></tr>
-            <tr><td>Facebook</td><td>仅用于分享视频的 OAuth 令牌</td><td>存储于设备钥匙串</td><td><a href="https://www.facebook.com/policy.php" target="_blank">Facebook 隐私政策</a></td></tr>
-
+            <tr><th>平台</th><th>发送内容</th><th>相关政策</th></tr>
+            <tr><td>YouTube</td><td>所选导出视频、OAuth 令牌及上传所需元数据</td><td><a href="https://policies.google.com/privacy?hl=zh-CN" target="_blank">Google 隐私政策</a></td></tr>
+            <tr><td>Facebook</td><td>所选导出视频、OAuth 令牌及发布所需元数据</td><td><a href="https://www.facebook.com/policy.php" target="_blank">Meta 隐私政策</a></td></tr>
         </table>
+        <p>OAuth 令牌存储在设备系统钥匙串中；应用不会取得您的平台密码。您可以在应用中断开账号，并按照相应平台提供的方式撤销授权。当前 1.1.3 不提供 TikTok 视频直传。</p>
 
-        <p>当您授权连接社交媒体账号时，认证流程通过安全浏览器会话（ASWebAuthenticationSession）以 OAuth 2.0 协议完成。我们仅存储生成的访问令牌，且仅用于上传您明确选择的视频。我们不会访问您的社交媒体联系人、私信、帖子或其他个人资料信息。</p>
-        <p>您可随时在应用设置中断开任意社交账号连接，操作完成后该账号对应的令牌将从钥匙串中删除。</p>
-
-        <h2>5. 应用内购与订阅</h2>
-        <p>应用可能通过苹果 App Store 提供付费功能，内购管理由 <strong>RevenueCat</strong> 负责。RevenueCat 接收您的 App Store 交易标识符和订阅状态以验证购买，不接收您的支付卡信息。详情请参阅 <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat 隐私政策</a>。</p>
-
-        <h2>6. 第三方服务提供商</h2>
-        <p>我们使用以下第三方服务，各服务均受其自身隐私政策约束：</p>
+        <h2>8. 其他服务与诊断</h2>
         <ul>
-            <li><strong>RevenueCat</strong> — 应用内购与订阅管理</li>
-            <li><strong>Apple App Store Connect 分析</strong> — 匿名应用使用统计（受您设备分析设置控制）</li>
-            <li><strong>Apple 崩溃报告</strong> — 崩溃诊断（受您设备分析设置控制）</li>
-            <li><strong>Apple CloudKit</strong> — 匿名检测质量遥测（仅数值频谱参数，不含音频/视频内容，可通过应用内开关控制）</li>
-            <li><strong>TikTok Content Posting API、YouTube Data API、Facebook Graph API</strong> — 通过 OAuth 2.0 实现社交分享（仅在您连接相关账号后激活）</li>
+            <li><strong>Apple 照片、iCloud 云盘和 iCloud KVS：</strong>处理用户选择的 Apple 云端素材与元数据同步。</li>
+            <li><strong>Apple CloudKit：</strong>在可选检测改进功能开启时接收派生检测和纠错字段。</li>
+            <li><strong>RevenueCat：</strong>管理订阅验证与权益状态。</li>
+            <li><strong>成绩提供方：</strong>在您主动导入时返回比赛与成绩信息。</li>
+            <li><strong>YouTube 和 Facebook：</strong>在您主动授权并上传时接收所选导出及必要元数据。</li>
+            <li><strong>Apple 诊断服务：</strong>Apple 可能依据您的“分析与改进”设置处理崩溃与诊断信息。</li>
         </ul>
-        <p>我们要求所有第三方服务提供商为您的数据提供与本隐私政策同等级别的保护。</p>
+        <p>我们不会出售您的个人信息。若法律、法院命令或政府机关依法要求，或者发生合并、收购或资产转让，我们可能在适用法律允许的范围内披露或转移相关信息。</p>
 
-        <h2>7. 数据共享与披露</h2>
-        <p>我们<strong>不会</strong>出售、出租或交易您的个人信息。仅在以下有限情况下，我们可能共享信息：</p>
+        <h2>9. 数据保留与删除</h2>
         <ul>
-            <li><strong>服务提供商：</strong>与上述受信任的服务提供商共享，这些服务商受严格的数据保护协议约束，代表我们处理数据。</li>
-            <li><strong>法律要求：</strong>在适用法律、法规、法院命令或政府机构要求时披露。</li>
-            <li><strong>业务转让：</strong>在合并、收购或资产出售等业务变更中，您的信息可能作为交易的一部分被转移。在转移发生前，我们将通过应用或本政策通知您。</li>
+            <li><strong>本地数据：</strong>项目、偏好、缓存和待重试遥测队列存储在设备上，受系统备份、应用删除和设备设置影响。</li>
+            <li><strong>iCloud 数据：</strong>KVS 元数据（包括已保存的自定义 RevenueCat App User ID）及 Apple 云端素材受您的 iCloud 账号设置和 Apple 保留政策约束。</li>
+            <li><strong>人物追踪：</strong>追踪路径与关键帧用于设备端导出，不会放入 KVS 或检测改进报告。</li>
+            <li><strong>已提交遥测：</strong>关闭开关不会自动删除已经提交到 CloudKit 的报告。</li>
+            <li><strong>平台与订阅数据：</strong>由 RevenueCat、YouTube、Facebook 或成绩提供方按照各自政策保留。</li>
         </ul>
+        <p>如需询问由我们或服务提供商持有的数据、请求删除，或报告隐私问题，请联系 <a href="mailto:support@shootingcut.com">support@shootingcut.com</a>。我们会根据适用法律和可验证的请求进行处理。</p>
 
-        <h2>8. 数据保留与删除</h2>
-        <p>由于应用在您的设备本地处理数据，您对自己的数据拥有完全控制权。卸载应用将删除存储在设备上的会话数据和应用偏好设置。断开社交账号连接后，对应的 OAuth 令牌将从设备钥匙串中删除。</p>
-        <p><strong>iCloud 键值存储：</strong>通过 iCloud KVS 同步的会话名称等元数据存储于您的个人 iCloud 账号，受 Apple iCloud 数据保留政策约束。卸载应用将清除关联的 KVS 键值，您也可通过 Apple ID 设置管理您的 iCloud 数据。</p>
-        <p><strong>人物追踪数据</strong>为临时性数据，仅存在于当前会话的设备内存中。关闭会话或退出应用后自动丢弃，无需额外操作。</p>
-        <p>如需删除第三方服务提供商（如 RevenueCat）持有的数据，请通过 <a href="mailto:support@shootingcut.com">support@shootingcut.com</a> 联系我们。</p>
+        <h2>10. 儿童隐私与国际处理</h2>
+        <p>本应用不面向 13 岁以下儿童，或您所在司法管辖区规定的更高最低年龄人群。若您认为儿童信息被不当处理，请联系我们。第三方服务可能在美国或其他国家或地区处理信息，并受其所在地和适用法律约束。</p>
 
-        <h2>9. 儿童隐私</h2>
-        <p>本应用不面向 13 岁以下（或您所在司法管辖区适用最低年龄以下）的儿童。我们不会有意收集儿童的个人信息。若您认为我们误收集了儿童信息，请立即联系 <a href="mailto:support@shootingcut.com">support@shootingcut.com</a>，我们将立即采取措施予以删除。</p>
-
-        <h2>10. 国际用户</h2>
-        <p>本应用面向全球用户开放。如果您位于美国以外地区，请注意第三方服务提供商处理的信息可能会被传输至美国或其他国家/地区进行处理。使用本应用即表示您同意本政策所述的此类数据传输。</p>
-
-        <h2>11. 您的隐私权利</h2>
-        <p>根据您所在地区的法律，您可能就个人数据享有以下权利：</p>
+        <h2>11. 您的选择与权利</h2>
+        <p>根据适用法律，您可能享有访问、更正、删除、限制处理、反对处理、数据可携带或投诉等权利。您还可以：</p>
         <ul>
-            <li><strong>访问权：</strong>请求了解我们或服务提供商持有的您的数据。</li>
-            <li><strong>更正权：</strong>请求更正不准确的数据。</li>
-            <li><strong>删除权：</strong>请求删除您的个人数据。</li>
-            <li><strong>拒绝分析：</strong>通过设备"设置 → 隐私与安全性 → 分析与改进"关闭数据收集。</li>
+            <li>在应用内关闭“帮助改进枪声检测”</li>
+            <li>不使用比赛成绩导入或平台上传</li>
+            <li>在系统设置中管理照片、iCloud 和 Apple 分析权限</li>
+            <li>断开 YouTube 或 Facebook 账号，并在平台侧撤销授权</li>
+            <li>在 Apple ID 设置中管理订阅和 iCloud 数据</li>
         </ul>
-        <p>如需行使上述任何权利，请联系 <a href="mailto:support@shootingcut.com">support@shootingcut.com</a>。我们将在 30 天内予以回复。</p>
 
-        <h2>11A. 特定地区的附加权利</h2>
-        <p><strong>欧盟/欧洲经济区居民（GDPR）：</strong></p>
-        <ul>
-            <li><strong>法律依据：</strong>我们基于合同履行（提供应用功能）、合法利益（改进服务）和您的同意（社交媒体连接）来处理您的数据。</li>
-            <li><strong>数据主体权利：</strong>除上述权利外，您还享有数据可携带权、限制处理权、反对处理权，以及向当地监管机构投诉的权利。</li>
-        </ul>
-        <p><strong>加州居民（CCPA）：</strong></p>
-        <ul>
-            <li><strong>知情权：</strong>您有权了解我们收集、使用和披露了哪些个人信息。</li>
-            <li><strong>删除权：</strong>您可以要求删除您的个人信息。</li>
-            <li><strong>不受歧视权：</strong>我们不会因您行使隐私权而对您区别对待。</li>
-            <li><strong>不出售个人信息：</strong>我们不会将您的个人信息出售给第三方。</li>
-        </ul>
-        <p>如需行使上述权利，请通过 <a href="mailto:support@shootingcut.com">support@shootingcut.com</a> 联系我们。</p>
-
-        <h2>12. 安全措施</h2>
-        <p>我们采用行业标准措施保护所持有的信息。社交媒体令牌存储于 iOS/macOS 系统钥匙串，该钥匙串经过加密且受设备硬件安全模块保护。但没有任何安全措施是完美的，使用本应用的风险由您自行承担。</p>
+        <h2>12. 安全</h2>
+        <p>我们采用与数据类型和功能相匹配的技术与组织措施，例如设备端处理、系统权限和钥匙串存储。互联网传输、云服务和本地设备均不存在绝对安全保证；我们不承诺 100% 安全。</p>
 
         <h2>13. 政策变更</h2>
-        <p>我们可能不时更新本隐私政策。当发生重大变更时，我们将更新页面顶部的"最后更新"日期。建议您定期查阅本政策。在变更后继续使用应用，即表示您接受更新后的政策。</p>
+        <p>我们可能更新本政策。发生变更时，我们会更新页面顶部的“最后更新”日期；重大变更可能通过应用或网站提供额外通知。</p>
 
         <h2>14. 联系我们</h2>
-        <p>如您对本隐私政策有任何疑问、意见或请求，请通过以下方式联系我们：</p>
+        <p>如您对本隐私政策、检测改进开关或数据请求有疑问，请联系我们：</p>
         <p><strong>ShootingCut</strong><br>
         邮箱：<a href="mailto:support@shootingcut.com">support@shootingcut.com</a><br>
-        官网：<a href="https://shootingcut.com">shootingcut.com</a></p>
+        官网：<a href="https://shootingcut.cn">shootingcut.cn</a></p>
     </div>
 
     <footer>
