@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竞技射击视频编辑器 — Shooting Cut 1.1.3</title>
+    <meta name="description" content="Shooting Cut 1.1.3 是面向 iPhone、iPad 和 Mac 的完整竞技射击视频编辑器，支持单片段裁剪、顺序合并、双机位同步、多机位剪辑、成绩与逐发计时、人物追踪和多比例导出。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/competitive-shooting-video-editor/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/competitive-shooting-video-editor/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/competitive-shooting-video-editor/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/competitive-shooting-video-editor/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/competitive-shooting-video-editor/">
+    <meta property="og:title" content="竞技射击视频编辑器 — Shooting Cut 1.1.3">
+    <meta property="og:description" content="从一段 Stage 素材到整场比赛、多机位作品和多比例成片，了解 Shooting Cut 的完整编辑工作流。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+
+    <link rel="stylesheet" href="/assets/content.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/competitive-shooting-video-editor/#article",
+                "url": "https://shootingcut.cn/competitive-shooting-video-editor/",
+                "mainEntityOfPage": {
+                    "@id": "https://shootingcut.cn/competitive-shooting-video-editor/"
+                },
+                "headline": "Shooting Cut 1.1.3：完整的竞技射击视频编辑器",
+                "description": "介绍 Shooting Cut 在 iPhone、iPad 和 Mac 上的四种编辑模式、成绩与计时、人物追踪、导出、检测修正和订阅边界。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {
+                    "@type": "Organization",
+                    "name": "ShootingCut",
+                    "url": "https://shootingcut.cn/"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "ShootingCut",
+                    "url": "https://shootingcut.cn/"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "首页",
+                        "item": "https://shootingcut.cn/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "竞技射击视频编辑器",
+                        "item": "https://shootingcut.cn/competitive-shooting-video-editor/"
+                    }
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://shootingcut.cn/competitive-shooting-video-editor/#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Shooting Cut 只是添加枪声字幕的工具吗？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "不是。Shooting Cut 1.1.3 是完整的竞技射击视频编辑器，覆盖素材裁剪、顺序合并、双机位同步、多机位剪辑、人物追踪、成绩与计时字幕、片头卡、水印和导出。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "一段横屏素材可以重复导出多个比例吗？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "可以。你可以保留同一份素材和人物追踪结果，依次生成 9:16、3:4、4:5、6:7 或 1:1 等版本。Track 驱动的裁切比例使用 1080 像素短边，也可以降为 720p，不是 4K 追踪导出。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "免费版与 Pro 的已确认区别是什么？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Auto Trim 与成绩导入免费；免费 Auto Trim 导出包含 Shooting Cut 水印和 Logo 片头卡。Pro 可移除水印、使用自定义片头卡、解锁 Split Sync 和 Stage Mix，并在 macOS 上使用批量导出。一次订阅覆盖该订阅者的 Apple 设备。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Shooting Cut 支持哪些平台上传？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Shooting Cut 1.1.3 支持由用户主动发起的 YouTube 和 Facebook 上传，也可以先导出文件再使用其他发布流程。"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/">首页</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/competitive-shooting-video-editor/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Shooting Cut 1.1.3 · iPhone、iPad 与 Mac</p>
+                <h1>完整的竞技射击视频编辑器</h1>
+                <p class="answer-first">Shooting Cut 1.1.3 不只是给枪声加字幕：它是一款面向 iPhone、iPad 和 Mac 的完整竞技射击视频编辑器，把素材裁剪、顺序合并、双机位同步、多机位剪辑、成绩与逐发计时、人物追踪和多比例导出放进同一套工作流。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+
+            <aside class="hero-panel" aria-label="四种编辑模式的输入数量">
+                <ol class="mode-rail">
+                    <li>
+                        <span class="rail-marker">1</span>
+                        <span class="rail-copy"><strong>Auto Trim</strong><span>恰好一段视频</span></span>
+                    </li>
+                    <li>
+                        <span class="rail-marker">20</span>
+                        <span class="rail-copy"><strong>Merge</strong><span>最多二十段顺序素材</span></span>
+                    </li>
+                    <li>
+                        <span class="rail-marker">2</span>
+                        <span class="rail-copy"><strong>Split Sync</strong><span>恰好两个同步画面</span></span>
+                    </li>
+                    <li>
+                        <span class="rail-marker">2–3</span>
+                        <span class="rail-copy"><strong>Stage Mix</strong><span>多个角色化机位</span></span>
+                    </li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#modes">四种编辑模式</a></li>
+                    <li><a href="#scores">成绩与逐发计时</a></li>
+                    <li><a href="#reframe">多比例重复导出</a></li>
+                    <li><a href="#detection">检测与人工修正</a></li>
+                    <li><a href="#plans">免费版与 Pro</a></li>
+                    <li><a href="#faq">常见问题</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="modes">
+                    <h2>按素材关系选择编辑模式</h2>
+                    <p>四种模式解决的是不同的素材关系。先判断素材是单段、按时间先后排列，还是同一 Stage 的同步机位，再选择模式。</p>
+
+                    <div class="table-wrap">
+                        <table>
+                            <caption>四种公开编辑模式比较</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">模式</th>
+                                    <th scope="col">输入</th>
+                                    <th scope="col">主要用途</th>
+                                    <th scope="col">本文确认的权益边界</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Auto Trim</strong></td>
+                                    <td>恰好 1 段视频</td>
+                                    <td>分析计时器蜂鸣声与枪声，围绕一次 Stage 自动裁剪</td>
+                                    <td>免费；免费导出带 Shooting Cut 水印与 Logo 片头卡</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Merge</strong></td>
+                                    <td>最多 20 段顺序视频</td>
+                                    <td>按比赛顺序组合不同 Stage，制作完整比赛或个人归档</td>
+                                    <td>本文不额外声明独立收费层级</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Split Sync</strong></td>
+                                    <td>恰好 2 个同步画面</td>
+                                    <td>用计时器蜂鸣声对齐同一 Stage 的两个视角</td>
+                                    <td>Pro</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Stage Mix</strong></td>
+                                    <td>2–3 个 POV、Follow 或 Static 输入</td>
+                                    <td>按射击与移动阶段感知切换机位，并允许手动调整切换点</td>
+                                    <td>Pro</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-grid">
+                        <div class="info-card">
+                            <span class="metric">4</span>
+                            <h3>Split Sync 布局</h3>
+                            <p>Full Screen、Dual Center HUD、Dual Top HUD 与 Side by Side。</p>
+                        </div>
+                        <div class="info-card">
+                            <span class="metric">2–3</span>
+                            <h3>Stage Mix 输入</h3>
+                            <p>为素材标记 POV、Follow 或 Static，先自动切换，再人工微调。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="article-section" id="scores">
+                    <h2>把成绩与官方逐发计时带进成片</h2>
+                    <p>成绩导入是免费功能。Shooting Cut 可以导入受支持来源的比赛、射手、赛段与成绩信息，并把记录关联到对应视频。</p>
+                    <p>当 PractiScore 提供官方计时器逐发记录（timer gunshot records）时，Shooting Cut 可以通过视频中的计时器蜂鸣声建立锚点，在字幕中使用官方时间、Split、发数与成绩数据。这个“官方逐发锚定”说明只适用于具有相应记录的 PractiScore 数据。</p>
+                    <div class="callout warning">
+                        <p>ESS、HDP 与 IDPA 的受支持导入路径用于成绩信息；本文不把它们描述为与 PractiScore 相同的官方逐发计时锚定来源。</p>
+                    </div>
+                </section>
+
+                <section class="article-section" id="reframe">
+                    <h2>一份素材，重复生成多个发布比例</h2>
+                    <p>Reframe 与 Track 让你保留同一段横屏拍摄和目标人物，依次导出适合竖屏短视频、竖向信息流、方形信息流或横屏视频的版本。你不需要为了每个平台重新拍摄，也可以重新追踪以更换目标或修正构图。</p>
+                    <ul>
+                        <li>画面比例包括来源比例、9:16、3:4、4:5、6:7、1:1 和 16:9。</li>
+                        <li>常规导出选择包括原始、4K、1080p 和 720p，实际可选项会受到源素材与当前工作流上限过滤。</li>
+                        <li>Track 驱动的 9:16、3:4、4:5、6:7 与 1:1 重构使用 1080 像素短边，也可以降为 720p；它们不是 4K 追踪导出。</li>
+                        <li>来源比例不裁切，16:9 不是追踪比例；Split Sync 使用布局定义的画布，并采用 1080 像素短边。</li>
+                    </ul>
+                    <p>平台名称只是格式用途示例，不代表每个比例都支持每个分辨率，也不代表自动发布集成。</p>
+                </section>
+
+                <section class="article-section" id="detection">
+                    <h2>自动检测之后仍可人工校正</h2>
+                    <p>比赛现场的自动增益控制（AGC）、邻近选手枪声、回音或混响，以及较弱的计时器蜂鸣声，都可能影响音频分析。Shooting Cut 提供人工校正，让你在导出前复核时间线。</p>
+                    <ul>
+                        <li>调整检测灵敏度和最小 Split；</li>
+                        <li>移动计时器标记；</li>
+                        <li>添加或删除枪声；</li>
+                        <li>修正最后一发的位置；</li>
+                        <li>重新检查字幕、裁剪边界和总用时。</li>
+                    </ul>
+                    <p>这些是常见录音环境与复核步骤，不把特定口径描述为产品限制。</p>
+                </section>
+
+                <section class="article-section" id="plans">
+                    <h2>免费版与 Pro 的已验证边界</h2>
+                    <div class="callout">
+                        <p><strong>免费：</strong>Auto Trim 与成绩导入。免费 Auto Trim 导出包含 Shooting Cut 水印和 Logo 片头卡。</p>
+                    </div>
+                    <p><strong>Pro：</strong>移除 Shooting Cut 水印、使用自定义片头卡、解锁 Split Sync 与 Stage Mix，并在 macOS 上使用批量导出。一次订阅覆盖该订阅者的 Apple 设备；当前价格以 <a href="https://apps.apple.com/app/shooting-cut/id6761160281" rel="noopener" target="_blank">App Store 页面</a>显示为准。</p>
+                    <p>Shooting Cut 1.1.3 支持由用户主动发起的 YouTube 和 Facebook 上传，也可以导出文件后接入其他发布流程。</p>
+                </section>
+
+                <section class="article-section" id="faq">
+                    <h2>常见问题</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <h3>Shooting Cut 只是添加枪声字幕的工具吗？</h3>
+                            <p>不是。Shooting Cut 1.1.3 是完整的竞技射击视频编辑器，覆盖素材裁剪、顺序合并、双机位同步、多机位剪辑、人物追踪、成绩与计时字幕、片头卡、水印和导出。</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>一段横屏素材可以重复导出多个比例吗？</h3>
+                            <p>可以。你可以保留同一份素材和人物追踪结果，依次生成 9:16、3:4、4:5、6:7 或 1:1 等版本。Track 驱动的裁切比例使用 1080 像素短边，也可以降为 720p，不是 4K 追踪导出。</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>免费版与 Pro 的已确认区别是什么？</h3>
+                            <p>Auto Trim 与成绩导入免费；免费 Auto Trim 导出包含 Shooting Cut 水印和 Logo 片头卡。Pro 可移除水印、使用自定义片头卡、解锁 Split Sync 和 Stage Mix，并在 macOS 上使用批量导出。一次订阅覆盖该订阅者的 Apple 设备。</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Shooting Cut 支持哪些平台上传？</h3>
+                            <p>Shooting Cut 1.1.3 支持由用户主动发起的 YouTube 和 Facebook 上传，也可以先导出文件再使用其他发布流程。</p>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">继续了解 Shooting Cut</h2>
+            <ul>
+                <li><a href="/on-device-shooting-video-editor/">设备端处理与数据边界</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a href="/privacy.html">隐私政策</a></li>
+                <li><a href="/support.html">获取支持</a></li>
+                <li><a href="/">返回首页</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a>
+            <a href="/faq.html">常见问题</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="/support.html">支持</a>
+            <a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>

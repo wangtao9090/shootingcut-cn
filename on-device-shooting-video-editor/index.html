@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设备端竞技射击视频编辑与隐私边界 — Shooting Cut</title>
+    <meta name="description" content="了解 Shooting Cut 的设备端视频与音频处理，以及 Apple 照片、iCloud KVS、RevenueCat、CloudKit、成绩导入和用户主动上传各自的数据边界。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/on-device-shooting-video-editor/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/on-device-shooting-video-editor/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/on-device-shooting-video-editor/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/on-device-shooting-video-editor/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/on-device-shooting-video-editor/">
+    <meta property="og:title" content="设备端竞技射击视频编辑与隐私边界">
+    <meta property="og:description" content="核心媒体处理在 Apple 设备上运行；了解 iCloud、订阅、检测改进、成绩导入与主动上传的单独边界。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+
+    <link rel="stylesheet" href="/assets/content.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/on-device-shooting-video-editor/#article",
+                "url": "https://shootingcut.cn/on-device-shooting-video-editor/",
+                "mainEntityOfPage": {
+                    "@id": "https://shootingcut.cn/on-device-shooting-video-editor/"
+                },
+                "headline": "Shooting Cut 的设备端处理与数据边界",
+                "description": "说明 Shooting Cut 核心媒体处理、Apple 服务、iCloud KVS、RevenueCat、CloudKit、成绩导入和平台上传之间的数据流边界。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {
+                    "@type": "Organization",
+                    "name": "ShootingCut",
+                    "url": "https://shootingcut.cn/"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "ShootingCut",
+                    "url": "https://shootingcut.cn/"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "首页",
+                        "item": "https://shootingcut.cn/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "设备端处理与数据边界",
+                        "item": "https://shootingcut.cn/on-device-shooting-video-editor/"
+                    }
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://shootingcut.cn/on-device-shooting-video-editor/#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "原始视频会上传到 Shooting Cut 的媒体处理服务器吗？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "不会为了完成核心分析、剪辑、导出或人物追踪而上传。原始素材保留在用户选择的设备、照片图库或 Apple 存储位置；用户主动选择 YouTube 或 Facebook 上传时，所选导出文件会发送给相应平台。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "设备端处理是否表示所有功能都离线？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "不是。Apple 照片与 iCloud 云盘会按用户设置使用 Apple 服务；订阅验证、可选检测改进、成绩导入，以及用户主动发起的平台上传也会使用网络。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "iCloud KVS 会同步哪些内容？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "KVS 可同步素材别名、机位视角、枪械类型、成绩关联、导入的比赛与射手字段，以及已经存在的非匿名自定义 RevenueCat App User ID。原始媒体、PCM 音频和人物追踪路径不会进入 KVS。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "怎样关闭检测改进数据发送？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "关闭编辑界面中的“改进”或“改进检测”，也可以在导出设置中关闭“帮助改进枪声检测”。关闭期间不会创建新报告，也不会重试本地待处理队列；此前已提交的报告不会因此删除，本地队列也不会被清空。"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/">首页</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/on-device-shooting-video-editor/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">设备端媒体处理 · 明确列出联网例外</p>
+                <h1>你的素材如何被处理</h1>
+                <p class="answer-first">Shooting Cut 的核心视频与音频分析、剪辑、导出和人物追踪在用户的 Apple 设备上运行；原始素材不会上传到 Shooting Cut 的媒体处理服务器。用户选择使用的 Apple 或网络功能属于单独例外，包括 iCloud、订阅验证、检测改进、成绩导入和主动发起的平台上传。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+
+            <aside class="hero-panel" aria-label="数据处理边界概览">
+                <ol class="boundary-rail">
+                    <li>
+                        <span class="rail-marker">设备</span>
+                        <span class="rail-copy"><strong>核心媒体处理</strong><span>分析、剪辑、导出、追踪</span></span>
+                    </li>
+                    <li>
+                        <span class="rail-marker">云</span>
+                        <span class="rail-copy"><strong>用户选择的服务</strong><span>Apple 设置与有限元数据</span></span>
+                    </li>
+                    <li>
+                        <span class="rail-marker">发</span>
+                        <span class="rail-copy"><strong>主动联网操作</strong><span>导入、验证与平台上传</span></span>
+                    </li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#boundary">核心处理边界</a></li>
+                    <li><a href="#data-flow">数据流表</a></li>
+                    <li><a href="#icloud">iCloud KVS</a></li>
+                    <li><a href="#subscription">订阅身份</a></li>
+                    <li><a href="#improvement">检测改进</a></li>
+                    <li><a href="#network">主动联网操作</a></li>
+                    <li><a href="#faq">常见问题</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="boundary">
+                    <h2>“设备端”描述的是核心媒体工作流</h2>
+                    <p>计时器蜂鸣声与枪声分析、视频裁剪、顺序合并、双画面同步、多机位剪辑、成绩与计时字幕渲染、画面重构、人物追踪和视频导出，都由用户设备执行。为了完成这些核心操作，Shooting Cut 不会把原始视频、原始音频或提取的 PCM 音频发送到自己的媒体处理服务器。</p>
+                    <p>这不表示应用的每一项功能都不使用网络。素材所在位置、用户的 Apple 设置和主动选择的功能，会决定 Apple 服务或其他网络服务是否参与。</p>
+                    <div class="privacy-cta">
+                        <p><strong>需要完整法律与保留说明？</strong><br>隐私政策列出权限、第三方服务、控制方式和数据保留。</p>
+                        <a class="button-link" href="/privacy.html">阅读隐私政策</a>
+                    </div>
+                </section>
+
+                <section class="article-section" id="data-flow">
+                    <h2>数据流一览</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>Shooting Cut 1.1.3 的处理位置与触发方式</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">功能或数据</th>
+                                    <th scope="col">处理位置或接收方</th>
+                                    <th scope="col">何时发生</th>
+                                    <th scope="col">明确边界</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>核心视频与音频处理</strong></td>
+                                    <td>用户的 Apple 设备</td>
+                                    <td>分析、编辑、追踪与导出时</td>
+                                    <td>原始素材不上传到 Shooting Cut 媒体处理服务器</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Apple 照片、iCloud 照片、iCloud 云盘</strong></td>
+                                    <td>Apple 服务与用户设备</td>
+                                    <td>用户选择云端素材或位置时</td>
+                                    <td>上传、下载与同步遵循 Apple 服务及用户设置</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>iCloud KVS 元数据</strong></td>
+                                    <td>用户自己的 iCloud 账号</td>
+                                    <td>启用相应 iCloud 能力时</td>
+                                    <td>只同步轻量元数据，不包含原始媒体、PCM 或追踪路径</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>订阅验证</strong></td>
+                                    <td>RevenueCat</td>
+                                    <td>购买、恢复或同步权益时</td>
+                                    <td>接收标识符和权益状态，不接收支付卡详情</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>检测改进</strong></td>
+                                    <td>Apple CloudKit</td>
+                                    <td>功能开启且形成报告时</td>
+                                    <td>有限的伪匿名派生与纠错字段，不包含原始媒体或 PCM</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>成绩导入</strong></td>
+                                    <td>用户选择的成绩来源</td>
+                                    <td>用户主动导入时</td>
+                                    <td>通过网络请求比赛、赛段、射手、成绩和可用计时记录</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>YouTube 或 Facebook 上传</strong></td>
+                                    <td>用户选择的平台</td>
+                                    <td>用户授权并确认上传时</td>
+                                    <td>发送所选导出文件和完成上传所需的令牌与元数据</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="article-section" id="icloud">
+                    <h2>Apple 照片、iCloud 照片与 iCloud 云盘</h2>
+                    <p>Apple 照片、iCloud 照片和 iCloud 云盘遵循 Apple 服务与用户设置。若所选素材只存在于 iCloud 照片，Apple 可能按需下载；在 macOS 上选择 iCloud 云盘文件，也可能触发 Apple 管理的上传、下载、缓存或同步。</p>
+                    <p>这些行为由照片权限、Apple ID、iCloud 与设备设置控制，因此不能把云端素材工作流描述为固定离线存储。</p>
+
+                    <h3>iCloud KVS 可以同步的轻量字段</h3>
+                    <ul>
+                        <li>素材别名、机位视角与枪械类型；</li>
+                        <li>视频和成绩之间的关联；</li>
+                        <li>导入的比赛记录，以及对应的比赛与射手字段；</li>
+                        <li>已经存在的非匿名自定义 RevenueCat App User ID。</li>
+                    </ul>
+                    <p>以 <code>$RCAnonymousID:</code> 开头的 RevenueCat 匿名 ID 不会备份到 KVS。原始媒体文件、PCM 音频、人物追踪路径和关键帧也不会进入 KVS。</p>
+                </section>
+
+                <section class="article-section" id="subscription">
+                    <h2>订阅身份如何跨设备恢复</h2>
+                    <p>如果 KVS 已经保存一个非匿名的自定义 RevenueCat App User ID，应用可在另一台 Apple 设备上读取该 ID，并使用它登录 RevenueCat，从而恢复相应的订阅身份。</p>
+                    <p>RevenueCat 会接收应用或订阅标识符、App Store 交易标识符和订阅权益状态，用于购买验证与跨设备权益同步。RevenueCat 匿名 ID 不进入上述 KVS 备份，RevenueCat 也不接收用户的支付卡详情。</p>
+                </section>
+
+                <section class="article-section" id="improvement">
+                    <h2>“帮助改进枪声检测”由用户控制</h2>
+                    <p>检测改进功能在当前版本中默认开启，但由用户控制。编辑界面的行内开关会显示“改进检测”或简称“改进”，导出设置使用完整标签“帮助改进枪声检测”。</p>
+                    <p>开启时，应用可以向 Apple CloudKit 发送有限的伪匿名派生与纠错字段，例如随机会话和分析标识符、枪声与计时器时间、分析状态、派生频谱或时序特征，以及用户添加、删除、截断或调整检测结果形成的纠错事件。</p>
+                    <div class="callout">
+                        <p>检测改进报告不包含原始视频、原始音频、PCM 音频、文件内容或人物追踪路径。</p>
+                    </div>
+                    <h3>关闭、重试与既有报告</h3>
+                    <ul>
+                        <li>关闭期间不会创建新的报告，也不会重试发送本地待处理队列；</li>
+                        <li>关闭不会删除此前已经提交的报告；</li>
+                        <li>关闭不会清空设备上已经存在的本地重试队列；</li>
+                        <li>再次开启后，应用可能继续重试该队列。</li>
+                    </ul>
+                </section>
+
+                <section class="article-section" id="network">
+                    <h2>成绩导入与平台上传由用户发起</h2>
+                    <p>成绩导入使用网络。只有当用户选择导入时，应用才会向相应成绩来源请求比赛、赛段、射手、成绩与可用计时记录。</p>
+                    <p>YouTube 和 Facebook 上传同样由用户主动发起。只有在选择平台、完成授权并确认后，应用才会把所选导出视频、访问令牌以及完成上传所需的账号或视频元数据发送给该平台。OAuth 令牌保存在系统钥匙串中，应用不会取得用户的平台密码。</p>
+                    <p>联网服务、云服务和本地设备都存在各自风险边界；更完整的控制、保留和安全说明请查阅<a href="/privacy.html">隐私政策</a>。</p>
+                </section>
+
+                <section class="article-section" id="faq">
+                    <h2>常见问题</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <h3>原始视频会上传到 Shooting Cut 的媒体处理服务器吗？</h3>
+                            <p>不会为了完成核心分析、剪辑、导出或人物追踪而上传。原始素材保留在用户选择的设备、照片图库或 Apple 存储位置；用户主动选择 YouTube 或 Facebook 上传时，所选导出文件会发送给相应平台。</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>设备端处理是否表示所有功能都离线？</h3>
+                            <p>不是。Apple 照片与 iCloud 云盘会按用户设置使用 Apple 服务；订阅验证、可选检测改进、成绩导入，以及用户主动发起的平台上传也会使用网络。</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>iCloud KVS 会同步哪些内容？</h3>
+                            <p>KVS 可同步素材别名、机位视角、枪械类型、成绩关联、导入的比赛与射手字段，以及已经存在的非匿名自定义 RevenueCat App User ID。原始媒体、PCM 音频和人物追踪路径不会进入 KVS。</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>怎样关闭检测改进数据发送？</h3>
+                            <p>关闭编辑界面中的“改进”或“改进检测”，也可以在导出设置中关闭“帮助改进枪声检测”。关闭期间不会创建新报告，也不会重试本地待处理队列；此前已提交的报告不会因此删除，本地队列也不会被清空。</p>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">继续了解 Shooting Cut</h2>
+            <ul>
+                <li><a href="/competitive-shooting-video-editor/">完整竞技射击视频编辑能力</a></li>
+                <li><a href="/privacy.html">完整隐私政策</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a href="/support.html">获取支持</a></li>
+                <li><a href="/">返回首页</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a>
+            <a href="/faq.html">常见问题</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="/support.html">支持</a>
+            <a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>
