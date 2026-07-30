@@ -22,6 +22,7 @@ const publicEntries = [
   "faq.html",
   "import-practiscore-ess-hdp-match-results",
   "index.html",
+  "llms.txt",
   "merge-uspsa-stage-videos",
   "on-device-shooting-video-editor",
   "oauth",
@@ -36,6 +37,21 @@ const publicEntries = [
   "sync-two-shooting-videos-by-timer-beep",
   "terms.html",
   "thailand-hdp-ess-match-results",
+];
+const guideRoutes = [
+  "/competitive-shooting-video-editor/",
+  "/on-device-shooting-video-editor/",
+  "/auto-trim-shooting-match-video/",
+  "/sync-two-shooting-videos-by-timer-beep/",
+  "/edit-multi-camera-shooting-video/",
+  "/shot-detection-troubleshooting/",
+  "/reframe-landscape-shooting-video-for-social-media/",
+  "/merge-uspsa-stage-videos/",
+  "/side-by-side-shooting-video-comparison/",
+  "/batch-export-match-videos/",
+  "/import-practiscore-ess-hdp-match-results/",
+  "/thailand-hdp-ess-match-results/",
+  "/add-shot-times-and-scores-to-match-video/",
 ];
 
 async function copyCurrentSite() {
@@ -77,6 +93,117 @@ function assertRejected(result, expected) {
   assert.equal(result.status, 1, output);
   assert.match(output, expected);
 }
+
+test("homepage exposes every guide through one visible ordinary link", async () => {
+  const homepage = await readFile(path.join(workspaceRoot, "index.html"), "utf8");
+  const guideSections = [
+    ...homepage.matchAll(
+      /<section\b[^>]*\bid="guides"[^>]*>([\s\S]*?)<\/section>/gi,
+    ),
+  ];
+  assert.equal(guideSections.length, 1, "homepage must contain one #guides section");
+
+  const guideSection = guideSections[0][1];
+  assert.doesNotMatch(
+    guideSection,
+    /\b(?:hidden|inert)\b|aria-hidden\s*=\s*["']?true|class\s*=\s*["'][^"']*\bfade-in\b|<script\b|<template\b|onclick\s*=/i,
+    "#guides links must remain visible and usable without JavaScript",
+  );
+
+  const hrefs = [
+    ...guideSection.matchAll(/<a\b[^>]*\bhref="(\/[^"#?]+\/)"[^>]*>/gi),
+  ].map((match) => match[1]);
+  assert.deepEqual(
+    hrefs,
+    guideRoutes,
+    "#guides must expose the 13 guide routes once, in the intended order",
+  );
+  assert.equal(new Set(hrefs).size, 13, "#guides links must be unique");
+  assert.match(
+    homepage,
+    /<nav\b[\s\S]*?<a\b[^>]*href="#guides"[^>]*>使用指南<\/a>[\s\S]*?<\/nav>/i,
+    "primary navigation must link to #guides",
+  );
+
+  for (const route of guideRoutes) {
+    const target = path.join(workspaceRoot, route.slice(1), "index.html");
+    await assert.doesNotReject(
+      readFile(target, "utf8"),
+      `${route} must resolve to a real guide`,
+    );
+  }
+
+  assert.doesNotMatch(homepage, /任意输出比例/);
+  assert.match(homepage, /9:16、3:4、4:5、6:7、1:1/);
+  assert.match(homepage, /Source[^。<]*(?:不裁切|保留来源)/);
+  assert.match(homepage, /非追踪[^。<]*16:9|16:9[^。<]*非追踪/);
+  const subscriptionClaims = [
+    ...homepage.matchAll(/一次订阅覆盖[^。"<>]*Apple 设备/g),
+  ].map((match) => match[0]);
+  assert.ok(subscriptionClaims.length > 0, "homepage must state device coverage");
+  assert.ok(
+    subscriptionClaims.every(
+      (claim) => claim === "一次订阅覆盖订阅者的所有 Apple 设备",
+    ),
+    `homepage has stale subscription coverage: ${subscriptionClaims.join(" | ")}`,
+  );
+});
+
+test("llms.txt publishes the complete factual discovery surface outside sitemap", async () => {
+  const llmsPath = path.join(workspaceRoot, "llms.txt");
+  let llms;
+  try {
+    llms = await readFile(llmsPath, "utf8");
+  } catch (error) {
+    assert.fail(`llms.txt must exist and be readable: ${error.message}`);
+  }
+
+  assert.ok(llms.startsWith("# Shooting Cut"));
+  for (const required of [
+    "1.1.3",
+    "https://shootingcut.cn/",
+    "https://shootingcut.com/",
+    "Auto Trim 恰好接收 1 个视频",
+    "Merge 最多把 20 个顺序片段合并为一条长视频",
+    "Split Sync 恰好接收 2 个同步视角",
+    "Stage Mix 接收 2–3 个同步输入",
+    "Auto Trim 和成绩导入免费",
+    "一次订阅覆盖订阅者的所有 Apple 设备",
+    "用户主动发起的 YouTube 和 Facebook 直传",
+    "Track 驱动的裁切比例为 9:16、3:4、4:5、6:7、1:1",
+    "Source 不裁切；非追踪 16:9 与 Track 比例分开处理",
+    "非匿名自定义 RevenueCat App User ID",
+    "$RCAnonymousID:",
+    "原始媒体、PCM 音频和人物追踪路径也不进入 KVS",
+    "当前默认开启",
+    "用户控制",
+    "https://shootingcut.cn/faq.html",
+    "https://shootingcut.cn/privacy.html",
+    "https://shootingcut.cn/support.html",
+    "https://shootingcut.cn/terms.html",
+    "https://shootingcut.cn/sitemap.xml",
+  ]) {
+    assert.ok(llms.includes(required), `llms.txt missing required fact: ${required}`);
+  }
+
+  for (const route of guideRoutes) {
+    const url = `https://shootingcut.cn${route}`;
+    assert.equal(
+      llms.split(url).length - 1,
+      1,
+      `llms.txt must list ${url} exactly once`,
+    );
+  }
+
+  assert.doesNotMatch(
+    llms,
+    /一次购买|终身买断|\.22\b|任意(?:比例|组合|4K)|(?:Track|追踪)[^。\n]{0,20}(?:任意|支持|可用|提供)[^。\n]{0,10}4K|4K\s*(?:Track|追踪)(?:导出)?\s*(?:可用|支持)|(?:自动|智能)章节|弹着点|命中定位|(?:所有|全部)(?:视频|音频|数据|媒体)[^。\n]*(?:不离开设备|绝不离开设备|完全离线)/i,
+  );
+
+  const sitemap = await readFile(path.join(workspaceRoot, "sitemap.xml"), "utf8");
+  assert.doesNotMatch(sitemap, /<loc>[^<]*llms\.txt<\/loc>/i);
+  assert.equal([...sitemap.matchAll(/<loc>/g)].length, 18);
+});
 
 test("accepts the precise privacy boundary and legitimate external JSON-LD URLs", async () => {
   const root = await copyCurrentSite();

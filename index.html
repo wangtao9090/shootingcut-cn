@@ -61,8 +61,8 @@
             "核心音视频分析和人物追踪在设备端完成",
             "原始素材不会为了剪辑或识别上传至 Shooting Cut 媒体处理服务器",
             "不进行跨 App 广告追踪；有关 iCloud、订阅、遥测、成绩导入和用户主动上传的细节，请查看 https://shootingcut.cn/privacy.html",
-            "直接上传至 YouTube 和 Facebook",
-            "转竖屏追踪（Portrait Tracking）：切换导出比例并追踪目标人物，任意输出比例保持射手居中（9:16、1:1、16:9）",
+            "用户主动发起 YouTube 和 Facebook 直传",
+            "Reframe/Track：Track 驱动裁切支持 9:16、3:4、4:5、6:7、1:1；Source 不裁切，非追踪 16:9 与 Track 比例分开处理",
             "智能音频分析检测枪声与计时器",
             "Auto Trim：恰好 1 个视频；Auto Trim 与成绩导入免费；免费 Auto Trim 导出包含 Shooting Cut 水印与 Logo 片头卡",
             "性能字幕叠加（分段时间、射击计数、累计时间）",
@@ -70,7 +70,7 @@
             "Split Sync：恰好 2 个视频",
             "Stage Mix：2–3 个视频，标记为 POV、Follow 或 Static；按射击和移动阶段智能切换，并支持手动调整",
             "Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出",
-            "一次订阅覆盖所有 Apple 设备"
+            "一次订阅覆盖订阅者的所有 Apple 设备"
         ],
         "screenshot": "https://shootingcut.cn/og-image.svg",
         "applicationSubCategory": "Sports Video Analysis"
@@ -112,7 +112,7 @@
                 "name": "Shooting Cut 支持哪些平台？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Shooting Cut 支持 Mac（macOS 26.0+）、iPad（iPadOS 26.0+）和 iPhone（iOS 26.0+）。Auto Trim 与成绩导入免费。Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。一次订阅覆盖所有 Apple 设备。"
+                    "text": "Shooting Cut 支持 Mac（macOS 26.0+）、iPad（iPadOS 26.0+）和 iPhone（iOS 26.0+）。Auto Trim 与成绩导入免费。Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。一次订阅覆盖订阅者的所有 Apple 设备。"
                 }
             },
             {
@@ -244,6 +244,17 @@
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header .section-subtitle { margin: 0 auto; }
 
+        /* ── Guide Hub ── */
+        #guides { scroll-margin-top: 6rem; }
+        .guide-hub-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; align-items: start; }
+        .guide-group { height: 100%; padding: 2rem; border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; background: var(--bg-card); }
+        .guide-group h3 { margin-bottom: 1.25rem; font-size: 1.2rem; }
+        .guide-group ul { display: grid; gap: 1.1rem; list-style: none; }
+        .guide-group a { color: var(--accent-light); font-weight: 700; text-decoration: none; }
+        .guide-group a:hover { text-decoration: underline; }
+        .guide-group a:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 4px; border-radius: 3px; }
+        .guide-group p { margin-top: 0.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+
         /* ── Feature Cards ── */
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .feature-card { background: var(--bg-card); border: 1px solid rgba(148,163,184,0.08); border-radius: 16px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
@@ -328,6 +339,9 @@
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
         /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .guide-hub-grid { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
@@ -343,14 +357,14 @@
     {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        "name": "ShootingCut Feature Demos — Portrait Tracking, Stage Mix & Split Sync",
-        "description": "Shooting Cut 三项核心功能演示：转竖屏追踪可在不同导出比例下保持人物居中；Stage Mix 处理 2–3 个标记为 POV、Follow 或 Static 的视频，按射击和移动阶段智能切换并支持手动调整；Split Sync 恰好处理 2 个视频并同步呈现两个机位。",
+        "name": "ShootingCut Feature Demos — 16:9 Format, 4:5 Tracking & Stage Mix",
+        "description": "Shooting Cut 功能演示：16:9 示例归类为非追踪横屏与格式输出，4:5 示例展示 Track 驱动的人物裁切；Stage Mix 处理 2–3 个标记为 POV、Follow 或 Static 的视频，按射击和移动阶段智能切换并支持手动调整。",
         "itemListElement": [
             {
                 "@type": "VideoObject",
                 "position": 1,
                 "name": "ShootingCut in Action — 16:9 Landscape Export",
-                "description": "Competitive shooting match video exported in 16:9 landscape ratio with Portrait Tracking keeping the shooter centered. Ideal for YouTube.",
+                "description": "Competitive shooting match video shown as a non-tracked 16:9 landscape and format example.",
                 "thumbnailUrl": "https://i.ytimg.com/vi/EO-yju9mCIk/hqdefault.jpg",
                 "uploadDate": "2026-04-04",
                 "contentUrl": "https://www.youtube.com/watch?v=EO-yju9mCIk",
@@ -359,8 +373,8 @@
             {
                 "@type": "VideoObject",
                 "position": 2,
-                "name": "ShootingCut in Action — 4:5 Portrait Export",
-                "description": "Same shooting stage exported in 4:5 portrait ratio with automatic subject tracking. Perfect for Instagram feed posts.",
+                "name": "ShootingCut in Action — 4:5 Track Export",
+                "description": "The same shooting stage shown as a 4:5 Track-driven crop with subject tracking.",
                 "thumbnailUrl": "https://i.ytimg.com/vi/ZO5H3u1iSR8/hq2.jpg",
                 "uploadDate": "2026-04-04",
                 "contentUrl": "https://www.youtube.com/shorts/ZO5H3u1iSR8",
@@ -406,6 +420,7 @@
         <div class="nav-inner">
             <div class="logo">Shooting Cut&trade;</div>
             <ul class="nav-links" id="navLinks">
+                <li><a href="#guides">使用指南</a></li>
                 <li><a href="#features">功能</a></li>
                 <li><a href="#demo">演示</a></li>
                 <li><a href="#modes">编辑模式</a></li>
@@ -454,6 +469,88 @@
         </div>
     </section>
 
+    <!-- 使用指南 -->
+    <section id="guides" aria-labelledby="guides-title">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">使用指南</span>
+                <h2 class="section-title" id="guides-title">从素材到整场比赛成片</h2>
+                <p class="section-subtitle">
+                    按你的素材和发布目标选择工作流。每篇指南都说明输入数量、操作步骤、导出边界和需要人工复核的环节。
+                </p>
+            </div>
+            <div class="guide-hub-grid">
+                <article class="guide-group">
+                    <h3>从这里开始</h3>
+                    <ul>
+                        <li>
+                            <a href="/competitive-shooting-video-editor/">完整竞技射击视频编辑器</a>
+                            <p>比较 Auto Trim、Merge、Split Sync 和 Stage Mix。</p>
+                        </li>
+                        <li>
+                            <a href="/on-device-shooting-video-editor/">设备端处理与隐私边界</a>
+                            <p>了解本地处理、iCloud、订阅、改进数据和主动上传。</p>
+                        </li>
+                    </ul>
+                </article>
+                <article class="guide-group">
+                    <h3>核心编辑</h3>
+                    <ul>
+                        <li>
+                            <a href="/auto-trim-shooting-match-video/">自动裁剪单个 Stage 视频</a>
+                            <p>分析恰好一段素材，复核事件并裁去前后空白。</p>
+                        </li>
+                        <li>
+                            <a href="/sync-two-shooting-videos-by-timer-beep/">用计时器蜂鸣同步两个视频</a>
+                            <p>对齐恰好两个同步视角并选择 Split Sync 布局。</p>
+                        </li>
+                        <li>
+                            <a href="/edit-multi-camera-shooting-video/">剪辑 2–3 机位 Stage 视频</a>
+                            <p>用 Stage Mix 处理 POV、Follow 或 Static 输入。</p>
+                        </li>
+                        <li>
+                            <a href="/shot-detection-troubleshooting/">排查枪声与蜂鸣检测</a>
+                            <p>处理 AGC、邻近枪声、回音/混响和弱蜂鸣。</p>
+                        </li>
+                        <li>
+                            <a href="/reframe-landscape-shooting-video-for-social-media/">把横屏素材重构为社交比例</a>
+                            <p>追踪一次，并按工作流上限导出多种画幅。</p>
+                        </li>
+                        <li>
+                            <a href="/merge-uspsa-stage-videos/">合并完整比赛的全部 Stage</a>
+                            <p>按顺序整理并合并最多 20 段，生成一个长视频。</p>
+                        </li>
+                    </ul>
+                </article>
+                <article class="guide-group">
+                    <h3>进阶工作流</h3>
+                    <ul>
+                        <li>
+                            <a href="/side-by-side-shooting-video-comparison/">Side by Side 双画面对比</a>
+                            <p>用 Split Sync 的并排布局比较恰好两个同步视频。</p>
+                        </li>
+                        <li>
+                            <a href="/batch-export-match-videos/">在 Mac 批量导出比赛视频</a>
+                            <p>用 macOS Pro 队列生成多个独立输出。</p>
+                        </li>
+                        <li>
+                            <a href="/import-practiscore-ess-hdp-match-results/">导入 PractiScore、ESS、HDP 和 IDPA 成绩</a>
+                            <p>在来源仍可访问时导入，并关联到本地视频档案。</p>
+                        </li>
+                        <li>
+                            <a href="/thailand-hdp-ess-match-results/">保存泰国 HDP 与 ESS 比赛记录</a>
+                            <p>及时导入可访问的结果，与自己的比赛素材保存在一起。</p>
+                        </li>
+                        <li>
+                            <a href="/add-shot-times-and-scores-to-match-video/">添加官方逐发时间与成绩字幕</a>
+                            <p>对齐可用的 PractiScore 官方逐发记录，复核后导出。</p>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- 功能 -->
     <section id="features" style="background: var(--bg-secondary);">
         <div class="container">
@@ -493,7 +590,7 @@
                 <div class="feature-card fade-in">
                     <div class="feature-icon">📱</div>
                     <h3>全平台原生体验</h3>
-                    <p>一次订阅覆盖所有 Apple 设备。你可以在 Mac 上使用桌面编辑工作流，也可以在 iPhone 和 iPad 上使用专门设计的触控体验。</p>
+                    <p>一次订阅覆盖订阅者的所有 Apple 设备。你可以在 Mac 上使用桌面编辑工作流，也可以在 iPhone 和 iPad 上使用专门设计的触控体验。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🔒</div>
@@ -503,12 +600,12 @@
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🚀</div>
                     <h3>一键多平台分享</h3>
-                    <p>在 App 内将完成的影片直接上传至 YouTube 和 Facebook，或导出成片并接入你自己的发布流程。</p>
+                    <p>用户可以在 App 内主动将完成的影片上传至 YouTube 和 Facebook，或导出成片并接入自己的发布流程。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🎯</div>
-                    <h3>转竖屏追踪 — 射手始终居中</h3>
-                    <p>将导出比例切换为 9:16、1:1 或 16:9，再点击“追踪”即可保持射手居中。同一段素材可以制作竖屏、方形和横屏版本。</p>
+                    <h3>Reframe/Track — 多比例画面重构</h3>
+                    <p>Track 驱动裁切支持 9:16、3:4、4:5、6:7 和 1:1；Source 保留来源画面，非追踪 16:9 单独处理。同一段素材可按工作流上限重复导出。查看<a href="/reframe-landscape-shooting-video-for-social-media/" style="color:var(--accent-light);">完整比例与分辨率指南</a>。</p>
                 </div>
                 <div class="feature-card fade-in">
                     <div class="feature-icon">🎞️</div>
@@ -537,25 +634,25 @@
                 </p>
             </div>
 
-            <!-- 转竖屏追踪 -->
+            <!-- 画幅与人物追踪 -->
             <div class="demo-feature fade-in" id="demo-portrait">
                 <div class="demo-feature-header">
                     <span class="demo-feature-icon">🎯</span>
-                    <h3 class="demo-feature-title">转竖屏追踪（Portrait Tracking）</h3>
-                    <p class="demo-feature-desc">切换导出比例，射手在每一帧都保持居中 — 一个素材，适配所有平台。</p>
+                    <h3 class="demo-feature-title">画幅与人物追踪（Reframe/Track）</h3>
+                    <p class="demo-feature-desc">左侧 16:9 是非追踪横屏与格式示例；右侧 4:5 展示 Track 驱动的人物裁切。两条输出路径分开处理。</p>
                 </div>
                 <div class="demo-grid-2col">
                     <div class="demo-card">
                         <div class="demo-video demo-landscape">
-                            <iframe src="https://www.youtube.com/embed/EO-yju9mCIk" title="ShootingCut 转竖屏追踪 16:9 演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/EO-yju9mCIk" title="ShootingCut 非追踪 16:9 横屏与格式演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
-                        <div class="demo-label">16:9 <span class="demo-platform">横屏</span></div>
+                        <div class="demo-label">16:9 <span class="demo-platform">非追踪横屏/格式示例</span></div>
                     </div>
                     <div class="demo-card">
                         <div class="demo-video demo-portrait">
-                            <iframe src="https://www.youtube.com/embed/ZO5H3u1iSR8" title="ShootingCut 转竖屏追踪 4:5 演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/ZO5H3u1iSR8" title="ShootingCut 4:5 Track 人物裁切演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
-                        <div class="demo-label">4:5 <span class="demo-platform">竖屏</span></div>
+                        <div class="demo-label">4:5 <span class="demo-platform">Track 竖屏裁切</span></div>
                     </div>
                 </div>
             </div>
@@ -696,7 +793,7 @@
         <span class="section-label">立即下载</span>
         <h2 class="section-title">准备好升级你的复盘方式了吗？</h2>
         <p class="section-subtitle">
-            立即前往 App Store 下载 Shooting Cut。Auto Trim 与成绩导入免费。Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。一次订阅覆盖所有 Apple 设备。
+            立即前往 App Store 下载 Shooting Cut。Auto Trim 与成绩导入免费。Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。一次订阅覆盖订阅者的所有 Apple 设备。
         </p>
         <a href="https://apps.apple.com/app/shooting-cut/id6761160281" class="appstore-btn" target="_blank" style="margin: 0 auto; display: inline-flex;">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;fill:white;"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -757,7 +854,7 @@
                 <details class="faq-item">
                     <summary class="faq-question">Shooting Cut 是免费的吗？</summary>
                     <div class="faq-answer">
-                        <p>Shooting Cut 免费下载。Auto Trim 与成绩导入免费，免费 Auto Trim 导出包含 Shooting Cut 水印与 Logo 片头卡。Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。一次订阅覆盖所有 Apple 设备。无需注册账号或登录。</p>
+                        <p>Shooting Cut 免费下载。Auto Trim 与成绩导入免费，免费 Auto Trim 导出包含 Shooting Cut 水印与 Logo 片头卡。Pro 去除 Shooting Cut 水印、支持自定义片头卡、解锁 Split Sync 和 Stage Mix，并支持 macOS 批量导出。一次订阅覆盖订阅者的所有 Apple 设备。无需注册账号或登录。</p>
                     </div>
                 </details>
                 <details class="faq-item">
@@ -789,6 +886,7 @@
             <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
             <ul class="footer-links">
                 <li><a href="#home">首页</a></li>
+                <li><a href="#guides">使用指南</a></li>
                 <li><a href="#features">功能</a></li>
                 <li><a href="#demo">演示</a></li>
                 <li><a href="#modes">编辑模式</a></li>
