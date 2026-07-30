@@ -87,6 +87,7 @@ function decodeCharacterReference(reference) {
   const named = {
     amp: "&",
     apos: "'",
+    colon: ":",
     gt: ">",
     lt: "<",
     nbsp: " ",
@@ -111,31 +112,64 @@ function decodeCharacterReference(reference) {
 
 function decodeHtmlAttribute(value) {
   return value.replace(
-    /&(amp|apos|gt|lt|nbsp|quot);|&(#x[0-9a-f]+|#[0-9]+);?/gi,
+    /&(amp|apos|colon|gt|lt|nbsp|quot);|&(#x[0-9a-f]+|#[0-9]+);?/gi,
     (_, namedReference, numericReference) =>
       decodeCharacterReference(namedReference ?? numericReference),
   );
 }
 
-function maskRawTextElementBodies(source) {
+function maskElementBodies(source, elementPattern) {
   const mask = (value) => " ".repeat(value.length);
-  const withoutClosedRawText = source.replace(
-    /(<(script|style)\b(?:"[^"]*"|'[^']*'|[^'"<>])*?>)([\s\S]*?)(<\/\2\s*>)/gi,
+  const closedPattern = new RegExp(
+    `(<(${elementPattern})\\b(?:"[^"]*"|'[^']*'|[^'"<>])*?>)([\\s\\S]*?)(<\\/\\2\\s*>)`,
+    "gi",
+  );
+  const withoutClosedElements = source.replace(
+    closedPattern,
     (_, opening, _name, content, closing) =>
       `${opening}${mask(content)}${closing}`,
   );
-  return withoutClosedRawText.replace(
-    /(<(script|style)\b(?:"[^"]*"|'[^']*'|[^'"<>])*?>)(?![\s\S]*?<\/\2\s*>)([\s\S]*)$/gi,
+  const unclosedPattern = new RegExp(
+    `(<(${elementPattern})\\b(?:"[^"]*"|'[^']*'|[^'"<>])*?>)(?![\\s\\S]*?<\\/\\2\\s*>)([\\s\\S]*)$`,
+    "gi",
+  );
+  return withoutClosedElements.replace(
+    unclosedPattern,
     (_, opening, _name, content) => `${opening}${mask(content)}`,
   );
 }
 
-function maskNonMarkupTagContent(source) {
-  const withoutComments = source.replace(
-    /<!--[\s\S]*?-->/g,
+function maskRawTextElementBodies(source) {
+  const commentPattern = /<!--[\s\S]*?(?:-->|--!>)|<!--[\s\S]*$/g;
+  let result = "";
+  let lastIndex = 0;
+  let comment;
+
+  while ((comment = commentPattern.exec(source)) !== null) {
+    result += maskElementBodies(
+      source.slice(lastIndex, comment.index),
+      "script|style",
+    );
+    result += comment[0];
+    lastIndex = commentPattern.lastIndex;
+  }
+  result += maskElementBodies(source.slice(lastIndex), "script|style");
+  return result;
+}
+
+function maskHtmlComments(source) {
+  return source.replace(
+    /<!--[\s\S]*?(?:-->|--!>)|<!--[\s\S]*$/g,
     (comment) => " ".repeat(comment.length),
   );
-  return maskRawTextElementBodies(withoutComments);
+}
+
+function maskNonMarkupTagContent(source) {
+  const withoutComments = maskHtmlComments(source);
+  return maskElementBodies(
+    withoutComments,
+    "script|style|textarea|title|xmp|iframe|noembed|noframes|noscript|plaintext",
+  );
 }
 
 const visibleBlockTags = new Set([
@@ -181,7 +215,12 @@ const visibleBlockTags = new Set([
   "tr",
   "ul",
 ]);
-const nonRenderedTags = new Set(["script", "style", "template"]);
+const nonRenderedTags = new Set([
+  "script",
+  "style",
+  "template",
+  "noscript",
+]);
 const voidTags = new Set([
   "area",
   "base",
@@ -198,9 +237,69 @@ const voidTags = new Set([
   "track",
   "wbr",
 ]);
+const paragraphClosingTags = new Set([
+  "address",
+  "article",
+  "aside",
+  "blockquote",
+  "div",
+  "dl",
+  "fieldset",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "header",
+  "hr",
+  "main",
+  "nav",
+  "ol",
+  "p",
+  "pre",
+  "section",
+  "table",
+  "ul",
+]);
+
+function closeLastOpenElement(stack, names) {
+  const matchingIndex = stack.findLastIndex((entry) =>
+    names.has(entry.name),
+  );
+  if (matchingIndex !== -1) {
+    stack.splice(matchingIndex);
+  }
+}
+
+function applyImpliedEndTags(stack, openingName) {
+  if (paragraphClosingTags.has(openingName)) {
+    closeLastOpenElement(stack, new Set(["p"]));
+  }
+  if (openingName === "li") {
+    closeLastOpenElement(stack, new Set(["li"]));
+  } else if (openingName === "dt" || openingName === "dd") {
+    closeLastOpenElement(stack, new Set(["dt", "dd"]));
+  } else if (openingName === "rt" || openingName === "rp") {
+    closeLastOpenElement(stack, new Set(["rt", "rp"]));
+  } else if (openingName === "option") {
+    closeLastOpenElement(stack, new Set(["option"]));
+  } else if (openingName === "optgroup") {
+    closeLastOpenElement(stack, new Set(["option", "optgroup"]));
+  } else if (openingName === "tr") {
+    closeLastOpenElement(stack, new Set(["tr"]));
+  } else if (openingName === "td" || openingName === "th") {
+    closeLastOpenElement(stack, new Set(["td", "th"]));
+  } else if (["thead", "tbody", "tfoot"].includes(openingName)) {
+    closeLastOpenElement(stack, new Set(["thead", "tbody", "tfoot"]));
+  }
+}
 
 function collectVisibleTextBlocks(source) {
   const scanSource = maskRawTextElementBodies(source);
+  const hiddenSelectors = hiddenStylesheetSelectors(source);
   const blocks = [];
   const stack = [];
   let text = "";
@@ -249,7 +348,7 @@ function collectVisibleTextBlocks(source) {
   };
 
   const tokenPattern =
-    /<!--[\s\S]*?-->|<\/?[A-Za-z][A-Za-z0-9:-]*(?:"[^"]*"|'[^']*'|[^'"<>])*>|&(amp|apos|gt|lt|nbsp|quot);|&(#x[0-9a-f]+|#[0-9]+);?/gi;
+    /<!--[\s\S]*?(?:-->|--!>)|<!--[\s\S]*$|<\/?[A-Za-z][A-Za-z0-9:-]*(?:"[^"]*"|'[^']*'|[^'"<>])*>|&(amp|apos|colon|gt|lt|nbsp|quot);|&(#x[0-9a-f]+|#[0-9]+);?/gi;
   let lastIndex = 0;
   let token;
   const isHidden = () => stack.at(-1)?.hidden ?? false;
@@ -269,11 +368,10 @@ function collectVisibleTextBlocks(source) {
       const closing = tagMatch?.[1] === "/";
       const name = tagMatch?.[2]?.toLowerCase();
 
-      if (name && visibleBlockTags.has(name) && !isHidden()) {
-        flush();
-      }
-
       if (closing && name) {
+        if (visibleBlockTags.has(name) && !isHidden()) {
+          flush();
+        }
         const matchingIndex = stack.findLastIndex(
           (entry) => entry.name === name,
         );
@@ -281,6 +379,10 @@ function collectVisibleTextBlocks(source) {
           stack.splice(matchingIndex);
         }
       } else if (name) {
+        applyImpliedEndTags(stack, name);
+        if (visibleBlockTags.has(name) && !isHidden()) {
+          flush();
+        }
         if (name === "br" && !isHidden()) {
           appendCharacter(" ", token.index);
         }
@@ -289,14 +391,17 @@ function collectVisibleTextBlocks(source) {
           token.index + 1 + name.length,
         );
         const tag = { name, index: token.index, attributes };
-        const selfClosing = /\/\s*>$/.test(value) || voidTags.has(name);
+        const selfClosing = voidTags.has(name);
         if (!selfClosing) {
           stack.push({
             name,
             hidden:
               isHidden() ||
               nonRenderedTags.has(name) ||
-              tagIsStaticallyHidden(tag),
+              tagIsVisuallyHidden(tag) ||
+              hiddenSelectors.some((selector) =>
+                tagMatchesSimpleCssSelector(tag, selector),
+              ),
           });
         }
       }
@@ -318,7 +423,7 @@ function collectVisibleTextBlocks(source) {
 function parseAttributes(attributeSource, sourceIndex) {
   const attributes = [];
   const attributePattern =
-    /([^\s"'=<>`]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+    /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
   let match;
 
   while ((match = attributePattern.exec(attributeSource)) !== null) {
@@ -369,22 +474,39 @@ function findAttribute(tag, name) {
   return tag.attributes.find((attribute) => attribute.name === name);
 }
 
-function tagIsStaticallyHidden(tag) {
-  const hidden = findAttribute(tag, "hidden");
-  const inert = findAttribute(tag, "inert");
-  const ariaHidden = findAttribute(tag, "aria-hidden");
-  const style = findAttribute(tag, "style");
-  return (
-    Boolean(hidden) ||
-    Boolean(inert) ||
-    ariaHidden?.value?.trim().toLowerCase() === "true" ||
-    /(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)\s*(?:!\s*important\s*)?(?:;|$)/i.test(
-      decodeHtmlAttribute(style?.value ?? ""),
-    )
+function normalizedCssDeclarations(value) {
+  return decodeHtmlAttribute(value).replace(/\/\*[\s\S]*?\*\//g, "");
+}
+
+function cssDeclarationsHideContent(value) {
+  return /(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)\s*(?:!\s*important\s*)?(?:;|$)/i.test(
+    normalizedCssDeclarations(value),
   );
 }
 
-function hasStaticallyHiddenAncestor(source, targetIndex) {
+function tagIsVisuallyHidden(tag) {
+  const hidden = findAttribute(tag, "hidden");
+  const style = findAttribute(tag, "style");
+  return (
+    Boolean(hidden) ||
+    (tag.name === "dialog" && !findAttribute(tag, "open")) ||
+    cssDeclarationsHideContent(style?.value ?? "")
+  );
+}
+
+function tagMakesControlUnavailable(tag) {
+  const inert = findAttribute(tag, "inert");
+  const ariaHidden = findAttribute(tag, "aria-hidden");
+  return (
+    tagIsVisuallyHidden(tag) ||
+    Boolean(inert) ||
+    decodeHtmlAttribute(ariaHidden?.value ?? "").trim().toLowerCase() ===
+      "true" ||
+    (tag.name === "details" && !findAttribute(tag, "open"))
+  );
+}
+
+function openElementStackAt(source, targetIndex) {
   const scanSource = maskNonMarkupTagContent(source);
   const stack = [];
   const tokenPattern =
@@ -407,7 +529,8 @@ function hasStaticallyHiddenAncestor(source, targetIndex) {
       continue;
     }
 
-    const selfClosing = /\/\s*>$/.test(match[0]) || voidTags.has(name);
+    applyImpliedEndTags(stack, name);
+    const selfClosing = voidTags.has(name);
     if (!selfClosing) {
       const tag = {
         name,
@@ -417,16 +540,109 @@ function hasStaticallyHiddenAncestor(source, targetIndex) {
           match.index + 1 + match[2].length,
         ),
       };
-      stack.push({
-        name,
-        hidden:
-          nonRenderedTags.has(name) ||
-          tagIsStaticallyHidden(tag),
-      });
+      stack.push(tag);
     }
   }
 
-  return stack.some((entry) => entry.hidden);
+  return stack;
+}
+
+function hasUnavailableAncestor(source, targetIndex) {
+  return openElementStackAt(source, targetIndex).some(
+    (tag) =>
+      nonRenderedTags.has(tag.name) ||
+      tagMakesControlUnavailable(tag),
+  );
+}
+
+function tagMatchesSimpleCssSelector(tag, selector) {
+  const normalized = selector.trim();
+  if (
+    !normalized ||
+    !/^(?:\*|[A-Za-z][A-Za-z0-9_-]*)?(?:[.#][A-Za-z_][A-Za-z0-9_-]*)*$/u.test(
+      normalized,
+    )
+  ) {
+    return false;
+  }
+
+  const name = normalized.match(/^(\*|[A-Za-z][A-Za-z0-9_-]*)/)?.[1];
+  if (name && name !== "*" && name.toLowerCase() !== tag.name) {
+    return false;
+  }
+
+  const id = decodeHtmlAttribute(findAttribute(tag, "id")?.value ?? "");
+  const classes = new Set(
+    decodeHtmlAttribute(findAttribute(tag, "class")?.value ?? "")
+      .split(/\s+/u)
+      .filter(Boolean),
+  );
+  for (const token of normalized.matchAll(/([.#])([A-Za-z_][A-Za-z0-9_-]*)/gu)) {
+    if (token[1] === "#" && token[2] !== id) {
+      return false;
+    }
+    if (token[1] === "." && !classes.has(token[2])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function hiddenStylesheetSelectors(source) {
+  const selectors = [];
+  const stylePattern =
+    /<style\b(?:"[^"]*"|'[^']*'|[^'"<>])*?>([\s\S]*?)<\/style\s*>/gi;
+  let style;
+
+  while ((style = stylePattern.exec(source)) !== null) {
+    const css = style[1].replace(/\/\*[\s\S]*?\*\//g, "");
+    let selectorStart = 0;
+    let bodyStart = 0;
+    let selector = "";
+    let depth = 0;
+
+    for (let index = 0; index < css.length; index += 1) {
+      if (css[index] === "{") {
+        if (depth === 0) {
+          selector = css.slice(selectorStart, index).trim();
+          bodyStart = index + 1;
+        }
+        depth += 1;
+        continue;
+      }
+      if (css[index] !== "}" || depth === 0) {
+        continue;
+      }
+      depth -= 1;
+      if (depth === 0) {
+        const declarations = css.slice(bodyStart, index);
+        if (
+          selector &&
+          !selector.startsWith("@") &&
+          cssDeclarationsHideContent(declarations)
+        ) {
+          selectors.push(
+            ...selector
+              .split(",")
+              .map((item) => item.trim())
+              .filter(Boolean),
+          );
+        }
+        selectorStart = index + 1;
+      }
+    }
+  }
+  return selectors;
+}
+
+function stylesheetHidesLanguageSwitch(source, languageSwitch) {
+  const candidates = [
+    ...openElementStackAt(source, languageSwitch.index),
+    languageSwitch,
+  ];
+  return hiddenStylesheetSelectors(source).some((selector) =>
+    candidates.some((tag) => tagMatchesSimpleCssSelector(tag, selector)),
+  );
 }
 
 function currentRoute(relativePath) {
@@ -1044,8 +1260,9 @@ function validateLanguageSwitch(page) {
 
   const languageSwitch = switches[0];
   if (
-    tagIsStaticallyHidden(languageSwitch.tag) ||
-    hasStaticallyHiddenAncestor(page.source, languageSwitch.tag.index)
+    tagMakesControlUnavailable(languageSwitch.tag) ||
+    hasUnavailableAncestor(page.source, languageSwitch.tag.index) ||
+    stylesheetHidesLanguageSwitch(page.source, languageSwitch.tag)
   ) {
     addFailure(
       page.relativePath,
@@ -1236,7 +1453,7 @@ function visibleTextForRequirements(source) {
 }
 
 function sentenceSegments(text) {
-  const isBoundary = (character) => /[.?!。！？;；]/u.test(character);
+  const isBoundary = (character) => /[.?!。！？;；…]/u.test(character);
   const segments = [];
   let start = 0;
 
@@ -1250,6 +1467,57 @@ function sentenceSegments(text) {
     segments.push({ text: text.slice(start), start });
   }
   return segments;
+}
+
+function clauseSegments(text) {
+  const segments = [];
+  const boundaryPattern =
+    /[,，:：—–]|\b(?:although|but|however|though|yet)\b|(?:但是|不过|然而|但)/giu;
+  let start = 0;
+  let boundary;
+
+  while ((boundary = boundaryPattern.exec(text)) !== null) {
+    if (boundary.index > start) {
+      segments.push({ text: text.slice(start, boundary.index), start });
+    }
+    start = boundaryPattern.lastIndex;
+  }
+  if (start < text.length) {
+    segments.push({ text: text.slice(start), start });
+  }
+  return segments;
+}
+
+function factScanUnits(blocks) {
+  const units = blocks.map((block) => ({
+    ...block,
+    requiredBoundary: null,
+  }));
+
+  for (let index = 0; index + 1 < blocks.length; index += 1) {
+    const left = blocks[index];
+    const right = blocks[index + 1];
+    const separatorSourceIndex =
+      left.sourceIndexes.at(-1) ?? right.sourceIndexes[0] ?? 0;
+    units.push({
+      text: `${left.text} ${right.text}`,
+      sourceIndexes: [
+        ...left.sourceIndexes,
+        separatorSourceIndex,
+        ...right.sourceIndexes,
+      ],
+      requiredBoundary: left.text.length,
+    });
+    units.push({
+      text: `${left.text}${right.text}`,
+      sourceIndexes: [
+        ...left.sourceIndexes,
+        ...right.sourceIndexes,
+      ],
+      requiredBoundary: left.text.length,
+    });
+  }
+  return units;
 }
 
 const requiredPrivacyBoundaryRules = [
@@ -1382,35 +1650,55 @@ function validateMarketingFacts(page) {
   }
 
   const visibleBlocks = collectVisibleTextBlocks(page.source);
+  const scanUnits = factScanUnits(visibleBlocks);
   for (const rule of [...directFactRules, ...contextualFactRules]) {
     let rejected = false;
-    for (const block of visibleBlocks) {
-      for (const sentence of sentenceSegments(block.text)) {
-        const flags = rule.pattern.flags.includes("g")
-          ? rule.pattern.flags
-          : `${rule.pattern.flags}g`;
-        const pattern = new RegExp(rule.pattern.source, flags);
-        const allowedPattern = rule.allowedPattern
-          ? new RegExp(
-              rule.allowedPattern.source,
-              rule.allowedPattern.flags.replaceAll("g", ""),
-            )
-          : null;
-        let match;
+    for (const unit of scanUnits) {
+      for (const sentence of sentenceSegments(unit.text)) {
+        const contexts = rule.allowedPattern
+          ? clauseSegments(sentence.text)
+          : [{ text: sentence.text, start: 0 }];
+        for (const context of contexts) {
+          const flags = rule.pattern.flags.includes("g")
+            ? rule.pattern.flags
+            : `${rule.pattern.flags}g`;
+          const pattern = new RegExp(rule.pattern.source, flags);
+          const allowedPattern = rule.allowedPattern
+            ? new RegExp(
+                rule.allowedPattern.source,
+                rule.allowedPattern.flags.replaceAll("g", ""),
+              )
+            : null;
+          let match;
 
-        while ((match = pattern.exec(sentence.text)) !== null) {
-          if (!allowedPattern?.test(sentence.text)) {
-            addFailure(
-              page.relativePath,
-              page.source,
-              block.sourceIndexes[sentence.start + match.index] ?? 0,
-              rule.message,
-            );
-            rejected = true;
-            break;
+          while ((match = pattern.exec(context.text)) !== null) {
+            const unitMatchIndex =
+              sentence.start + context.start + match.index;
+            const matchEnd = unitMatchIndex + match[0].length;
+            const crossesRequiredBoundary =
+              unit.requiredBoundary === null ||
+              (unitMatchIndex < unit.requiredBoundary &&
+                matchEnd > unit.requiredBoundary);
+
+            if (
+              crossesRequiredBoundary &&
+              !allowedPattern?.test(context.text)
+            ) {
+              addFailure(
+                page.relativePath,
+                page.source,
+                unit.sourceIndexes[unitMatchIndex] ?? 0,
+                rule.message,
+              );
+              rejected = true;
+              break;
+            }
+            if (match[0].length === 0) {
+              pattern.lastIndex += 1;
+            }
           }
-          if (match[0].length === 0) {
-            pattern.lastIndex += 1;
+          if (rejected) {
+            break;
           }
         }
         if (rejected) {
