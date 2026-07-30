@@ -87,9 +87,10 @@ Create:
 - `merge-uspsa-stage-videos/`
 - `batch-export-match-videos/`
 - `import-practiscore-ess-hdp-match-results/`
+- `thailand-hdp-ess-match-results/`
 - `add-shot-times-and-scores-to-match-video/`
 
-Keep Side by Side inside Split Sync, distinguish Merge from multi-camera sync, and state macOS + Pro for batch export. The score-import guide covers PractiScore, ESS, and HDP/IDPA inputs and limitations. The overlay guide explains that, when PractiScore official per-shot timing records are available, Shooting Cut aligns them to footage using the timer beep and can use official times/splits, shot count, and score data in subtitles. ESS/HDP/IDPA score import must not be described as PractiScore-style official per-shot anchoring.
+Keep Side by Side inside Split Sync, distinguish Merge from multi-camera sync, and state macOS + Pro for batch export. The general score-import guide covers PractiScore, ESS, and HDP/IDPA inputs and limitations. The Thailand guide covers HDP and ESS Thailand together because their participant populations substantially overlap; explain both import paths and how one shooter can keep results/videos from both systems in one archive. The overlay guide explains that, when PractiScore official per-shot timing records are available, Shooting Cut aligns them to footage using the timer beep and can use official times/splits, shot count, and score data in subtitles. ESS/HDP/IDPA score import must not be described as PractiScore-style official per-shot anchoring.
 
 ## Task 6: Complete discovery, HTTPS, and handoff
 
