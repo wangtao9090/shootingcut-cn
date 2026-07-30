@@ -12,12 +12,15 @@ const validatorPath = path.join(workspaceRoot, "scripts", "validate-site.mjs");
 const temporaryRoots = new Set();
 const publicEntries = [
   ".github",
+  "add-shot-times-and-scores-to-match-video",
   "assets",
   "auto-trim-shooting-match-video",
+  "batch-export-match-videos",
   "CNAME",
   "competitive-shooting-video-editor",
   "edit-multi-camera-shooting-video",
   "faq.html",
+  "import-practiscore-ess-hdp-match-results",
   "index.html",
   "merge-uspsa-stage-videos",
   "on-device-shooting-video-editor",
@@ -27,10 +30,12 @@ const publicEntries = [
   "reframe-landscape-shooting-video-for-social-media",
   "robots.txt",
   "shot-detection-troubleshooting",
+  "side-by-side-shooting-video-comparison",
   "sitemap.xml",
   "support.html",
   "sync-two-shooting-videos-by-timer-beep",
   "terms.html",
+  "thailand-hdp-ess-match-results",
 ];
 
 async function copyCurrentSite() {
