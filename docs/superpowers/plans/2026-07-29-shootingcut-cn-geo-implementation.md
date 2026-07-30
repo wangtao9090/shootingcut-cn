@@ -19,7 +19,12 @@
 - One subscription covers all Apple devices. Never promise one purchase, lifetime, or buyout access.
 - Auto Trim and score import are free. Free Auto Trim exports include the Shooting Cut watermark and logo intro card.
 - Safe Pro facts: watermark removal, custom intro cards, Split Sync/Stage Mix, and macOS batch export. Do not state a single-platform social-upload paywall.
-- Export ratios: Source, 9:16, 3:4, 4:5, 6:7, 1:1, 16:9. Resolutions: Original, 4K, 1080p, 720p.
+- General export choices are Original, 4K, 1080p, and 720p, filtered by the
+  source and workflow ceiling. Ratio choices are Source, 9:16, 3:4, 4:5, 6:7,
+  1:1, and 16:9. Track-driven 9:16/3:4/4:5/6:7/1:1 reframes use a 1080-pixel
+  short edge and may be downscaled to 720p; they are not 4K tracked exports.
+  Source does not crop, 16:9 is not a tracked ratio, and Split Sync uses its
+  layout-defined canvas with a 1080-pixel short edge.
 - PractiScore supports official per-shot anchoring. ESS/PractiScore/HDP/IDPA import paths exist; ESS has 41 configured regions. Do not claim arbitrary PDFs or WinMSS.
 - Troubleshooting may cover AGC, neighboring gunshots, echo/reverb, weak timer beeps, sensitivity, timer-marker adjustment, adding/removing shots, last-shot correction, and minimum split. Never describe `.22` as a limitation.
 - Privacy wording:
@@ -78,7 +83,16 @@ Create:
 - `reframe-landscape-shooting-video-for-social-media/`
 - `merge-uspsa-stage-videos/`
 
-The Reframe/Track guide must show how one landscape recording can generate multiple locally tracked exports for vertical short video, portrait feed, square feed, and landscape video. Include every verified ratio/resolution; platform names are format examples only, and TikTok must not be presented as a direct-upload integration.
+The Reframe/Track guide must show how one landscape recording can generate
+multiple locally tracked exports for vertical short video, portrait feed, square
+feed, and landscape video. Include every verified ratio and explain that
+Original, 4K, 1080p, and 720p are general choices filtered by the workflow:
+tracked crop ratios use a 1080-pixel short edge and may be downscaled to 720p,
+so they are not 4K tracked outputs. Treat Source and non-tracked 16:9
+separately, explain the Split Sync layout-defined 1080-short-edge output, and
+never imply that every ratio supports every resolution. Platform names are
+format examples only, and TikTok must not be presented as a direct-upload
+integration.
 
 The Merge guide is a core full-match workflow: arrange separate Stage 1…Stage N recordings in competition order, combine up to 20 clips into one long video for YouTube or a personal archive, review each input, and preserve the verified ability for each Merge video to carry its own score association. Use natural Chinese equivalents of recurring YouTube titles such as “完整比赛,” “全部关卡,” “第一视角,” and explicit stage counts. Do not claim automatic chapters. Distinguish sequential Merge from simultaneous-angle Split Sync/Stage Mix and from macOS batch export.
 
@@ -92,7 +106,22 @@ Create:
 - `thailand-hdp-ess-match-results/`
 - `add-shot-times-and-scores-to-match-video/`
 
-Keep Side by Side inside Split Sync and state macOS + Pro for batch export. The general score-import guide covers PractiScore, ESS, and HDP/IDPA inputs and limitations. The Thailand guide covers HDP and ESS Thailand together because their participant populations substantially overlap; explain both import paths and how one shooter can keep results/videos from both systems in one archive. The overlay guide explains that, when PractiScore official per-shot timing records are available, Shooting Cut aligns them to footage using the timer beep and can use official times/splits, shot count, and score data in subtitles. ESS/HDP/IDPA score import must not be described as PractiScore-style official per-shot anchoring.
+Keep Side by Side inside Split Sync and state macOS + Pro for batch export. The
+general score-import guide covers PractiScore, ESS, and HDP/IDPA inputs and
+limitations. The Thailand guide covers HDP and ESS Thailand together because
+their participant populations substantially overlap. Lead the ESS section with
+the unstable-history pain: the Thailand portal normally exposes only the
+current match, and older match/result URLs can become unavailable when the
+published match changes. Tell shooters to import results while they remain
+accessible and keep the imported record associated with their own video
+archive. Explain both HDP and ESS import paths, how one shooter can retain
+results and videos from both systems in one archive, and each source's
+limitations. Do not promise that Shooting Cut can recover an ESS result after
+the source removes it. The overlay guide explains that, when PractiScore
+official per-shot timing records are available, Shooting Cut aligns them to
+footage using the timer beep and can use official times/splits, shot count, and
+score data in subtitles. ESS/HDP/IDPA score import must not be described as
+PractiScore-style official per-shot anchoring.
 
 ## Task 6: Complete discovery, HTTPS, and handoff
 
