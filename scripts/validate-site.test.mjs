@@ -13,17 +13,23 @@ const temporaryRoots = new Set();
 const publicEntries = [
   ".github",
   "assets",
+  "auto-trim-shooting-match-video",
   "CNAME",
   "competitive-shooting-video-editor",
+  "edit-multi-camera-shooting-video",
   "faq.html",
   "index.html",
+  "merge-uspsa-stage-videos",
   "on-device-shooting-video-editor",
   "oauth",
   "og-image.svg",
   "privacy.html",
+  "reframe-landscape-shooting-video-for-social-media",
   "robots.txt",
+  "shot-detection-troubleshooting",
   "sitemap.xml",
   "support.html",
+  "sync-two-shooting-videos-by-timer-beep",
   "terms.html",
 ];
 

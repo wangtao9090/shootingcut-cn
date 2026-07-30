@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>横屏射击视频转竖屏：Reframe 与 Track 指南 | Shooting Cut</title>
+    <meta name="description" content="用 Shooting Cut 在设备端追踪横屏射击视频中的主体，重复导出 9:16、3:4、4:5、6:7 或 1:1，并了解各工作流的真实分辨率边界。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/reframe-landscape-shooting-video-for-social-media/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/reframe-landscape-shooting-video-for-social-media/">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/">
+    <meta property="og:title" content="横屏射击视频转竖屏：Reframe 与 Track 指南">
+    <meta property="og:description" content="在设备端追踪主体，按真实输出边界把一段横屏素材重复生成竖屏、竖版信息流或方形版本。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="/assets/content.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/#article",
+                "url": "https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/",
+                "mainEntityOfPage": {"@id": "https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/"},
+                "headline": "横屏射击视频转竖屏：Reframe 与 Track 指南",
+                "description": "介绍如何在设备端追踪横屏素材中的主体并重复导出多个比例，以及不同工作流的输出边界。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"},
+                "publisher": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"}
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://shootingcut.cn/"},
+                    {"@type": "ListItem", "position": 2, "name": "竞技射击视频编辑器", "item": "https://shootingcut.cn/competitive-shooting-video-editor/"},
+                    {"@type": "ListItem", "position": 3, "name": "Reframe 与 Track 指南", "item": "https://shootingcut.cn/reframe-landscape-shooting-video-for-social-media/"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/competitive-shooting-video-editor/">功能总览</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/reframe-landscape-shooting-video-for-social-media/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">一段横屏素材 · 多次导出</p>
+                <h1>把横屏射击视频重构为竖屏与方形</h1>
+                <p class="answer-first">在 Shooting Cut 中，可以对一段横屏射击视频进行设备端主体追踪，再从同一份编辑结果重复导出 9:16、3:4、4:5、6:7 或 1:1；选择比例时还要遵守 Track、手动裁切与 Split Sync 各自的分辨率边界。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+            <aside class="hero-panel" aria-label="Track 支持的画面比例">
+                <ol class="mode-rail">
+                    <li><span class="rail-marker">9:16</span><span class="rail-copy"><strong>竖屏短视频</strong><span>Track 裁切比例</span></span></li>
+                    <li><span class="rail-marker">4:5</span><span class="rail-copy"><strong>竖版信息流</strong><span>另有 3:4 与 6:7</span></span></li>
+                    <li><span class="rail-marker">1:1</span><span class="rail-copy"><strong>方形画面</strong><span>可重复使用追踪结果</span></span></li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#workflow">重构流程</a></li>
+                    <li><a href="#modes">哪些模式可用 Track</a></li>
+                    <li><a href="#matrix">真实输出矩阵</a></li>
+                    <li><a href="#review">构图复核</a></li>
+                    <li><a href="#repeat">重复导出</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="workflow">
+                    <h2>从横屏素材到多个版本的五个步骤</h2>
+                    <ol>
+                        <li><strong>完成基础编辑。</strong>先处理单段裁剪、多段合并或多机位切换，确认需要重构的最终内容范围。</li>
+                        <li><strong>选择 Track 并指定主体。</strong>Shooting Cut 在设备端分析画面中的目标人物，为裁切窗口提供运动路径。</li>
+                        <li><strong>选择适用比例。</strong>Track 比例为 9:16、3:4、4:5、6:7 和 1:1；Source 与非追踪的 16:9 属于另外的输出路径。</li>
+                        <li><strong>预览主体位置。</strong>检查快速移动、遮挡、边缘构图和切换点，必要时重新追踪或改用手动裁切。</li>
+                        <li><strong>按用途重复导出。</strong>保留同一份素材与追踪结果，依次生成需要的比例，而不必重新拍摄。</li>
+                    </ol>
+                    <p>Track 是辅助构图工具，不会替代最终预览。尤其在移动快、画面被遮挡或主体靠近边缘时，应从头到尾检查裁切窗口。</p>
+                </section>
+
+                <section class="article-section" id="modes">
+                    <h2>Reframe 在三种模式中支持 Track</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>不同编辑模式的 Reframe 路径</caption>
+                            <thead>
+                                <tr><th scope="col">模式</th><th scope="col">Track</th><th scope="col">手动裁切</th><th scope="col">关键边界</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Auto Trim</strong></td><td>支持</td><td>支持</td><td>每次处理恰好一段 Stage 视频</td></tr>
+                                <tr><td><strong>Merge</strong></td><td>支持</td><td>支持</td><td>最多 20 段顺序素材</td></tr>
+                                <tr><td><strong>Stage Mix</strong></td><td>支持</td><td>以当前工作流提供的重构方式为准</td><td>2–3 个 POV、Follow 或 Static 输入</td></tr>
+                                <tr><td><strong>Split Sync</strong></td><td>不走常规 Track 比例流程</td><td>由布局定义画布</td><td>恰好两个同步输入，输出由所选布局控制</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Auto Trim 与 Merge 即使不使用 Track，也可以手动裁切。Split Sync 的四种布局负责组合两个同步画面，因此不能把它理解为任意 Track 比例与任意分辨率的自由组合器。</p>
+                </section>
+
+                <section class="article-section" id="matrix">
+                    <h2>比例与分辨率要按工作流组合</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>Shooting Cut 输出矩阵</caption>
+                            <thead>
+                                <tr><th scope="col">成片用途</th><th scope="col">工作流</th><th scope="col">画面比例</th><th scope="col">分辨率边界</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>竖屏短视频</strong></td><td>Track</td><td>9:16</td><td>裁切后短边 1080 像素，也可降为 720p；不是 4K Track 输出</td></tr>
+                                <tr><td><strong>竖版信息流</strong></td><td>Track</td><td>3:4、4:5、6:7</td><td>裁切后短边 1080 像素，也可降为 720p；不是 4K Track 输出</td></tr>
+                                <tr><td><strong>方形信息流</strong></td><td>Track</td><td>1:1</td><td>裁切后短边 1080 像素，也可降为 720p；不是 4K Track 输出</td></tr>
+                                <tr><td><strong>横屏或保留来源</strong></td><td>Source 或非追踪 16:9</td><td>来源比例、16:9</td><td>常规选项为 Original、4K、1080p、720p，并按源素材与处理上限过滤</td></tr>
+                                <tr><td><strong>双机位同步画面</strong></td><td>Split Sync 布局</td><td>由 Full Screen、Dual View: Center HUD、Dual View: Top HUD 或 Side by Side 决定</td><td>输出短边 1080 像素，不属于常规 Track 比例流程</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warning">
+                        <p><strong>不要把选项做笛卡尔积。</strong>Original、4K、1080p 和 720p 是常规输出选择，并不表示每一种比例都能搭配每一种分辨率；源素材和具体处理流程会过滤可用选项。</p>
+                    </div>
+                </section>
+
+                <section class="article-section" id="review">
+                    <h2>用运动过程检查裁切，而不只看第一帧</h2>
+                    <p>竞技射击中的启动、横移、进出射击位置和快速转向会改变主体在画面中的位置。预览时应关注头部与脚部是否被切断、枪械方向是否留有空间、遮挡后追踪是否恢复，以及从一个位置移动到下一个位置时画面是否过度晃动。</p>
+                    <ul>
+                        <li>主体选择不正确时，重新指定目标并追踪；</li>
+                        <li>自动路径不适合某个片段时，回到预览修正或使用手动裁切；</li>
+                        <li>比例越窄，越要检查横向移动和边缘空间；</li>
+                        <li>导出前同时检查字幕、安全边距与裁切窗口。</li>
+                    </ul>
+                    <p>这些分析与编辑在设备端完成。有关本地处理、可选改进数据和外部分享边界，请阅读<a href="/on-device-shooting-video-editor/">设备端视频编辑说明</a>。</p>
+                </section>
+
+                <section class="article-section" id="repeat">
+                    <h2>保留一个项目，按发布用途逐次导出</h2>
+                    <p>建议先确定一份内容完整、字幕正确的主编辑结果，再按用途导出 9:16、4:5、1:1 或横屏版本。平台名称在这里仅用于解释常见画面用途，不代表自动发布能力，也不改变上述输出边界。</p>
+                    <div class="privacy-cta">
+                        <p>需要先把多个 Stage 整理成一条完整比赛视频？</p>
+                        <a class="button-link" href="/merge-uspsa-stage-videos/">查看 Merge 指南</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">相关指南</h2>
+            <ul>
+                <li><a href="/auto-trim-shooting-match-video/">自动裁剪单个 Stage</a></li>
+                <li><a href="/merge-uspsa-stage-videos/">合并整场比赛</a></li>
+                <li><a href="/edit-multi-camera-shooting-video/">Stage Mix 多机位剪辑</a></li>
+                <li><a href="/sync-two-shooting-videos-by-timer-beep/">Split Sync 双机位布局</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a><a href="/faq.html">常见问题</a><a href="/privacy.html">隐私政策</a><a href="/support.html">支持</a><a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>

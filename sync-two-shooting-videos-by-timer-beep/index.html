@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用计时器蜂鸣同步两个射击视频 | Shooting Cut</title>
+    <meta name="description" content="用 Shooting Cut Split Sync 按计时器蜂鸣声对齐同一次 Stage 的恰好两个机位，选择四种固定布局并在导出前手动复核同步点。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/">
+    <link rel="alternate" hreflang="en" href="https://shootingcut.com/sync-two-shooting-videos-by-timer-beep/">
+    <link rel="alternate" hreflang="x-default" href="https://shootingcut.com/sync-two-shooting-videos-by-timer-beep/">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/">
+    <meta property="og:title" content="用计时器蜂鸣同步两个射击视频">
+    <meta property="og:description" content="按同一次 Stage 的计时器蜂鸣声对齐两个机位，选择 Split Sync 布局并人工确认同步。">
+    <meta property="og:image" content="https://shootingcut.cn/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shooting Cut">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="/assets/content.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "@id": "https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/#article",
+                "url": "https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/",
+                "mainEntityOfPage": {"@id": "https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/"},
+                "headline": "用计时器蜂鸣同步两个射击视频",
+                "description": "介绍如何用 Shooting Cut Split Sync 对齐同一次 Stage 的两个机位，选择固定布局并复核同步点。",
+                "image": "https://shootingcut.cn/og-image.svg",
+                "datePublished": "2026-07-29",
+                "dateModified": "2026-07-29",
+                "inLanguage": "zh-Hans",
+                "author": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"},
+                "publisher": {"@type": "Organization", "name": "ShootingCut", "url": "https://shootingcut.cn/"}
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://shootingcut.cn/"},
+                    {"@type": "ListItem", "position": 2, "name": "竞技射击视频编辑器", "item": "https://shootingcut.cn/competitive-shooting-video-editor/"},
+                    {"@type": "ListItem", "position": 3, "name": "Split Sync 指南", "item": "https://shootingcut.cn/sync-two-shooting-videos-by-timer-beep/"}
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+        <nav class="site-nav" aria-label="主要导航">
+            <a class="brand" href="/">Shooting Cut&trade;</a>
+            <ul class="nav-links">
+                <li><a href="/competitive-shooting-video-editor/">功能总览</a></li>
+                <li><a href="/faq.html">常见问题</a></li>
+                <li><a class="language-link" href="https://shootingcut.com/sync-two-shooting-videos-by-timer-beep/" hreflang="en" lang="en">English</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">同一次 Stage · 恰好两个机位</p>
+                <h1>用计时器蜂鸣同步两个射击视频</h1>
+                <p class="answer-first">要对齐同一次 Stage 的两个拍摄视角，可在 Shooting Cut Pro 中使用 Split Sync：导入恰好两个视频，以双方音轨中的计时器蜂鸣声建立同步点，手动复核后从四种固定布局中选择成片画面。</p>
+                <p class="updated">更新日期：2026 年 7 月 29 日</p>
+            </div>
+            <aside class="hero-panel" aria-label="Split Sync 的工作流边界">
+                <ol class="mode-rail">
+                    <li><span class="rail-marker">2</span><span class="rail-copy"><strong>恰好两个输入</strong><span>必须来自同一次 Stage</span></span></li>
+                    <li><span class="rail-marker">音</span><span class="rail-copy"><strong>蜂鸣声对齐</strong><span>自动建议，人工确认</span></span></li>
+                    <li><span class="rail-marker">4</span><span class="rail-copy"><strong>四种布局</strong><span>成片画布由布局决定</span></span></li>
+                </ol>
+            </aside>
+        </header>
+
+        <div class="content-layout">
+            <nav class="section-index" aria-label="本文目录">
+                <p>本文目录</p>
+                <ol>
+                    <li><a href="#prepare">拍摄与准备</a></li>
+                    <li><a href="#workflow">同步流程</a></li>
+                    <li><a href="#layouts">四种布局</a></li>
+                    <li><a href="#review">人工复核</a></li>
+                    <li><a href="#boundary">输出与模式边界</a></li>
+                </ol>
+            </nav>
+
+            <article class="article-body">
+                <section class="article-section" id="prepare">
+                    <h2>两个视频必须记录同一次射击过程</h2>
+                    <p>Split Sync 的输入不是前后发生的两个 Stage，而是同一次 Stage 的两个同步视角，例如第一人称相机与场外跟拍。两个视频都应尽量保留清晰的开始蜂鸣声，且不要在导入前把蜂鸣声附近切掉。</p>
+                    <p>一次 Split Sync 接收<strong>恰好两个输入</strong>。如果要连接 Stage 1、Stage 2 等顺序素材，应使用 <a href="/merge-uspsa-stage-videos/">Merge</a>；如果同一次 Stage 有 2–3 个需要自动切换的角色化机位，则使用 <a href="/edit-multi-camera-shooting-video/">Stage Mix</a>。</p>
+                </section>
+
+                <section class="article-section" id="workflow">
+                    <h2>从两个原片到同步成片的五个步骤</h2>
+                    <ol>
+                        <li><strong>导入同一次 Stage 的两个视频。</strong>确认两段素材都包含计时器蜂鸣声和可用于比对的射击过程。</li>
+                        <li><strong>运行音频对齐。</strong>Shooting Cut 分析双方音轨，以计时器蜂鸣声为同步锚点生成时间线偏移建议。</li>
+                        <li><strong>试听并手动复核。</strong>检查蜂鸣声、首发与后续枪声是否在两个画面中同时发生，必要时调整同步点。</li>
+                        <li><strong>选择 Split Sync 布局。</strong>根据两个画面的关系选择 Full Screen、Dual View: Center HUD、Dual View: Top HUD 或 Side by Side。</li>
+                        <li><strong>完整预览后导出。</strong>从开始到结束检查同步、字幕、布局安全区和裁切，再输出短边 1080 像素的成片。</li>
+                    </ol>
+                    <p>蜂鸣声分析能缩短寻找同步点的时间，但最终同步仍要以两个画面的动作和音频为依据，由用户确认。</p>
+                </section>
+
+                <section class="article-section" id="layouts">
+                    <h2>四种布局决定两个画面的组合方式</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <caption>Split Sync 布局</caption>
+                            <thead>
+                                <tr><th scope="col">布局名称</th><th scope="col">自然用途</th><th scope="col">选择时检查</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Full Screen</strong></td><td>按 Full Screen 模板呈现同步内容，突出当前模板中的主画面</td><td>主体是否在安全区，画面切换是否符合预期</td></tr>
+                                <tr><td><strong>Dual View: Center HUD</strong></td><td>用中央 HUD 区域组合两个同步视角与相关画面信息</td><td>中央区域是否遮挡关键动作</td></tr>
+                                <tr><td><strong>Dual View: Top HUD</strong></td><td>用顶部 HUD 区域组合两个同步视角与相关画面信息</td><td>顶部区域与字幕是否拥挤</td></tr>
+                                <tr><td><strong>Side by Side</strong></td><td>两个同步画面左右并列，方便在同一时刻直接对照</td><td>两个主体的可见面积是否足够</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>这四项是产品提供的布局模板，不是可任意组合比例、位置和分辨率的画布生成器。应在实际预览中判断哪个布局最适合当前两个机位。</p>
+                </section>
+
+                <section class="article-section" id="review">
+                    <h2>复杂音频环境下如何确认同步</h2>
+                    <p>自动增益控制（AGC）、邻近选手枪声、挡板或室内环境造成的回音与混响，以及较弱的计时器蜂鸣声，都可能影响音频锚点。同步后建议放大检查三个时刻：蜂鸣声开始、首发，以及包含明显身体动作或枪口动作的后续事件。</p>
+                    <ul>
+                        <li>两条音轨中的蜂鸣声不重合时，先修正同步锚点；</li>
+                        <li>蜂鸣声附近有邻近枪声时，结合画面动作判断真实起点；</li>
+                        <li>回音形成多个峰值时，不要只看单个自动标记；</li>
+                        <li>导出前从头播放到尾，确认偏移没有在人工调整后被引入。</li>
+                    </ul>
+                    <p>需要逐项处理音频检测问题时，请参阅<a href="/shot-detection-troubleshooting/">枪声检测排查指南</a>。</p>
+                </section>
+
+                <section class="article-section" id="boundary">
+                    <h2>Split Sync 是 Pro 功能，输出由布局控制</h2>
+                    <p>Split Sync 属于 Pro。它的输出使用所选布局，短边为 1080 像素；不要把它描述为常规 Track 流程，也不要承诺任意画面比例与分辨率组合。若目标是把一段横屏素材持续跟随主体并重复导出多种比例，请改用适用模式中的 <a href="/reframe-landscape-shooting-video-for-social-media/">Reframe 与 Track</a>。</p>
+                    <div class="privacy-cta">
+                        <p>同一次 Stage 有第三个角色化机位，并希望自动建议切换点？</p>
+                        <a class="button-link" href="/edit-multi-camera-shooting-video/">查看 Stage Mix 指南</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">相关指南</h2>
+            <ul>
+                <li><a href="/edit-multi-camera-shooting-video/">剪辑 2–3 个机位</a></li>
+                <li><a href="/merge-uspsa-stage-videos/">区分顺序合并</a></li>
+                <li><a href="/shot-detection-troubleshooting/">排查蜂鸣声与枪声检测</a></li>
+                <li><a href="/competitive-shooting-video-editor/">比较四种编辑模式</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ShootingCut&trade; LLC. 保留所有权利。</p>
+        <nav aria-label="页脚导航">
+            <a href="/">首页</a><a href="/faq.html">常见问题</a><a href="/privacy.html">隐私政策</a><a href="/support.html">支持</a><a href="/terms.html">服务条款</a>
+        </nav>
+    </footer>
+</body>
+</html>
