@@ -111,6 +111,16 @@ function decodeHtmlAttribute(value) {
   );
 }
 
+function decodeHtmlForScan(value) {
+  return value.replace(
+    /&(amp|apos|gt|lt|quot|#x[0-9a-f]+|#[0-9]+);/gi,
+    (entity, reference) => {
+      const decoded = decodeCharacterReference(reference);
+      return `${decoded}${" ".repeat(Math.max(0, entity.length - decoded.length))}`;
+    },
+  );
+}
+
 function parseAttributes(attributeSource, sourceIndex) {
   const attributes = [];
   const attributePattern =
@@ -141,11 +151,15 @@ function parseAttributes(attributeSource, sourceIndex) {
 
 function scanStartTags(source) {
   const tags = [];
+  const scanSource = source.replace(
+    /<!--[\s\S]*?-->/g,
+    (comment) => " ".repeat(comment.length),
+  );
   const tagPattern =
     /<([A-Za-z][A-Za-z0-9:-]*)(?=\s|\/?>)((?:"[^"]*"|'[^']*'|[^'"<>])*)>/g;
   let match;
 
-  while ((match = tagPattern.exec(source)) !== null) {
+  while ((match = tagPattern.exec(scanSource)) !== null) {
     tags.push({
       name: match[1].toLowerCase(),
       index: match.index,
@@ -299,6 +313,16 @@ function collectPageOwnedJsonLdUrls(value, entries = []) {
             ownerType,
             value: candidate,
           });
+        } else if (
+          candidate &&
+          typeof candidate === "object" &&
+          typeof candidate["@id"] === "string"
+        ) {
+          entries.push({
+            field: `${field}.@id`,
+            ownerType,
+            value: candidate["@id"],
+          });
         }
       }
     }
@@ -322,7 +346,8 @@ function validatePageOwnedJsonLdUrls(page, json, sourceIndex) {
       parsed = null;
     }
 
-    const allowsFragment = entry.field === "@id";
+    const allowsFragment =
+      entry.field === "@id" || entry.field.endsWith(".@id");
     const valid =
       parsed?.origin === siteOrigin &&
       parsed.username === "" &&
@@ -631,7 +656,9 @@ function validateChineseVisibleText(page) {
     .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, mask)
     .replace(/<[^>]*>/g, mask);
   const chineseCharacter =
-    /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/u.exec(visibleSource);
+    /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/u.exec(
+      decodeHtmlForScan(visibleSource),
+    );
 
   if (!chineseCharacter) {
     addFailure(
@@ -770,6 +797,30 @@ function validateLanguageSwitch(page) {
   }
 
   const languageSwitch = switches[0];
+  const hidden = findAttribute(languageSwitch.tag, "hidden");
+  const inert = findAttribute(languageSwitch.tag, "inert");
+  const ariaHidden = findAttribute(languageSwitch.tag, "aria-hidden");
+  const style = findAttribute(languageSwitch.tag, "style");
+  const isDirectlyHidden =
+    Boolean(hidden) ||
+    Boolean(inert) ||
+    ariaHidden?.value?.trim().toLowerCase() === "true" ||
+    /(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)\s*(?:;|$)/i.test(
+      style?.value ?? "",
+    );
+  if (isDirectlyHidden) {
+    addFailure(
+      page.relativePath,
+      page.source,
+      hidden?.index ??
+        inert?.index ??
+        ariaHidden?.index ??
+        style?.index ??
+        languageSwitch.tag.index,
+      "language switch must be visible",
+    );
+  }
+
   const href = languageSwitch.href?.value
     ? decodeHtmlAttribute(languageSwitch.href.value).trim()
     : "";
@@ -896,7 +947,7 @@ const directFactRules = [
   },
   {
     pattern:
-      /(?<!伪)匿名[^。；]{0,80}(?:检测|遥测|派生字段)|(?:检测|遥测|派生字段)[^。；]{0,80}(?<!伪)匿名/i,
+      /(?<!伪)匿名(?:的)?(?:派生|检测|遥测|报告|字段)|(?:检测|遥测)报告[^。；]{0,80}(?<!伪)匿名/i,
     message: "detection reports must be described as pseudonymous",
   },
   {
@@ -948,6 +999,17 @@ function visibleLine(line) {
     .replace(/&nbsp;/gi, " ");
 }
 
+function visibleSourceForFactScan(source) {
+  const mask = (value) => " ".repeat(value.length);
+  return decodeHtmlForScan(
+    source
+      .replace(/<!--[\s\S]*?-->/g, mask)
+      .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, mask)
+      .replace(/<[^>]*>/g, mask)
+      .replace(/&nbsp;/gi, mask),
+  ).replace(/\r?\n/g, mask);
+}
+
 const requiredPrivacyBoundaryRules = [
   {
     pattern:
@@ -966,6 +1028,12 @@ const requiredPrivacyBoundaryRules = [
   },
   {
     pattern:
+      /非匿名\s*RevenueCat App User ID[\s\S]{0,280}\$RCAnonymousID:/i,
+    message:
+      "must disclose the custom RevenueCat App User ID KVS boundary",
+  },
+  {
+    pattern:
       /原始媒体文件[\s\S]*PCM\s*音频[\s\S]*人物追踪路径[\s\S]*不会放入\s*KVS/i,
     message: "must list media and tracking data excluded from iCloud KVS",
   },
@@ -976,9 +1044,20 @@ const requiredPrivacyBoundaryRules = [
   },
   {
     pattern:
+      /读取该\s*ID[\s\S]{0,120}登录\s*RevenueCat/i,
+    message:
+      "must describe restoring a custom RevenueCat App User ID from KVS",
+  },
+  {
+    pattern:
       /帮助改进枪声检测[\s\S]{0,160}用户可控制[\s\S]{0,80}默认开启/i,
     message:
       "must state that detection improvement is currently enabled by default",
+  },
+  {
+    pattern:
+      /编辑界面的行内开关[\s\S]{0,160}“改进检测”[\s\S]{0,80}“改进”[\s\S]{0,180}导出设置[\s\S]{0,100}“帮助改进枪声检测”/i,
+    message: "must list the actual detection-improvement control labels",
   },
   {
     pattern: /CloudKit[\s\S]{0,160}有限的伪匿名派生/i,
@@ -1013,6 +1092,20 @@ const requiredPrivacyBoundaryRules = [
       /所选导出视频[\s\S]*YouTube\s*或\s*Facebook[\s\S]*账号或视频元数据/i,
     message: "must describe user-initiated YouTube and Facebook uploads",
   },
+  {
+    pattern:
+      /iCloud\s*数据[\s\S]{0,200}自定义\s*RevenueCat App User ID/i,
+    message:
+      "must include the custom RevenueCat App User ID in KVS retention",
+  },
+];
+
+const requiredSupportBoundaryRules = [
+  {
+    pattern:
+      /编辑界面的行内开关[\s\S]{0,160}“改进检测”[\s\S]{0,80}“改进”[\s\S]{0,180}导出设置[\s\S]{0,100}“帮助改进枪声检测”/i,
+    message: "support must list the actual detection-improvement control labels",
+  },
 ];
 
 function validatePrivacyBoundary(page) {
@@ -1031,35 +1124,75 @@ function validatePrivacyBoundary(page) {
   }
 }
 
+function validateSupportBoundary(page) {
+  if (page.relativePath !== "support.html") {
+    return;
+  }
+
+  const visibleText = page.source
+    .split("\n")
+    .map((line) => visibleLine(line))
+    .join(" ");
+  for (const rule of requiredSupportBoundaryRules) {
+    if (!rule.pattern.test(visibleText)) {
+      addFailure(page.relativePath, page.source, 0, rule.message);
+    }
+  }
+}
+
 function validateMarketingFacts(page) {
   if (!isFactLintPage(page.relativePath)) {
     return;
   }
 
-  const lines = page.source.split("\n");
-  for (const [offset, sourceLine] of lines.entries()) {
-    const line = visibleLine(sourceLine);
-    for (const rule of [...directFactRules, ...contextualFactRules]) {
-      if (rule.pattern.test(line) && !rule.allowedPattern?.test(line)) {
-        failures.push({
-          relativePath: page.relativePath,
-          line: offset + 1,
-          message: rule.message,
-        });
+  const visibleSource = visibleSourceForFactScan(page.source);
+  for (const rule of [...directFactRules, ...contextualFactRules]) {
+    const flags = rule.pattern.flags.includes("g")
+      ? rule.pattern.flags
+      : `${rule.pattern.flags}g`;
+    const pattern = new RegExp(rule.pattern.source, flags);
+    let match;
+
+    while ((match = pattern.exec(visibleSource)) !== null) {
+      const contextStart = Math.max(0, match.index - 180);
+      const contextEnd = Math.min(
+        visibleSource.length,
+        match.index + match[0].length + 180,
+      );
+      const context = visibleSource.slice(contextStart, contextEnd);
+      const allowedPattern = rule.allowedPattern
+        ? new RegExp(
+            rule.allowedPattern.source,
+            rule.allowedPattern.flags.replaceAll("g", ""),
+          )
+        : null;
+
+      if (!allowedPattern?.test(context)) {
+        addFailure(
+          page.relativePath,
+          page.source,
+          match.index,
+          rule.message,
+        );
+        break;
+      }
+      if (match[0].length === 0) {
+        pattern.lastIndex += 1;
       }
     }
+  }
 
-    if (
-      /<(?:h[1-6]|dt|strong)\b[^>]*>\s*strings\s*<\/(?:h[1-6]|dt|strong)>/i.test(
-        sourceLine,
-      )
-    ) {
-      failures.push({
-        relativePath: page.relativePath,
-        line: offset + 1,
-        message: 'obsolete "Strings" editing-mode heading',
-      });
-    }
+  const stringsHeading =
+    /<(?:h[1-6]|dt|strong)\b[^>]*>\s*strings\s*<\/(?:h[1-6]|dt|strong)>/i.exec(
+      page.source,
+    );
+  if (stringsHeading) {
+    addFailure(
+      page.relativePath,
+      page.source,
+      stringsHeading.index,
+      'obsolete "Strings" editing-mode heading',
+    );
   }
 }
 
@@ -1614,6 +1747,7 @@ async function main() {
     parseJsonLd(page);
     validateMarketingFacts(page);
     validatePrivacyBoundary(page);
+    validateSupportBoundary(page);
   }
   for (const page of pages.values()) {
     validateLocalLinks(page, pages, publicFiles);

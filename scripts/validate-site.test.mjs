@@ -106,6 +106,33 @@ test("rejects a page-owned JSON-LD URL on the wrong domain", async () => {
   assertRejected(result, /index\.html:\d+ SoftwareApplication url must be exactly/i);
 });
 
+test("accepts a same-route object mainEntityOfPage reference", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '"url": "https://shootingcut.cn/",',
+    '"url": "https://shootingcut.cn/",\n        "mainEntityOfPage": {"@id": "https://shootingcut.cn/"},',
+  );
+  const result = runValidator(root);
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+});
+
+test("rejects an object mainEntityOfPage reference on the wrong domain", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '"url": "https://shootingcut.cn/",',
+    '"url": "https://shootingcut.cn/",\n        "mainEntityOfPage": {"@id": "https://shootingcut.com/"},',
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /index\.html:\d+ SoftwareApplication mainEntityOfPage\.@id must be exactly/i,
+  );
+});
+
 test("rejects duplicate HTML ids", async () => {
   const root = await copyCurrentSite();
   await replaceInFile(
@@ -116,6 +143,33 @@ test("rejects duplicate HTML ids", async () => {
   );
   const result = runValidator(root);
   assertRejected(result, /index\.html:\d+ duplicate id="home"/i);
+});
+
+test("rejects a directly hidden language switch", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>',
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" hidden>EN</a>',
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ language switch must be visible/i);
+});
+
+test("does not count a commented language switch as visible", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>',
+    '<!-- <a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a> -->',
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /index\.html:\d+ expected exactly one visible English language switch; found 0/i,
+  );
 });
 
 test("rejects an absolute local-media privacy claim", async () => {
@@ -157,6 +211,68 @@ test("requires the current default state of the detection-improvement switch", a
   assertRejected(
     result,
     /privacy\.html:\d+ must state that detection improvement is currently enabled by default/i,
+  );
+});
+
+test("requires the custom RevenueCat App User ID KVS boundary", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "非匿名 RevenueCat App User ID",
+    "RevenueCat 标识符",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ must disclose the custom RevenueCat App User ID KVS boundary/i,
+  );
+});
+
+test("requires all real detection-improvement control labels", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "或简称“改进”",
+    "",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ must list the actual detection-improvement control labels/i,
+  );
+});
+
+test("requires support to list all real detection-improvement control labels", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "support.html",
+    "或简称“改进”",
+    "",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /support\.html:\d+ support must list the actual detection-improvement control labels/i,
+  );
+});
+
+test("rejects a TikTok direct-upload claim split across source lines", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<section class="hero" id="home">',
+    `<section class="hero" id="home">
+      <p>TikTok 视频<span> </span>
+      直传目前受支持。</p>`,
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /index\.html:\d+ TikTok direct-upload or integration claim/i,
   );
 });
 

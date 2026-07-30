@@ -96,7 +96,7 @@
             <li><strong>字幕叠加：</strong>将实时成绩统计数据（各枪时间、Split 间隔、总用时等）以字幕形式叠加于导出视频中。</li>
             <li><strong>人物追踪与画面重构：</strong>使用 Apple Vision 在设备端追踪所选人物，并为不同导出比例计算画面裁切。</li>
             <li><strong>成绩导入：</strong>通过网络从受支持的 PractiScore、ESS、HDP、IDPA 等来源导入比赛、成绩或官方计时记录。</li>
-            <li><strong>iCloud 元数据同步：</strong>素材别名、视角、枪械类型、成绩关联和导入比赛记录等轻量元数据可通过用户自己的 iCloud KVS 跨设备同步；原始媒体、PCM 音频和人物追踪路径不使用该机制同步。</li>
+            <li><strong>iCloud 元数据同步：</strong>素材别名、视角、枪械类型、成绩关联、导入比赛记录，以及已经存在的非匿名自定义 RevenueCat App User ID 等轻量数据可通过用户自己的 iCloud KVS 跨设备同步；以 <code>$RCAnonymousID:</code> 开头的 RevenueCat ID、原始媒体、PCM 音频和人物追踪路径不使用该机制同步。</li>
             <li><strong>平台上传：</strong>用户可主动把所选导出视频上传到 YouTube 或 Facebook（需单独授权）。当前版本不提供 TikTok 视频直传。</li>
         </ul>
         <p>各平台（iOS、iPadOS、macOS）的界面和部分功能可能有所差异，功能也可能随版本更新而变更。需要付费权益的功能通过订阅提供。</p>
@@ -137,7 +137,7 @@
         <p>订阅管理及购买相关咨询请直接联系苹果 App Store 客服，我们不直接处理退款。</p>
 
         <h2>8. 第三方服务与社交平台集成</h2>
-        <p>应用在您主动使用相应功能时会与第三方服务交互，包括：RevenueCat 的订阅验证、Apple iCloud KVS 的元数据同步、CloudKit 的可选检测改进报告、成绩来源的网络导入，以及 YouTube 或 Facebook 的用户发起上传。当前版本不提供 TikTok 视频直传。</p>
+        <p>应用在您主动使用相应功能时会与第三方服务交互，包括：RevenueCat 的订阅验证、Apple iCloud KVS 的元数据同步（其中可包含用于跨设备恢复订阅身份的既有非匿名自定义 RevenueCat App User ID）、CloudKit 的可选检测改进报告、成绩来源的网络导入，以及 YouTube 或 Facebook 的用户发起上传。当前版本不提供 TikTok 视频直传。</p>
         <p>您使用第三方服务时，还须遵守相应服务的条款和隐私政策。关于传输字段、遥测开关和数据控制方式，请阅读我们的<a href="/privacy.html">隐私政策</a>。</p>
 
         <h2>9. 知识产权</h2>

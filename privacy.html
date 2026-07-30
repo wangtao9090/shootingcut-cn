@@ -104,6 +104,7 @@
             <li>素材别名、机位视角和枪械类型</li>
             <li>视频与成绩的关联信息</li>
             <li>导入的比赛记录，以及记录中的射手和比赛字段</li>
+            <li>已经存在的非匿名 RevenueCat App User ID（用于跨设备恢复订阅身份的自定义 ID）。以 <code>$RCAnonymousID:</code> 开头的 RevenueCat 匿名 ID 不会写入 KVS。</li>
         </ul>
         <p>原始媒体文件、PCM 音频和人物追踪路径或关键帧不会放入 KVS。KVS 数据由 Apple 托管在您的 iCloud 账号下，并受 Apple 的服务条款、保留政策和您的 iCloud 设置约束。</p>
 
@@ -117,13 +118,13 @@
             <li>应用版本、触发原因和报告时间</li>
         </ul>
         <p>这些报告不包含原始视频、原始音频、PCM 音频、文件内容或人物追踪路径。它们也不用于跨应用广告跟踪。</p>
-        <p><strong>如何控制：</strong>您可以在编辑或导出界面关闭“帮助改进枪声检测”；部分紧凑界面会显示“改进检测”。关闭后，应用在关闭期间不会创建新的报告，也不会重试发送本地待处理队列。关闭开关不会删除此前已经提交的报告，也不会清空设备上已经存在的本地重试队列。再次开启后，应用可能继续重试该队列。</p>
+        <p><strong>如何控制：</strong>您可以关闭编辑界面的行内开关；根据平台与布局，它会显示“改进检测”或简称“改进”，导出设置则使用完整标签“帮助改进枪声检测”。关闭后，应用在关闭期间不会创建新的报告，也不会重试发送本地待处理队列。关闭开关不会删除此前已经提交的报告，也不会清空设备上已经存在的本地重试队列。再次开启后，应用可能继续重试该队列。</p>
 
         <h2>5. 比赛成绩导入</h2>
         <p>PractiScore、ESS、HDP、IDPA 或其他受支持成绩来源的导入功能需要网络连接。使用该功能时，应用会向您选择或提供的成绩来源请求比赛、赛段、射手、成绩和官方计时记录等所需信息。相应站点会按照其自身政策接收正常的网络请求信息。导入后的比赛记录和成绩关联可存储在本地，并可按第 3 节所述通过您的 iCloud KVS 同步。</p>
 
         <h2>6. 购买与订阅</h2>
-        <p>应用通过 Apple App Store 提供订阅，并使用 <strong>RevenueCat</strong> 管理订阅权益。RevenueCat 会接收应用或订阅标识符、App Store 交易标识符和订阅状态，以完成购买验证和跨设备权益同步；RevenueCat 不接收您的支付卡详情。一次订阅可覆盖该订阅者的 Apple 设备。详情请参阅 <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat 隐私政策</a>。</p>
+        <p>应用通过 Apple App Store 提供订阅，并使用 <strong>RevenueCat</strong> 管理订阅权益。RevenueCat 会接收应用或订阅标识符、App Store 交易标识符和订阅状态，以完成购买验证和跨设备权益同步。如果 KVS 中已经保存非匿名的自定义 RevenueCat App User ID，应用可在另一台 Apple 设备上读取该 ID，并用它登录 RevenueCat；RevenueCat 匿名 ID 不进入这项 KVS 备份。RevenueCat 不接收您的支付卡详情。一次订阅可覆盖该订阅者的 Apple 设备。详情请参阅 <a href="https://www.revenuecat.com/privacy" target="_blank">RevenueCat 隐私政策</a>。</p>
 
         <h2>7. 用户主动发起的平台上传</h2>
         <p>ShootingCut 1.1.3 支持用户主动把所选导出视频上传到 YouTube 或 Facebook。只有在您选择平台、完成授权并确认上传后，应用才会把所选导出文件、访问令牌以及平台完成上传所需的账号或视频元数据发送给该平台。</p>
@@ -148,7 +149,7 @@
         <h2>9. 数据保留与删除</h2>
         <ul>
             <li><strong>本地数据：</strong>项目、偏好、缓存和待重试遥测队列存储在设备上，受系统备份、应用删除和设备设置影响。</li>
-            <li><strong>iCloud 数据：</strong>KVS 及 Apple 云端素材受您的 iCloud 账号设置和 Apple 保留政策约束。</li>
+            <li><strong>iCloud 数据：</strong>KVS 元数据（包括已保存的自定义 RevenueCat App User ID）及 Apple 云端素材受您的 iCloud 账号设置和 Apple 保留政策约束。</li>
             <li><strong>人物追踪：</strong>追踪路径与关键帧用于设备端导出，不会放入 KVS 或检测改进报告。</li>
             <li><strong>已提交遥测：</strong>关闭开关不会自动删除已经提交到 CloudKit 的报告。</li>
             <li><strong>平台与订阅数据：</strong>由 RevenueCat、YouTube、Facebook 或成绩提供方按照各自政策保留。</li>
