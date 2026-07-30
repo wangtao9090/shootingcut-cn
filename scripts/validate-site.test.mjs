@@ -145,13 +145,27 @@ test("rejects duplicate HTML ids", async () => {
   assertRejected(result, /index\.html:\d+ duplicate id="home"/i);
 });
 
-test("rejects a directly hidden language switch", async () => {
+test("rejects a language switch hidden with an important inline style", async () => {
   const root = await copyCurrentSite();
   await replaceInFile(
     root,
     "index.html",
     '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>',
-    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" hidden>EN</a>',
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en" style="display:none!important">EN</a>',
+  );
+  const result = runValidator(root);
+  assertRejected(result, /index\.html:\d+ language switch must be visible/i);
+});
+
+test("rejects a language switch hidden by an ancestor", async () => {
+  const root = await copyCurrentSite();
+  const languageSwitch =
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>';
+  await replaceInFile(
+    root,
+    "index.html",
+    languageSwitch,
+    `<div style="visibility:hidden !important">${languageSwitch}</div>`,
   );
   const result = runValidator(root);
   assertRejected(result, /index\.html:\d+ language switch must be visible/i);
@@ -170,6 +184,25 @@ test("does not count a commented language switch as visible", async () => {
     result,
     /index\.html:\d+ expected exactly one visible English language switch; found 0/i,
   );
+});
+
+test("does not count language switches inside script or style elements", async () => {
+  const languageSwitch =
+    '<a href="https://shootingcut.com/" class="lang-btn" hreflang="en" lang="en">EN</a>';
+  for (const element of ["script", "style"]) {
+    const root = await copyCurrentSite();
+    await replaceInFile(
+      root,
+      "index.html",
+      languageSwitch,
+      `<${element}>${languageSwitch}</${element}>`,
+    );
+    const result = runValidator(root);
+    assertRejected(
+      result,
+      /index\.html:\d+ expected exactly one visible English language switch; found 0/i,
+    );
+  }
 });
 
 test("rejects an absolute local-media privacy claim", async () => {
@@ -235,7 +268,7 @@ test("requires all real detection-improvement control labels", async () => {
     root,
     "privacy.html",
     "或简称“改进”",
-    "",
+    "<!--\n或简称“改进”\n-->",
   );
   const result = runValidator(root);
   assertRejected(
@@ -259,21 +292,47 @@ test("requires support to list all real detection-improvement control labels", a
   );
 });
 
-test("rejects a TikTok direct-upload claim split across source lines", async () => {
+test("rejects a TikTok direct-upload claim split by an inline tag", async () => {
   const root = await copyCurrentSite();
   await replaceInFile(
     root,
     "index.html",
     '<section class="hero" id="home">',
     `<section class="hero" id="home">
-      <p>TikTok 视频<span> </span>
-      直传目前受支持。</p>`,
+      <p>TikTok 视频直<span>传</span>目前受支持。</p>`,
   );
   const result = runValidator(root);
   assertRejected(
     result,
     /index\.html:\d+ TikTok direct-upload or integration claim/i,
   );
+});
+
+test("does not let a legal negative sentence excuse an adjacent positive claim", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "privacy.html",
+    "当前 1.1.3 不提供 TikTok 视频直传。",
+    "当前 1.1.3 不提供 TikTok 视频直传。TikTok 视频直传目前受支持。",
+  );
+  const result = runValidator(root);
+  assertRejected(
+    result,
+    /privacy\.html:\d+ TikTok direct-upload or integration claim/i,
+  );
+});
+
+test("ignores forbidden claims that are statically hidden", async () => {
+  const root = await copyCurrentSite();
+  await replaceInFile(
+    root,
+    "index.html",
+    '<section class="hero" id="home">',
+    '<section class="hero" id="home"><p hidden>所有视频都完全在本地处理。TikTok 视频直传。Stage Mix 支持三机位以上。</p>',
+  );
+  const result = runValidator(root);
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
 });
 
 test("requires robots.txt to reference only the Chinese sitemap", async () => {
