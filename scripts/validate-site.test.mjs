@@ -160,7 +160,7 @@ test("llms.txt publishes the complete factual discovery surface outside sitemap"
 
   assert.ok(llms.startsWith("# Shooting Cut"));
   for (const required of [
-    "1.1.3",
+    "1.1.8",
     "https://shootingcut.cn/",
     "https://shootingcut.com/",
     "Auto Trim 恰好接收 1 个视频",
